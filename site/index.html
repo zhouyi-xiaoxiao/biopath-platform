@@ -8,14 +8,20 @@
   </head>
   <body>
     <header class="hero">
-      <div>
-        <h1>BioPath Platform</h1>
-        <p>Compliance-driven trap optimization for farm operations.</p>
+      <div class="hero-copy">
+        <p class="eyebrow">BioPath Operations Console</p>
+        <h1>Farm Trap Optimization, Ready for Demo and Pitch</h1>
+        <p>Map in, optimized trap placement out, with benchmark-backed impact and repeatable iteration.</p>
+        <div class="hero-tags">
+          <span>Cambridge Demo Map</span>
+          <span>CREGS + ECEF Ready</span>
+          <span>Auto Benchmark Loop</span>
+        </div>
       </div>
       <button id="pitchModeBtn" class="btn">Pitch Mode</button>
     </header>
 
-    <section class="card">
+    <section class="card config-card">
       <h2>API Config</h2>
       <div class="row">
         <label for="apiBase">API Base URL</label>
@@ -27,7 +33,7 @@
     </section>
 
     <main class="grid">
-      <section class="card">
+      <section class="card live-demo">
         <h2>Live Demo</h2>
         <div class="row">
           <label for="kInput">Traps (k)</label>
@@ -56,7 +62,7 @@
         </div>
       </section>
 
-      <section class="card">
+      <section class="card compare-card">
         <h2>Compare</h2>
         <pre id="compareBox" class="console">No benchmark yet.</pre>
       </section>

@@ -48,18 +48,48 @@ function pretty(obj) {
   return JSON.stringify(obj, null, 2);
 }
 
+function fmt(value, digits = 3) {
+  if (typeof value !== "number" || Number.isNaN(value)) return "n/a";
+  return value.toFixed(digits);
+}
+
 function renderMetrics(result) {
   const metrics = result.metrics || {};
   const cp = typeof result.capture_probability === "number" ? result.capture_probability : null;
   const rb = typeof result.robust_score === "number" ? result.robust_score : null;
+  const objectiveName = result.objective?.name || "n/a";
+  const objectiveValue = result.objective?.value;
   $("metrics").innerHTML = `
-    <p><strong>Run:</strong> ${result.run_id || "n/a"}</p>
-    <p><strong>Objective:</strong> ${result.objective?.name} = ${result.objective?.value}</p>
-    <p><strong>Capture Probability:</strong> ${cp === null ? "n/a" : `${(cp * 100).toFixed(1)}%`}</p>
-    <p><strong>Robust Score:</strong> ${rb === null ? "n/a" : `${(rb * 100).toFixed(1)}%`}</p>
-    <p><strong>Mean Distance:</strong> ${metrics.mean_distance_m ?? "n/a"}</p>
-    <p><strong>Weighted Mean Distance:</strong> ${metrics.weighted_mean_distance_m ?? "n/a"}</p>
-    <p><strong>Traps:</strong> ${result.traps?.length || 0}</p>
+    <div class="metric-grid">
+      <article class="metric metric--wide">
+        <span class="metric-label">Run ID</span>
+        <strong class="metric-value">${result.run_id || "n/a"}</strong>
+      </article>
+      <article class="metric metric--wide">
+        <span class="metric-label">Objective</span>
+        <strong class="metric-value">${objectiveName} = ${fmt(Number(objectiveValue), 4)}</strong>
+      </article>
+      <article class="metric">
+        <span class="metric-label">Capture Probability</span>
+        <strong class="metric-value">${cp === null ? "n/a" : `${(cp * 100).toFixed(1)}%`}</strong>
+      </article>
+      <article class="metric">
+        <span class="metric-label">Robust Score</span>
+        <strong class="metric-value">${rb === null ? "n/a" : `${(rb * 100).toFixed(1)}%`}</strong>
+      </article>
+      <article class="metric">
+        <span class="metric-label">Mean Distance (m)</span>
+        <strong class="metric-value">${fmt(Number(metrics.mean_distance_m), 2)}</strong>
+      </article>
+      <article class="metric">
+        <span class="metric-label">Weighted Mean Distance (m)</span>
+        <strong class="metric-value">${fmt(Number(metrics.weighted_mean_distance_m), 2)}</strong>
+      </article>
+      <article class="metric metric--wide">
+        <span class="metric-label">Trap Count</span>
+        <strong class="metric-value">${result.traps?.length || 0}</strong>
+      </article>
+    </div>
   `;
   const link = $("summaryLink");
   if (result.artifacts?.summary) {
@@ -81,7 +111,11 @@ async function loadRunList() {
     }
     rows.forEach((r) => {
       const li = document.createElement("li");
-      li.textContent = `${r.run_id} | ${r.objective} | cp=${r.capture_probability ?? "n/a"}`;
+      const cp = typeof r.capture_probability === "number" ? `${(r.capture_probability * 100).toFixed(1)}%` : "n/a";
+      li.innerHTML = `
+        <span class="run-id">${r.run_id}</span>
+        <span class="run-meta">${r.objective || "n/a"} · CP ${cp}</span>
+      `;
       li.onclick = async () => {
         if (apiBase()) {
           const detail = await callApi(`/api/runs/${r.run_id}`);
