@@ -1,0 +1,188 @@
+% !TEX TS-program = xelatex
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+
+\setmainfont{Times}
+\setsansfont{Helvetica}
+\setmonofont{Menlo}
+\IfFontExistsTF{PingFang SC}{
+  \setCJKmainfont{PingFang SC}
+  \setCJKmonofont{PingFang SC}
+}{
+  \IfFontExistsTF{Songti SC}{
+    \setCJKmainfont{Songti SC}
+    \setCJKmonofont{Songti SC}
+  }{
+    \IfFontExistsTF{STSong}{
+      \setCJKmainfont{STSong}
+      \setCJKmonofont{STSong}
+    }{
+      \IfFontExistsTF{SimSun}{
+        \setCJKmainfont{SimSun}
+        \setCJKmonofont{SimSun}
+      }{
+        \setCJKmainfont{Arial Unicode MS}
+        \setCJKmonofont{Arial Unicode MS}
+      }
+    }
+  }
+}
+
+\definecolor{Accent}{HTML}{2E5E4E}
+\definecolor{SoftAccent}{HTML}{8FB09E}
+\definecolor{Muted}{HTML}{555555}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=Accent,
+  urlcolor=Accent
+}
+
+\titleformat{\section}
+  {\Large\bfseries\color{Accent}}{\thesection}{0.6em}{}
+\titleformat{\subsection}
+  {\bfseries\color{Accent}}{\thesubsection}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.2em}{0.5em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.3em}
+
+\setlist[itemize]{leftmargin=*,topsep=4pt,itemsep=2pt}
+\setlist[enumerate]{leftmargin=*,topsep=4pt,itemsep=2pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{BioPath}
+\rhead{Technical Report}
+\cfoot{\thepage}
+\setlength{\headheight}{14pt}
+
+\newcommand{\CN}{\textbf{中文：}}
+\newcommand{\EN}{\textbf{English:}}
+
+\begin{document}
+\onehalfspacing
+
+\begin{titlepage}
+  \vspace*{1.2cm}
+  \noindent{\Large \textbf{BioPath}}\par
+  \vspace{0.4cm}
+  {\huge\bfseries 技术报告 / Technical Report}\par
+  \vspace{0.6cm}
+  {\large Bio-inspired Optimization for Precision Pest Management}\par
+  \vspace{0.8cm}
+  \textcolor{SoftAccent}{\rule{\linewidth}{1.2pt}}\par
+  \vspace{0.8cm}
+  \textbf{Version:} 1.0\par
+  \textbf{Date:} \today\par
+  \vfill
+  \noindent
+  \textcolor{Muted}{This report is bilingual (Chinese/English) and describes the BioPath MVP
+  implementation, algorithms, and Web UI usage.}
+\end{titlepage}
+
+\section{概览 / Overview}
+\CN BioPath 是一个轻量级优化工具，用于在栅格地图上推荐最优布点位置，
+以最小化到最近陷阱的平均行走距离，并支持基于风险权重的优化。
+系统包含 CLI 与本地 Web 可视化界面，能够输出指标、热力图与报告。\par
+\EN BioPath is a lightweight optimization tool that recommends trap locations on grid maps,
+minimizing the average walking distance to the nearest trap and supporting risk-weighted
+optimization. The MVP includes a CLI and a local Web UI, and outputs metrics, heatmaps,
+and reports.
+
+\section{架构 / Architecture}
+\CN 系统采用模块化结构，核心组件包括：\par
+\begin{itemize}
+  \item 地图解析与数据模型：\texttt{biopath/mapio.py}
+  \item 候选点生成：\texttt{biopath/candidates.py}
+  \item 目标函数与指标：\texttt{biopath/objective.py}
+  \item 贪心优化与局部改进：\texttt{biopath/optimizer.py}
+  \item 可视化与报告：\texttt{biopath/viz.py}, \texttt{biopath/report.py}
+  \item CLI：\texttt{biopath/cli.py}
+  \item Web UI：\texttt{biopath/web.py} 与 \texttt{biopath/web/}
+\end{itemize}
+\EN The system is modular. Key components include map parsing, candidate generation,
+objective and metrics, greedy optimization with local swaps, visualization/reporting,
+CLI entry point, and a local Web UI server with static assets.
+
+\section{数据模型 / Data Model}
+\CN 地图采用 JSON 格式，包含：\par
+\begin{itemize}
+  \item \texttt{name}: 地图名称
+  \item \texttt{cell\_size\_m}: 单元格尺寸（米）
+  \item \texttt{ascii}: ASCII 栅格，\texttt{.} 为可行走，\texttt{\#} 为障碍
+  \item \texttt{weights}（可选）：与栅格同尺寸的权重矩阵
+\end{itemize}
+\CN 若未提供 \texttt{weights}，所有可行走单元权重默认 1.0。\par
+\EN The map JSON includes a name, cell size, ASCII grid, and optional weights matrix.
+If weights are omitted, all walkable cells default to weight 1.0.
+
+\section{算法与实现 / Algorithms}
+\subsection{距离图 / Distance Map}
+\CN 采用多源 BFS 在 4 邻域上计算每个可行走单元到最近陷阱的最短距离。
+距离单位为米（按 \texttt{cell\_size\_m} 累加）。\par
+\EN A multi-source BFS over the 4-neighborhood computes the shortest distance from every
+walkable cell to its nearest trap, measured in meters.
+
+\subsection{目标函数 / Objective}
+\CN 提供两种目标：\par
+\begin{itemize}
+  \item \textbf{Mean}: 所有可行走单元的平均距离
+  \item \textbf{Weighted Mean}: 以权重加权的平均距离
+\end{itemize}
+\EN Two objectives are supported: unweighted mean distance and weighted mean distance
+using the optional weights matrix.
+
+\subsection{贪心优化 / Greedy Optimization}
+\CN 算法迭代选择陷阱位置，每次选择能最小化目标的候选点，支持局部交换改进。
+适合中小规模地图的快速求解。\par
+\EN The solver greedily selects traps, optionally applying single-swap local improvements.
+It is fast and suitable for small-to-medium maps.
+
+\section{指标 / Metrics}
+\CN 输出的指标包括：平均距离、加权平均距离、最大距离、P95 距离，
+以及可选的覆盖率（给定阈值半径）。\par
+\EN Metrics include mean distance, weighted mean distance, max distance, P95 distance,
+and optional coverage within a user-specified radius.
+
+\section{Web UI 使用说明 / Web UI Usage}
+\CN \textbf{启动步骤：}\par
+\begin{enumerate}
+  \item 在项目根目录运行：\texttt{python3 -m biopath.web --port 8000}
+  \item 打开浏览器：\url{http://127.0.0.1:8000}
+  \item 在 \textbf{Map Input} 选择样例或上传 JSON
+  \item 在 \textbf{Map Builder} 创建空地图或绘制障碍/权重
+  \item 设置参数并点击 \textbf{Run Optimization}
+  \item 需要导出时使用 \textbf{Download map/results}
+\end{enumerate}
+\EN \textbf{Steps:}\par
+\begin{enumerate}
+  \item From the project root: \texttt{python3 -m biopath.web --port 8000}
+  \item Open: \url{http://127.0.0.1:8000}
+  \item Load a sample/upload JSON in \textbf{Map Input}
+  \item Use \textbf{Map Builder} to create or paint obstacles/weights
+  \item Configure settings and click \textbf{Run Optimization}
+  \item Export via \textbf{Download map/results}
+\end{enumerate}
+
+\section{错误处理与验证 / Validation}
+\CN 系统对地图格式、权重、参数范围进行校验；若存在不可达单元，
+目标函数返回无穷大，UI 会以灰色显示。\par
+\EN The system validates input maps, weights, and parameters. Unreachable cells yield
+infinite objectives and are rendered in gray.
+
+\section{限制与后续 / Limitations \& Next Steps}
+\CN 目前采用贪心优化，尚非全局最优；后续可引入更强的搜索策略或多目标约束，
+并支持 GIS 数据与更复杂场景。\par
+\EN Greedy optimization is not globally optimal. Future work can include stronger search
+methods, multi-objective constraints, and GIS-based inputs.
+
+\end{document}

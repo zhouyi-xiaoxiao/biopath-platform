@@ -1,0 +1,361 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [ 3 0 R 4 0 R 5 0 R 6 0 R ] /Count 4 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 7 0 R >> >> /Contents 8 0 R >>
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 7 0 R >> >> /Contents 9 0 R >>
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 7 0 R >> >> /Contents 10 0 R >>
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 7 0 R >> >> /Contents 11 0 R >>
+endobj
+7 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+8 0 obj
+<< /Length 2219 >>
+stream
+BT
+/F1 11 Tf
+72 720 Td
+(BioPath MVP Technical Report) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(1. Overview) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(BioPath is a lightweight optimization tool that recommends trap locations on a grid map.) Tj
+0 -14 Td
+(It) Tj
+0 -14 Td
+(minimizes average walking distance to the nearest trap using bio-inspired search) Tj
+0 -14 Td
+(principles.) Tj
+0 -14 Td
+(The MVP accepts ASCII maps, generates candidate trap locations, solves a greedy placement) Tj
+0 -14 Td
+(problem, and outputs metrics, plots, and reports. A local web UI provides visual) Tj
+0 -14 Td
+(interaction.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(2. Architecture) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(- Core map parsing and data model: biopath/mapio.py) Tj
+0 -14 Td
+(- Candidate generation: biopath/candidates.py) Tj
+0 -14 Td
+(- Objective functions and metrics: biopath/objective.py) Tj
+0 -14 Td
+(- Greedy optimizer with optional local swap: biopath/optimizer.py) Tj
+0 -14 Td
+(- Reporting and visualization: biopath/report.py, biopath/viz.py) Tj
+0 -14 Td
+(- CLI entry point: biopath/cli.py) Tj
+0 -14 Td
+(- Local web UI server and assets: biopath/web.py, biopath/web/) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(3. Data Model) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(The system uses a GridMap dataclass with:) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(- ascii: list of strings with . for walkable cells and # for obstacles.) Tj
+0 -14 Td
+(- cell_size_m: meters per grid cell.) Tj
+0 -14 Td
+(- weights \(optional\): same shape as ascii, with non-negative values for walkable cells.) Tj
+0 -14 Td
+(  Obstacles must be 0 or null. When omitted, all walkable cells have weight 1.0.) Tj
+0 -14 Td
+(- Derived fields: height, width, walkable mask, walkable count, and weight totals.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(Parsing is implemented in load_map_data and load_map in biopath/mapio.py.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(4. Optimization Algorithms) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(4.1 Distance Map \(Multi-source BFS\)) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(Distances are computed via multi-source breadth-first search on the 4-neighborhood. All) Tj
+0 -14 Td
+(traps are enqueued as sources with distance 0, and distances propagate through walkable) Tj
+ET
+endstream
+endobj
+9 0 obj
+<< /Length 1948 >>
+stream
+BT
+/F1 11 Tf
+72 720 Td
+(cells in increments of cell_size_m. This yields the shortest-path distance to the nearest) Tj
+0 -14 Td
+(trap for every cell. Implementation: compute_distance_map in biopath/objective.py.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(Complexity: O\(H * W\) per distance map, where H and W are grid height and width.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(4.2 Objective Functions) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(- Mean distance: average of all walkable cell distances.) Tj
+0 -14 Td
+(- Weighted mean distance: average weighted by cell weights.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(Implementation: mean_distance_to_traps and weighted_mean_distance_to_traps in) Tj
+0 -14 Td
+(biopath/objective.py.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(4.3 Greedy Placement) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(The optimizer selects traps iteratively. At each step, it evaluates all remaining) Tj
+0 -14 Td
+(candidates) Tj
+0 -14 Td
+(and chooses the one that minimizes the objective with the current set. Optional local) Tj
+0 -14 Td
+(improvement attempts single swaps to further reduce the objective.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(Implementation: greedy_optimize in biopath/optimizer.py.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(Complexity: O\(K * C * H * W\) for greedy selection where K is the trap count and C is) Tj
+0 -14 Td
+(candidate count. Local improvement adds O\(S * C * H * W\) where S is the number of swaps.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(5. Metrics) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(The MVP reports:) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(- Mean distance) Tj
+0 -14 Td
+(- Weighted mean distance) Tj
+0 -14 Td
+(- Max distance) Tj
+0 -14 Td
+(- P95 distance) Tj
+0 -14 Td
+(- Optional coverage within a user-defined radius \(unweighted and weighted\)) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(Implementation: distance_metrics in biopath/objective.py.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(6. Web UI Implementation) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(6.1 Server) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+() Tj
+ET
+endstream
+endobj
+10 0 obj
+<< /Length 2446 >>
+stream
+BT
+/F1 11 Tf
+72 720 Td
+(biopath/web.py runs a local HTTP server using Python standard library modules. Endpoints:) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(- GET /api/samples: lists sample maps from tests/fixtures) Tj
+0 -14 Td
+(- GET /api/sample?name=...: returns the JSON map) Tj
+0 -14 Td
+(- POST /api/solve: runs optimization on a provided map JSON) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(The server uses load_map_data, candidate rules, and greedy_optimize to compute traps,) Tj
+0 -14 Td
+(then returns metrics and a serialized distance map for visualization.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(6.2 Frontend) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(biopath/web/index.html, app.css, and app.js provide a two-panel UI with:) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(- Map preview canvas and legend) Tj
+0 -14 Td
+(- Map builder to create blank grids, edit metadata, and paint obstacles or weights) Tj
+0 -14 Td
+(- Solver controls \(k, objective, candidate rules, coverage radius\)) Tj
+0 -14 Td
+(- Results panel with metrics and trap list) Tj
+0 -14 Td
+(- One-click export of map and results JSON) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(The heatmap renders directly on a canvas by mapping distance values to an HSL color scale,) Tj
+0 -14 Td
+(and traps are drawn as red cross markers.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(7. Validation and Error Handling) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(- Map input validation: shape, allowed characters, numeric weights.) Tj
+0 -14 Td
+(- Parameter validation: non-negative counts, valid objective names.) Tj
+0 -14 Td
+(- Unreachable cells: objective returns infinity; the UI renders unreachable cells in gray.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(Errors are returned as JSON with an error field in the web API and surfaced in the UI.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(8. Web UI Usage) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(1. Start the server: python3 -m biopath.web --port 8000.) Tj
+0 -14 Td
+(2. Open http://127.0.0.1:8000 in a browser.) Tj
+0 -14 Td
+(3. Use Map Input to load a sample or upload a JSON map, or use Map Builder to:) Tj
+0 -14 Td
+(   - Create a blank grid and set name/cell size.) Tj
+0 -14 Td
+(   - Paint obstacles, walkable cells, or custom weights on the canvas.) Tj
+0 -14 Td
+(4. Configure solver settings \(k, objective, candidate rule\).) Tj
+0 -14 Td
+(5. Click Run Optimization to generate traps and metrics.) Tj
+0 -14 Td
+(6. Download JSON via Download map/results when needed.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(9. Limitations and Next Steps) Tj
+0 -14 Td
+() Tj
+ET
+endstream
+endobj
+11 0 obj
+<< /Length 469 >>
+stream
+BT
+/F1 11 Tf
+72 720 Td
+() Tj
+0 -14 Td
+(- Greedy optimization is fast but not globally optimal; consider simulated annealing or) Tj
+0 -14 Td
+(  integer programming for larger maps.) Tj
+0 -14 Td
+(- Real-world geometry could be imported from GIS formats rather than ASCII grids.) Tj
+0 -14 Td
+(- Multi-objective extensions \(cost, accessibility, regulatory constraints\) can be added.) Tj
+0 -14 Td
+(- Add authentication and job queueing if deployed beyond local use.) Tj
+ET
+endstream
+endobj
+xref
+0 12
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000135 00000 n 
+0000000261 00000 n 
+0000000387 00000 n 
+0000000514 00000 n 
+0000000641 00000 n 
+0000000711 00000 n 
+0000002982 00000 n 
+0000004982 00000 n 
+0000007481 00000 n 
+trailer
+<< /Size 12 /Root 1 0 R >>
+startxref
+8002
+%%EOF

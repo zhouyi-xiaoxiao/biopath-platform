@@ -1,0 +1,135 @@
+:root {
+  --bg: #f0f4f8;
+  --card: #ffffff;
+  --ink: #132238;
+  --muted: #5b6b7a;
+  --accent: #1f7a8c;
+  --accent-2: #2ec4b6;
+  --border: #d8e2ea;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 15% 15%, #d9f3ff 0, transparent 30%),
+    radial-gradient(circle at 80% 5%, #d9ffe7 0, transparent 28%),
+    var(--bg);
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 1.6rem;
+  background: linear-gradient(90deg, #184e77, #1f7a8c);
+  color: #fff;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.hero p {
+  margin: 0.25rem 0 0;
+  opacity: 0.9;
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 1rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+}
+
+.row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+input,
+select,
+textarea,
+button {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.5rem;
+  font-size: 0.95rem;
+}
+
+textarea {
+  width: 100%;
+  min-height: 220px;
+  font-family: "SF Mono", Menlo, monospace;
+  margin-bottom: 0.75rem;
+}
+
+.btn {
+  background: var(--accent);
+  color: #fff;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #17697a;
+}
+
+.btn.ghost {
+  background: #fff;
+  color: var(--ink);
+  border-color: var(--border);
+}
+
+.console {
+  min-height: 180px;
+  background: #0f1720;
+  color: #d4f4ff;
+  padding: 0.8rem;
+  border-radius: 8px;
+  overflow: auto;
+}
+
+.runs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 300px;
+  overflow: auto;
+}
+
+.runs li {
+  border-bottom: 1px dashed var(--border);
+  padding: 0.5rem 0;
+  cursor: pointer;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+@media (max-width: 720px) {
+  .hero {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+}

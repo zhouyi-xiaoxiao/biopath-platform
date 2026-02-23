@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BioPath Field Console</title>
+    <link rel="stylesheet" href="app.css" />
+  </head>
+  <body>
+    <div class="backdrop"></div>
+    <header class="hero">
+      <div class="badge">BioPath</div>
+      <h1>Field Console</h1>
+      <p>Plan trap placement using bio-inspired distance optimization.</p>
+    </header>
+
+    <main class="layout">
+      <section class="panel map-panel">
+        <div class="panel-head">
+          <div>
+            <h2>Map View</h2>
+            <div class="meta" id="mapMeta">Load a sample or upload a map.</div>
+          </div>
+          <div class="legend">
+            <span class="legend-swatch walkable"></span>walkable
+            <span class="legend-swatch obstacle"></span>obstacle
+            <span class="legend-swatch trap"></span>trap
+          </div>
+        </div>
+        <div class="view-controls">
+          <label for="viewMode">View mode</label>
+          <select id="viewMode">
+            <option value="distance">Distance heatmap</option>
+            <option value="weights">Weight heatmap</option>
+            <option value="base">Base grid</option>
+          </select>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="mapCanvas"></canvas>
+        </div>
+        <div class="scale" id="scaleInfo"></div>
+      </section>
+
+      <section class="panel control-panel">
+        <div class="block">
+          <h3>Map Input</h3>
+          <label for="sampleSelect">Sample maps</label>
+          <div class="row">
+            <select id="sampleSelect"></select>
+            <button id="loadSample">Load</button>
+          </div>
+          <label for="mapFile">Upload map JSON</label>
+          <input id="mapFile" type="file" accept="application/json" />
+          <div class="row">
+            <button class="ghost" id="exportMap">Download map JSON</button>
+            <button class="ghost" id="exportResults">Download results JSON</button>
+          </div>
+        </div>
+
+        <div class="block">
+          <h3>Map Builder</h3>
+          <div class="row">
+            <label for="mapName">Map name</label>
+            <input id="mapName" type="text" placeholder="Map name" />
+          </div>
+          <div class="row">
+            <label for="cellSize">Cell size (m)</label>
+            <input id="cellSize" type="number" min="0.1" step="0.1" value="1.0" />
+          </div>
+          <div class="row">
+            <label for="gridWidth">Grid width</label>
+            <input id="gridWidth" type="number" min="2" value="12" />
+          </div>
+          <div class="row">
+            <label for="gridHeight">Grid height</label>
+            <input id="gridHeight" type="number" min="2" value="12" />
+          </div>
+          <div class="row">
+            <button id="createMap">Create blank map</button>
+            <button class="ghost" id="applyMeta">Apply meta</button>
+          </div>
+          <div class="row">
+            <label for="paintTool">Paint tool</label>
+            <select id="paintTool">
+              <option value="walkable">Walkable</option>
+              <option value="obstacle">Obstacle</option>
+              <option value="weight">Weight</option>
+            </select>
+          </div>
+          <div class="row">
+            <label for="weightValue">Weight value</label>
+            <input id="weightValue" type="number" min="0" step="0.5" value="1" />
+          </div>
+          <button class="ghost" id="clearWeights">Clear weights</button>
+        </div>
+
+        <div class="block">
+          <h3>Solver Settings</h3>
+          <div class="row">
+            <label for="kInput">Traps (k)</label>
+            <input id="kInput" type="number" min="1" value="5" />
+          </div>
+          <div class="row">
+            <label for="candidateRule">Candidate rule</label>
+            <select id="candidateRule">
+              <option value="all_walkable">All walkable</option>
+              <option value="adjacent_to_wall">Adjacent to wall</option>
+            </select>
+          </div>
+          <div class="row">
+            <label for="minWallNeighbors">Min wall neighbors</label>
+            <input id="minWallNeighbors" type="number" min="0" value="1" />
+          </div>
+          <div class="row">
+            <label for="objectiveSelect">Objective</label>
+            <select id="objectiveSelect">
+              <option value="mean">Mean distance</option>
+              <option value="weighted_mean">Weighted mean</option>
+            </select>
+          </div>
+          <div class="row">
+            <label for="coverageRadius">Coverage radius (m)</label>
+            <input id="coverageRadius" type="number" min="0" step="0.1" placeholder="optional" />
+          </div>
+          <div class="row">
+            <label for="localImprove">Local improve</label>
+            <input id="localImprove" type="checkbox" />
+          </div>
+          <button class="run" id="runSolve">Run Optimization</button>
+          <div class="status" id="statusMessage"></div>
+        </div>
+
+        <div class="block results">
+          <h3>Results</h3>
+          <div class="objective" id="objectiveValue">No run yet.</div>
+          <div class="metric-grid" id="metricsGrid"></div>
+          <div class="trap-list" id="trapList"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Local only. No data leaves your machine.</span>
+    </footer>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>

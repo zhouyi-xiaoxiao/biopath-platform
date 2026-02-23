@@ -1,0 +1,23 @@
+[project]
+name = "biopath"
+version = "0.1.0"
+description = "BioPath MVP: trap placement optimization on grid maps."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy",
+  "matplotlib",
+  "typer",
+  "fastapi",
+  "uvicorn",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.scripts]
+biopath = "biopath.cli:app"
+[build-system]
+requires = []
+build-backend = "biopath_build_backend"
+backend-path = ["."]

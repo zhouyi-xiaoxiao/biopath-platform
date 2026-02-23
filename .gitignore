@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+out.png
+out.json
+report.md
+*.log
+TECH_REPORT_CN_EN.aux
+TECH_REPORT_CN_EN.out
+TECH_REPORT_CN_EN.log

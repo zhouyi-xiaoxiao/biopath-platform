@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BioPath Platform</title>
+    <link rel="stylesheet" href="./app.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div>
+        <h1>BioPath Platform</h1>
+        <p>Compliance-driven trap optimization for farm operations.</p>
+      </div>
+      <button id="pitchModeBtn" class="btn">Pitch Mode</button>
+    </header>
+
+    <section class="card">
+      <h2>API Config</h2>
+      <div class="row">
+        <label for="apiBase">API Base URL</label>
+        <input id="apiBase" type="text" placeholder="https://your-render-service.onrender.com" />
+        <button id="saveApi" class="btn">Save</button>
+        <button id="healthCheck" class="btn ghost">Health</button>
+      </div>
+      <p id="apiStatus" class="muted">No API checked yet.</p>
+    </section>
+
+    <main class="grid">
+      <section class="card">
+        <h2>Live Demo</h2>
+        <div class="row">
+          <label for="kInput">Traps (k)</label>
+          <input id="kInput" type="number" min="1" value="5" />
+          <label for="objective">Objective</label>
+          <select id="objective">
+            <option value="capture_prob">capture_prob</option>
+            <option value="robust_capture">robust_capture</option>
+            <option value="mean">mean</option>
+            <option value="weighted_mean">weighted_mean</option>
+          </select>
+        </div>
+        <div class="row">
+          <label for="mcRuns">MC Runs</label>
+          <input id="mcRuns" type="number" min="20" value="120" />
+          <label for="horizon">Time Horizon</label>
+          <input id="horizon" type="number" min="5" value="40" />
+          <label for="seed">Seed</label>
+          <input id="seed" type="number" value="7" />
+        </div>
+        <textarea id="mapJson" spellcheck="false"></textarea>
+        <div class="row">
+          <button id="runSolve" class="btn">Run Solve</button>
+          <button id="runBenchmark" class="btn">Run Benchmark</button>
+          <button id="loadLatest" class="btn ghost">Load Latest</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Compare</h2>
+        <pre id="compareBox" class="console">No benchmark yet.</pre>
+      </section>
+
+      <section class="card" id="iterationsCard">
+        <h2>Iterations</h2>
+        <ul id="runList" class="runs"></ul>
+      </section>
+
+      <section class="card" id="resultCard">
+        <h2>Latest Result</h2>
+        <div id="metrics"></div>
+        <a id="summaryLink" href="#" target="_blank" rel="noreferrer">Summary</a>
+      </section>
+    </main>
+
+    <section class="card" id="pitchCard">
+      <h2>Pitch Quick Page</h2>
+      <ol>
+        <li>Problem: manual trap placement is inconsistent and costly.</li>
+        <li>Solution: map in, optimized trap plan out with measurable uplift.</li>
+        <li>Proof: benchmark vs random baseline using repeatable runs.</li>
+        <li>Ask: pilot intros + funding path via Cambridge/CREGS/Ceres.</li>
+      </ol>
+    </section>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
