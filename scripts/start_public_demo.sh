@@ -38,6 +38,7 @@ start_api() {
 
   # If port is already in use by another process, trust it as the API process.
   if lsof -nP -iTCP:"$API_PORT" -sTCP:LISTEN >/dev/null 2>&1; then
+    lsof -nP -t -iTCP:"$API_PORT" -sTCP:LISTEN | head -n1 > "$API_PID_FILE" || true
     return
   fi
 
