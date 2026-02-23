@@ -32,8 +32,28 @@ def _extract_map(payload: dict[str, Any]) -> dict:
     map_data = payload.get("map_json")
     if map_data is None:
         map_data = payload.get("map")
+    if map_data is None:
+        map_path = payload.get("map_path")
+        if map_path is not None:
+            if not isinstance(map_path, str) or not map_path.strip():
+                raise HTTPException(status_code=400, detail="map_path must be a non-empty string")
+            candidate = Path(map_path)
+            if not candidate.is_absolute():
+                candidate = ROOT / candidate
+            if not candidate.exists():
+                raise HTTPException(status_code=400, detail=f"map_path not found: {candidate}")
+            try:
+                loaded = json.loads(candidate.read_text())
+            except Exception as exc:  # noqa: BLE001
+                raise HTTPException(status_code=400, detail=f"map_path is not valid JSON: {candidate}") from exc
+            if not isinstance(loaded, dict):
+                raise HTTPException(status_code=400, detail=f"map_path must contain a JSON object: {candidate}")
+            map_data = loaded
     if not isinstance(map_data, dict):
-        raise HTTPException(status_code=400, detail="map_json (or map) must be an object")
+        raise HTTPException(
+            status_code=400,
+            detail="Provide map_json (or map) object, or map_path to a JSON file",
+        )
     return map_data
 
 
@@ -114,6 +134,11 @@ def benchmark(payload: dict[str, Any]) -> dict[str, Any]:
 
     uplift_vs_mean = optimized - baseline["mean"]
     payload_out = {
+        "run_id": result.get("run_id"),
+        "traps": result.get("traps"),
+        "metrics": result.get("metrics"),
+        "artifacts": result.get("artifacts"),
+        "solver_version": result.get("solver_version"),
         "run": result,
         "baseline": baseline,
         "optimized_score": optimized,

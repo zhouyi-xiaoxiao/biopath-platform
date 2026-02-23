@@ -8,6 +8,7 @@ It now includes:
 - FastAPI backend (`/api/solve`, `/api/benchmark`, `/api/runs/latest`, `/api/runs/{run_id}`)
 - Static website (`site/`) for live demo, compare, and iteration history
 - Automation scripts for repeatable runs and escalation workflows
+- A Cambridge-region inspired demo map (`maps/cambridgeshire_demo_farm.json`)
 
 ## Quickstart
 
@@ -20,6 +21,14 @@ python -m biopath.cli solve --map tests/fixtures/warehouse.json --k 5 --objectiv
 
 ```bash
 uvicorn api.main:app --host 0.0.0.0 --port 8001
+```
+
+Example request:
+
+```bash
+curl -X POST http://127.0.0.1:8001/api/solve \
+  -H 'Content-Type: application/json' \
+  -d '{"map_path":"maps/cambridgeshire_demo_farm.json","k":6,"objective":"robust_capture","mc_runs":160,"time_horizon_steps":48}'
 ```
 
 ## Run Website
@@ -39,7 +48,7 @@ Then open `http://127.0.0.1:8080`.
 bash scripts/auto_iterate.sh
 
 # one benchmark run
-python scripts/run_benchmark.py --map tests/fixtures/warehouse.json --k 5 --objective capture_prob
+python scripts/run_benchmark.py --map maps/cambridgeshire_demo_farm.json --k 6 --objective robust_capture
 
 # publish latest run into site/data/
 bash scripts/publish_site.sh
@@ -52,6 +61,12 @@ bash scripts/publish_site.sh
 python scripts/escalate_to_gpt52_web.py --question escalations/pending/example.md --answer escalations/answers/example.md
 bash scripts/escalation_worker.sh
 ```
+
+Worker behavior:
+
+- retries web escalation up to 3 attempts
+- then runs Codex CLI with `gpt-5.3-codex` and `xhigh` reasoning
+- runs tests and appends output to `escalations/actions/<id>.md`
 
 ## Map format
 

@@ -1,19 +1,20 @@
 const DEFAULT_MAP = {
-  name: "Cambridge Synthetic Farm Layout",
+  name: "Cambridgeshire Demo Farm (Publicly Inspired Synthetic)",
   cell_size_m: 1,
   ascii: [
-    "########################",
-    "#....#........#.......#",
-    "#....#........#.......#",
-    "#....#........#.......#",
-    "#.............#.......#",
-    "######.############...#",
-    "#........#............#",
-    "#........#............#",
-    "#........#............#",
-    "#........#########....#",
-    "#.....................#",
-    "########################"
+    "############################",
+    "#............#.............#",
+    "#............#.............#",
+    "#............#.............#",
+    "#..........................#",
+    "######.##################..#",
+    "#............#............##",
+    "#............#.............#",
+    "#............#.............#",
+    "#.....################.....#",
+    "#..........................#",
+    "#..........................#",
+    "############################"
   ]
 };
 
@@ -49,13 +50,15 @@ function pretty(obj) {
 
 function renderMetrics(result) {
   const metrics = result.metrics || {};
+  const cp = typeof result.capture_probability === "number" ? result.capture_probability : null;
+  const rb = typeof result.robust_score === "number" ? result.robust_score : null;
   $("metrics").innerHTML = `
     <p><strong>Run:</strong> ${result.run_id || "n/a"}</p>
     <p><strong>Objective:</strong> ${result.objective?.name} = ${result.objective?.value}</p>
-    <p><strong>Capture Probability:</strong> ${(result.capture_probability * 100).toFixed(1)}%</p>
-    <p><strong>Robust Score:</strong> ${(result.robust_score * 100).toFixed(1)}%</p>
-    <p><strong>Mean Distance:</strong> ${metrics.mean_distance_m}</p>
-    <p><strong>Weighted Mean Distance:</strong> ${metrics.weighted_mean_distance_m}</p>
+    <p><strong>Capture Probability:</strong> ${cp === null ? "n/a" : `${(cp * 100).toFixed(1)}%`}</p>
+    <p><strong>Robust Score:</strong> ${rb === null ? "n/a" : `${(rb * 100).toFixed(1)}%`}</p>
+    <p><strong>Mean Distance:</strong> ${metrics.mean_distance_m ?? "n/a"}</p>
+    <p><strong>Weighted Mean Distance:</strong> ${metrics.weighted_mean_distance_m ?? "n/a"}</p>
     <p><strong>Traps:</strong> ${result.traps?.length || 0}</p>
   `;
   const link = $("summaryLink");
@@ -71,17 +74,38 @@ function renderMetrics(result) {
 async function loadRunList() {
   const runList = $("runList");
   runList.innerHTML = "";
-  try {
-    const data = await callApi("/api/runs");
-    (data.runs || []).forEach((r) => {
+  const drawRows = (rows) => {
+    if (!rows.length) {
+      runList.innerHTML = '<li class="muted">No runs yet.</li>';
+      return;
+    }
+    rows.forEach((r) => {
       const li = document.createElement("li");
       li.textContent = `${r.run_id} | ${r.objective} | cp=${r.capture_probability ?? "n/a"}`;
       li.onclick = async () => {
-        const detail = await callApi(`/api/runs/${r.run_id}`);
-        renderMetrics(detail);
+        if (apiBase()) {
+          const detail = await callApi(`/api/runs/${r.run_id}`);
+          renderMetrics(detail);
+        } else {
+          await loadLatestWithFallback();
+        }
       };
       runList.appendChild(li);
     });
+  };
+  try {
+    const data = await callApi("/api/runs");
+    drawRows(data.runs || []);
+    return;
+  } catch (_) {
+    // fallback to static history
+  }
+
+  try {
+    const res = await fetch("./data/runs.json");
+    if (!res.ok) throw new Error("No fallback runs.json");
+    const data = await res.json();
+    drawRows(data.runs || []);
   } catch (err) {
     runList.innerHTML = `<li class="muted">${err.message}</li>`;
   }

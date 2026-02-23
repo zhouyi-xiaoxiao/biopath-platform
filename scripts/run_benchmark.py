@@ -6,13 +6,18 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from biopath.run_pipeline import SolveOptions, run_solve
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--map", default="tests/fixtures/warehouse.json")
+    parser.add_argument("--map", default="maps/cambridgeshire_demo_farm.json")
     parser.add_argument("--k", type=int, default=5)
     parser.add_argument("--objective", default="capture_prob")
     parser.add_argument("--mc-runs", type=int, default=120)

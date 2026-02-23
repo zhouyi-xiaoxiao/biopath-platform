@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 from datetime import datetime, timezone
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -20,14 +21,46 @@ def run(cmd: list[str]) -> str:
     return subprocess.check_output(cmd, text=True)
 
 
-def find_ref(snapshot: dict, *, role: str | None = None, contains: str | None = None) -> str | None:
+def _iter_snapshot_refs(snapshot: dict):
+    # Old CLI shape: {"refs": {"e1": {"role": "button", "name": "..."}}}
     refs = snapshot.get("refs") or {}
-    needle = (contains or "").lower()
     for ref, info in refs.items():
-        if role and info.get("role") != role:
+        yield str(ref), str(info.get("role", "")), str(info.get("name", ""))
+
+    # Aria shape: {"nodes": [{"ref":"ax1","role":"button","name":"..."}, ...]}
+    nodes = snapshot.get("nodes") or []
+    for node in nodes:
+        ref = node.get("ref")
+        if ref:
+            yield str(ref), str(node.get("role", "")), str(node.get("name", ""))
+
+    # AI shape: {"snapshot": "- button \"Name\" [ref=e12] ..."}
+    text = snapshot.get("snapshot")
+    if isinstance(text, str):
+        for line in text.splitlines():
+            m_named = re.search(r"-\s*([^\[\"]+?)\s+\"([^\"]*)\"\s+\[ref=([^\]]+)\]", line)
+            if m_named:
+                role, name, ref = m_named.group(1).strip(), m_named.group(2).strip(), m_named.group(3).strip()
+                yield ref, role, name
+                continue
+            m_unnamed = re.search(r"-\s*([^\[\"]+?)\s+\[ref=([^\]]+)\](?:[^:]*:\s*(.*))?\s*$", line)
+            if m_unnamed:
+                role = m_unnamed.group(1).strip()
+                ref = m_unnamed.group(2).strip()
+                name = (m_unnamed.group(3) or "").strip()
+                yield ref, role, name
+
+
+def find_ref(snapshot: dict, *, role: str | None = None, contains: str | None = None) -> str | None:
+    want_role = (role or "").strip().lower()
+    needle = (contains or "").strip().lower()
+
+    for ref, got_role, name in _iter_snapshot_refs(snapshot):
+        got_role_l = got_role.lower()
+        name_l = name.lower()
+        if want_role and want_role not in got_role_l:
             continue
-        name = str(info.get("name", "")).lower()
-        if needle and needle not in name:
+        if needle and needle not in name_l:
             continue
         return ref
     return None
@@ -52,7 +85,7 @@ def main() -> None:
         raise SystemExit("ChatGPT session not logged in. Please login once and rerun.")
 
     # Try model picker and highest thinking mode when controls exist.
-    model_ref = find_ref(snap, contains="gpt")
+    model_ref = find_ref(snap, contains="model selector")
     if model_ref:
         try:
             run(["openclaw", "browser", "click", model_ref, "--json"])
@@ -86,7 +119,24 @@ def main() -> None:
             pass
 
     snap4 = run_json(["openclaw", "browser", "snapshot", "--format", "ai", "--json"])
-    box_ref = find_ref(snap4, role="textbox") or find_ref(snap4, role="combobox")
+
+    # Ensure Deep Research mode is off (it renders output in an iframe and breaks text capture).
+    deep_on_ref = find_ref(snap4, contains="deep research, click to remove")
+    if deep_on_ref:
+        try:
+            run(["openclaw", "browser", "click", deep_on_ref, "--json"])
+            snap4 = run_json(["openclaw", "browser", "snapshot", "--format", "ai", "--json"])
+        except Exception:
+            pass
+
+    box_ref = (
+        find_ref(snap4, role="textbox")
+        or find_ref(snap4, role="combobox")
+        or find_ref(snap4, contains="ask anything")
+        or find_ref(snap4, contains="get a detailed report")
+        or find_ref(snap4, contains="message chatgpt")
+        or find_ref(snap4, contains="send a message")
+    )
     if not box_ref:
         raise SystemExit("Unable to find message input box on chatgpt.com")
 
@@ -101,11 +151,11 @@ def main() -> None:
                 "browser",
                 "evaluate",
                 "--fn",
-                '() => !!document.querySelector("button[aria-label*=\\"Stop\\" i], button[data-testid*=\\"stop\\" i]")',
+                '() => [...document.querySelectorAll("button")].some((b) => /stop/i.test(`${b.getAttribute("aria-label") || ""} ${b.textContent || ""}`) || /stop/i.test(b.getAttribute("data-testid") || ""))',
                 "--json",
             ]
         )
-        value = has_stop.get("value")
+        value = has_stop.get("result", has_stop.get("value"))
         if not value:
             break
         run(["openclaw", "browser", "wait", "--time", "2", "--json"])
@@ -116,11 +166,29 @@ def main() -> None:
             "browser",
             "evaluate",
             "--fn",
-            "() => { const nodes=[...document.querySelectorAll(\"[data-message-author-role='assistant']\")]; const n=nodes.at(-1) || [...document.querySelectorAll(\"article\")].at(-1); return n ? n.innerText : \"\"; }",
+            """() => {
+              const clean = (s) => (s || "").trim();
+              const fromRole = [...document.querySelectorAll("[data-message-author-role='assistant']")]
+                .map((n) => clean(n.innerText))
+                .filter(Boolean);
+              const fromArticles = [...document.querySelectorAll("article")]
+                .map((n) => clean(n.innerText))
+                .filter(Boolean);
+              const fromMarkdown = [...document.querySelectorAll("[data-testid*='conversation-turn'] .markdown, .prose")]
+                .map((n) => clean(n.innerText))
+                .filter(Boolean);
+              const merged = [...fromRole, ...fromArticles, ...fromMarkdown]
+                .filter((s) => s.length > 20 && !/^ChatGPT said:?$/i.test(s));
+              if (!merged.length) return "";
+              // Prefer the latest substantial answer; fall back to the longest one.
+              const latest = merged.at(-1);
+              if (latest && latest.length >= 80) return latest;
+              return merged.slice().sort((a, b) => b.length - a.length)[0];
+            }""",
             "--json",
         ]
     )
-    answer_text = str(answer_eval.get("value") or "").strip()
+    answer_text = str(answer_eval.get("result", answer_eval.get("value")) or "").strip()
 
     if not answer_text:
         raise SystemExit("No assistant answer captured from page")
