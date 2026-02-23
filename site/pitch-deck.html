@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BioPath Pitch Deck</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Manrope:wght@400;500;700;800&family=Sora:wght@600;700;800&display=swap");
+
+      :root {
+        --bg: #081c14;
+        --bg-soft: #0f2f23;
+        --panel: #f4fbf7;
+        --ink: #102b20;
+        --muted: #3f5f52;
+        --brand: #1f8b5f;
+        --accent: #db7b2c;
+      }
+
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        font-family: "Manrope", sans-serif;
+        color: #f6fff9;
+        background:
+          radial-gradient(1000px 700px at -15% -20%, rgba(40, 184, 122, 0.25), transparent 60%),
+          radial-gradient(760px 520px at 110% -14%, rgba(219, 123, 44, 0.24), transparent 60%),
+          linear-gradient(155deg, #061710, var(--bg) 45%, var(--bg-soft));
+      }
+
+      .top {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.7rem 1rem;
+        border-bottom: 1px solid rgba(255,255,255,0.16);
+        background: rgba(6, 25, 18, 0.8);
+        backdrop-filter: blur(8px);
+      }
+
+      .top strong {
+        font-family: "Sora", sans-serif;
+        letter-spacing: 0.01em;
+      }
+
+      .top code {
+        font-family: "JetBrains Mono", monospace;
+        color: #b8ffd9;
+      }
+
+      .top a {
+        color: #ddfbe9;
+      }
+
+      .deck {
+        display: grid;
+        gap: 0.9rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0.9rem;
+      }
+
+      .slide {
+        min-height: 88vh;
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 24px;
+        background:
+          linear-gradient(160deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06)),
+          linear-gradient(165deg, rgba(12, 46, 34, 0.9), rgba(16, 63, 47, 0.9));
+        box-shadow: 0 24px 68px rgba(0,0,0,0.32);
+        padding: 1.3rem 1.4rem;
+        display: grid;
+        align-content: start;
+        gap: 0.8rem;
+        scroll-margin-top: 64px;
+      }
+
+      .kicker {
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: #b8f0d3;
+        font-size: 0.72rem;
+        font-weight: 700;
+      }
+
+      h1, h2, h3 { margin: 0; font-family: "Sora", sans-serif; }
+      h1 { font-size: clamp(2rem, 4vw, 3.8rem); line-height: 1.02; }
+      h2 { font-size: clamp(1.4rem, 2.4vw, 2.4rem); }
+      p { margin: 0; line-height: 1.55; color: rgba(239,253,245,0.95); }
+
+      .grid2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+      }
+
+      .card {
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 14px;
+        background: rgba(0,0,0,0.18);
+        padding: 0.72rem;
+      }
+
+      .metric {
+        border: 1px solid rgba(255,255,255,0.22);
+        border-radius: 14px;
+        padding: 0.7rem;
+        background: rgba(3, 20, 14, 0.24);
+      }
+
+      .metric span {
+        display: block;
+        font-size: 0.75rem;
+        color: #b8f0d3;
+        font-weight: 700;
+      }
+
+      .metric strong {
+        display: block;
+        margin-top: 0.14rem;
+        font-size: clamp(1.1rem, 2.4vw, 1.8rem);
+      }
+
+      .accent {
+        color: #ffd9b2;
+      }
+
+      .criteria {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 0.6rem;
+      }
+
+      .criteria .card {
+        min-height: 110px;
+      }
+
+      .criteria h3 {
+        font-size: 0.88rem;
+      }
+
+      img {
+        width: 100%;
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.2);
+        background: #fff;
+      }
+
+      ul, ol {
+        margin: 0;
+        padding-left: 1.1rem;
+        display: grid;
+        gap: 0.4rem;
+      }
+
+      li { line-height: 1.45; }
+
+      .badge {
+        display: inline-block;
+        padding: 0.26rem 0.56rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.28);
+        background: rgba(0,0,0,0.2);
+        font-size: 0.74rem;
+        font-weight: 700;
+      }
+
+      .footer {
+        text-align: center;
+        color: #c5ebd8;
+        font-size: 0.86rem;
+        padding: 0.2rem 0 1rem;
+      }
+
+      @media (max-width: 980px) {
+        .grid2 { grid-template-columns: 1fr; }
+        .criteria { grid-template-columns: 1fr; }
+        .slide { min-height: auto; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="top">
+      <strong>BioPath | 10-min Pitch Deck</strong>
+      <span>Keys: <code>PgDown/PgUp</code> or scroll</span>
+      <a href="./">Back to Pitch Studio</a>
+    </header>
+
+    <main class="deck" id="deckRoot">
+      <section class="slide" id="s1">
+        <p class="kicker">Slide 1 · Title</p>
+        <h1>BioPath: from farm map to measurable pest-control impact.</h1>
+        <p>Decision-support software for trap placement optimisation using stochastic movement modelling + Monte Carlo validation.</p>
+        <div>
+          <span class="badge">Cambridgeshire synthetic demo</span>
+          <span class="badge">Research-backed</span>
+          <span class="badge">Pitch-ready evidence</span>
+        </div>
+      </section>
+
+      <section class="slide" id="s2">
+        <p class="kicker">Slide 2 · Problem</p>
+        <h2>Manual trap placement is hard to standardise and easy to underperform.</h2>
+        <div class="grid2">
+          <article class="card">
+            <h3>Current pain</h3>
+            <ul>
+              <li>Blind spots in complex layouts.</li>
+              <li>Inconsistent outcomes across operators.</li>
+              <li>No reproducible optimisation logic.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Business consequence</h3>
+            <ul>
+              <li>Higher labour for repeated re-positioning.</li>
+              <li>Uncertain capture performance.</li>
+              <li>Difficult auditability for IPM workflows.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="slide" id="s3">
+        <p class="kicker">Slide 3 · Solution</p>
+        <h2>Input a map, output executable trap coordinates and quantified uplift.</h2>
+        <div class="grid2">
+          <article class="card">
+            <h3>Pipeline</h3>
+            <ol>
+              <li>Map parsing (grid / graph representation)</li>
+              <li>Optimisation for robust capture objective</li>
+              <li>Monte Carlo benchmark versus random baseline</li>
+              <li>Actionable coordinates + report + visuals</li>
+            </ol>
+          </article>
+          <article class="card">
+            <h3>What users get</h3>
+            <ul>
+              <li>Trap coordinates ready to deploy</li>
+              <li>Capture and robust metrics</li>
+              <li>Evidence for operational decisions</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="slide" id="s4">
+        <p class="kicker">Slide 4 · Cambridge Layout</p>
+        <h2>What the Cambridge-style demo farm looks like.</h2>
+        <img src="./assets/cambridge-layout.png" alt="Cambridge synthetic farm layout" />
+      </section>
+
+      <section class="slide" id="s5">
+        <p class="kicker">Slide 5 · Optimisation Output</p>
+        <h2>Optimised trap overlay and distance heatmap.</h2>
+        <img src="./assets/cambridge-heatmap.png" alt="Heatmap with optimized trap locations" />
+      </section>
+
+      <section class="slide" id="s6">
+        <p class="kicker">Slide 6 · Proof</p>
+        <h2>One recent benchmark (same trap budget) shows strong uplift.</h2>
+        <div class="grid2">
+          <div class="metric"><span>Robust Score (Optimised)</span><strong>0.5167</strong></div>
+          <div class="metric"><span>Random Baseline Mean</span><strong>0.2933</strong></div>
+          <div class="metric"><span>Absolute Uplift</span><strong class="accent">+0.2233</strong></div>
+          <div class="metric"><span>Relative Uplift</span><strong class="accent">+76.1%</strong></div>
+        </div>
+      </section>
+
+      <section class="slide" id="s7">
+        <p class="kicker">Slide 7 · Market + Customer</p>
+        <h2>Initial buyers: farms and pest-control operators.</h2>
+        <div class="grid2">
+          <article class="card">
+            <h3>Why now</h3>
+            <ul>
+              <li>Need for lower-chemical, evidence-based workflows.</li>
+              <li>Operational pressure to improve consistency.</li>
+              <li>Demand for auditable, standardisable process.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Why this approach</h3>
+            <ul>
+              <li>Pure software: low deployment friction.</li>
+              <li>Works with existing trap hardware.</li>
+              <li>Research-grade modelling translated to operations.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="slide" id="s8">
+        <p class="kicker">Slide 8 · Business Model + Finance</p>
+        <h2>Pilot-first model with conservative, realistic financial assumptions.</h2>
+        <div class="grid2">
+          <article class="card">
+            <h3>Commercial path</h3>
+            <ol>
+              <li>8-week paid pilot</li>
+              <li>Evidence pack for ROI and consistency</li>
+              <li>Conversion to subscription support</li>
+            </ol>
+          </article>
+          <article class="card">
+            <h3>Finance framing</h3>
+            <ul>
+              <li>Low CAPEX requirement for customers</li>
+              <li>Software-led margins if pilots convert</li>
+              <li>Budget ask tied to measurable validation milestones</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="slide" id="s9">
+        <p class="kicker">Slide 9 · Five Judging Criteria Coverage</p>
+        <h2>Deck is explicitly structured around the official marking rubric.</h2>
+        <div class="criteria">
+          <article class="card"><h3>1. Clarity</h3><p>Problem → solution → proof in first 3 slides.</p></article>
+          <article class="card"><h3>2. Market</h3><p>Specific customer segments and pain points.</p></article>
+          <article class="card"><h3>3. Model</h3><p>Pilot-to-subscription logic with fit to users.</p></article>
+          <article class="card"><h3>4. Logic/Delivery</h3><p>Clean narrative flow and strong visuals.</p></article>
+          <article class="card"><h3>5. Finance</h3><p>Conservative assumptions and milestone-based ask.</p></article>
+        </div>
+      </section>
+
+      <section class="slide" id="s10">
+        <p class="kicker">Slide 10 · Ask</p>
+        <h2>Ask: help us run the next evidence cycle fast.</h2>
+        <div class="grid2">
+          <article class="card">
+            <h3>We ask for</h3>
+            <ul>
+              <li>2 pilot introductions</li>
+              <li>small PoC budget</li>
+              <li>practical data access for an 8-week trial</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>What you get</h3>
+            <ul>
+              <li>Measured uplift report per site</li>
+              <li>repeatable decision workflow</li>
+              <li>clear go/no-go for scale-up</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <p class="footer">BioPath · University of Bristol · Cambridge-style synthetic demonstration</p>
+
+    <script>
+      const slides = [...document.querySelectorAll('.slide')];
+      const next = (dir) => {
+        const pos = window.scrollY + 10;
+        let idx = slides.findIndex((el) => el.offsetTop <= pos && el.offsetTop + el.offsetHeight > pos);
+        if (idx < 0) idx = 0;
+        idx = Math.max(0, Math.min(slides.length - 1, idx + dir));
+        slides[idx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      };
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'PageDown' || e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          next(1);
+        }
+        if (e.key === 'PageUp' || e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          next(-1);
+        }
+      });
+    </script>
+  </body>
+</html>

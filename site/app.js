@@ -103,6 +103,17 @@ function formatUtc(value) {
   return `${date.toLocaleTimeString([], { hour12: false })} UTC`;
 }
 
+function resolveArtifactPath(pathValue) {
+  if (!pathValue) return "";
+  const raw = String(pathValue);
+  if (/^https?:\/\//i.test(raw)) return raw;
+  if (raw.startsWith("./") || raw.startsWith("../")) return raw;
+  if (raw.startsWith("runs/")) return `./${raw}`;
+  const idx = raw.lastIndexOf("/runs/");
+  if (idx >= 0) return `.${raw.slice(idx)}`;
+  return raw;
+}
+
 function showToast(message) {
   const el = $("toast");
   el.textContent = message;
@@ -409,13 +420,65 @@ function renderProof(result, benchmark = null) {
   $("benchmarkState").textContent = benchmark ? "Benchmark complete" : "No benchmark yet";
 
   const link = $("summaryLink");
-  if (result?.artifacts?.summary) {
-    link.href = result.artifacts.summary;
+  const summaryPath = resolveArtifactPath(result?.artifacts?.summary);
+  if (summaryPath) {
+    link.href = summaryPath;
     link.textContent = "Open run summary";
   } else {
     link.href = "#";
     link.textContent = "Summary not available";
   }
+
+  const preview = $("cambridgeHeatmapPreview");
+  if (preview) {
+    const heatmapPath = resolveArtifactPath(result?.artifacts?.heatmap);
+    if (heatmapPath) {
+      preview.src = `${heatmapPath}?ts=${Date.now()}`;
+    }
+  }
+
+  updateJourneyOutcome(result, benchmark);
+}
+
+function updateJourneyOutcome(result, benchmark = null) {
+  const runId = result?.run_id || "n/a";
+  const trapCount = result?.traps?.length;
+  const cp = typeof result?.capture_probability === "number"
+    ? `${(result.capture_probability * 100).toFixed(1)}%`
+    : "n/a";
+  const robust = typeof result?.robust_score === "number"
+    ? `${(result.robust_score * 100).toFixed(1)}%`
+    : "n/a";
+
+  const uplift = benchmark && typeof benchmark.uplift_vs_random_mean === "number"
+    ? benchmark.uplift_vs_random_mean
+    : null;
+  const baseline = benchmark && benchmark.baseline && typeof benchmark.baseline.mean === "number"
+    ? benchmark.baseline.mean
+    : null;
+
+  const upliftLabel = uplift === null
+    ? "Run benchmark to compute uplift"
+    : baseline && baseline > 0
+      ? `+${((uplift / baseline) * 100).toFixed(1)}% vs random`
+      : `+${fmt(uplift, 3)} (absolute)`;
+
+  $("journeyRunId").textContent = runId;
+  $("journeyTraps").textContent = typeof trapCount === "number" ? `${trapCount} coordinates` : "n/a";
+  $("journeyCapture").textContent = cp;
+  $("journeyRobust").textContent = robust;
+  $("journeyUplift").textContent = upliftLabel;
+
+  let outcome = "Connect API and run solve to generate the first executable trap plan.";
+  if (result?.traps?.length) {
+    outcome = "Coordinates are generated. Next step: run benchmark to quantify uplift against random placement.";
+  }
+  if (uplift !== null) {
+    outcome = uplift > 0
+      ? "BioPath is outperforming random placement with the same trap budget."
+      : "Current run is not yet above random baseline. Tune map parameters and rerun benchmark.";
+  }
+  $("journeyOutcome").textContent = outcome;
 }
 
 function setCompareBox(text, loading = false) {
@@ -791,6 +854,7 @@ function bindEvents() {
 async function setup() {
   $("mapJson").value = pretty(DEFAULT_MAP);
   $("proofMetrics").innerHTML = '<article class="metric metric--wide"><span class="metric-label">Status</span><strong class="metric-value">Waiting for first run...</strong></article>';
+  updateJourneyOutcome(null, null);
 
   const queryApi = normalizeApiBase(params.get("api") || "");
   if (queryApi) {

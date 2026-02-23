@@ -24,6 +24,7 @@
         <p class="brand-title">Pitch Studio</p>
       </div>
       <div class="topbar-links">
+        <a class="text-link" href="./pitch-deck.html" target="_blank" rel="noreferrer">Online Deck</a>
         <a class="text-link" href="./quickstart-onepager.html" target="_blank" rel="noreferrer">One-page Guide</a>
       </div>
     </header>
@@ -47,6 +48,7 @@
           <button id="startDemoBtn" class="btn accent">Start 2-min Demo</button>
           <button id="pitchModeBtn" class="btn">Open Pitch Mode</button>
           <button id="helpBtn" class="btn ghost">Guided Tour</button>
+          <a class="btn ghost" href="./pitch-deck.html" target="_blank" rel="noreferrer">Open Online Deck</a>
           <a
             class="btn ghost"
             href="./quickstart-onepager.html"
@@ -96,6 +98,53 @@
     </section>
 
     <main class="layout">
+      <section class="panel journey-panel" id="journeyPanel">
+        <div class="panel-head">
+          <h2>User Flow and Effect</h2>
+          <p>Show judges exactly what users do, then show exactly what changes after one run.</p>
+        </div>
+
+        <div class="journey-grid">
+          <article class="journey-card">
+            <h3>How A User Uses BioPath</h3>
+            <ol class="journey-steps">
+              <li><strong>Connect API</strong> with Auto Connect or paste URL.</li>
+              <li><strong>Load farm map</strong> (default Cambridge synthetic layout).</li>
+              <li><strong>Run Solve</strong> to get trap coordinates.</li>
+              <li><strong>Run Benchmark</strong> to compare against random baseline.</li>
+              <li><strong>Quote proof</strong> in pitch mode using ready-made lines.</li>
+            </ol>
+          </article>
+
+          <article class="journey-card effect-card">
+            <h3>What Effect Users Get</h3>
+            <div class="effect-grid">
+              <div class="effect-metric">
+                <span>Latest Run</span>
+                <strong id="journeyRunId">n/a</strong>
+              </div>
+              <div class="effect-metric">
+                <span>Trap Plan</span>
+                <strong id="journeyTraps">n/a</strong>
+              </div>
+              <div class="effect-metric">
+                <span>Capture Probability</span>
+                <strong id="journeyCapture">n/a</strong>
+              </div>
+              <div class="effect-metric">
+                <span>Robust Score</span>
+                <strong id="journeyRobust">n/a</strong>
+              </div>
+              <div class="effect-metric effect-metric-wide">
+                <span>Uplift vs Random</span>
+                <strong id="journeyUplift">Run benchmark to compute uplift</strong>
+              </div>
+            </div>
+            <p id="journeyOutcome" class="journey-outcome">Connect API and run solve to generate the first executable trap plan.</p>
+          </article>
+        </div>
+      </section>
+
       <section class="panel live-panel" id="livePanel">
         <div class="panel-head">
           <h2>Live Operations</h2>
@@ -149,6 +198,16 @@
             </div>
             <textarea id="mapJson" spellcheck="false" aria-label="Map JSON"></textarea>
             <p id="mapError" class="field-error hidden"></p>
+            <div class="map-visuals">
+              <figure>
+                <img src="./assets/cambridge-layout.png" alt="Cambridge synthetic farm layout" loading="lazy" />
+                <figcaption>Cambridge demo layout (synthetic)</figcaption>
+              </figure>
+              <figure>
+                <img id="cambridgeHeatmapPreview" src="./assets/cambridge-heatmap.png" alt="Optimized heatmap and trap placement" loading="lazy" />
+                <figcaption>Optimized heatmap + trap overlay</figcaption>
+              </figure>
+            </div>
           </article>
 
           <article class="subpanel run-panel">

@@ -12,6 +12,7 @@ python3 - "$ROOT" <<'PY'
 import json
 import sys
 from pathlib import Path
+import shutil
 root = Path(sys.argv[1])
 rows = []
 for p in sorted(root.glob("runs/*/metrics.json"), reverse=True):
@@ -29,4 +30,19 @@ for p in sorted(root.glob("runs/*/metrics.json"), reverse=True):
     if len(rows) >= 120:
         break
 (root / "site" / "data" / "runs.json").write_text(json.dumps({"runs": rows}, indent=2))
+
+latest = root / "runs" / "latest.json"
+if latest.exists():
+    try:
+        latest_data = json.loads(latest.read_text())
+    except Exception:
+        latest_data = {}
+    heatmap = latest_data.get("artifacts", {}).get("heatmap")
+    if heatmap:
+        hp = Path(str(heatmap))
+        if not hp.is_absolute():
+            hp = (root / hp).resolve()
+        if hp.exists():
+            target = root / "site" / "data" / "latest-heatmap.png"
+            shutil.copyfile(hp, target)
 PY
