@@ -45,7 +45,7 @@ for q in escalations/pending/*.md; do
     fi
 
     codex_ok=0
-    if codex exec \
+    if perl -e 'alarm shift @ARGV; exec @ARGV' 180 codex exec \
       --dangerously-bypass-approvals-and-sandbox \
       -m gpt-5.3-codex \
       -c model_reasoning_effort='"xhigh"' \
@@ -56,7 +56,7 @@ for q in escalations/pending/*.md; do
 
     if [[ $codex_ok -ne 1 ]]; then
       echo "codex exec failed; fallback to OpenClaw agent for ${id}." >&2
-      openclaw agent \
+      perl -e 'alarm shift @ARGV; exec @ARGV' 240 openclaw agent \
         --json \
         --agent main \
         --thinking high \

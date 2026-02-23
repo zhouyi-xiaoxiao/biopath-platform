@@ -21,6 +21,48 @@ def run(cmd: list[str]) -> str:
     return subprocess.check_output(cmd, text=True)
 
 
+def try_send_with_dom(question: str) -> bool:
+    fn = f"""
+() => {{
+  const text = {json.dumps(question)};
+  const sendEnter = (el) => {{
+    el.dispatchEvent(new KeyboardEvent('keydown', {{ key: 'Enter', code: 'Enter', which: 13, keyCode: 13, bubbles: true }}));
+    el.dispatchEvent(new KeyboardEvent('keyup', {{ key: 'Enter', code: 'Enter', which: 13, keyCode: 13, bubbles: true }}));
+  }};
+
+  const textarea = document.querySelector('textarea');
+  if (textarea) {{
+    textarea.focus();
+    textarea.value = text;
+    textarea.dispatchEvent(new Event('input', {{ bubbles: true }}));
+    sendEnter(textarea);
+    return true;
+  }}
+
+  const editable = document.querySelector('[contenteditable=\"true\"]');
+  if (editable) {{
+    editable.focus();
+    const sel = window.getSelection();
+    if (sel && editable.firstChild) {{
+      sel.removeAllRanges();
+      const range = document.createRange();
+      range.selectNodeContents(editable);
+      range.collapse(false);
+      sel.addRange(range);
+    }}
+    document.execCommand('insertText', false, text);
+    sendEnter(editable);
+    return true;
+  }}
+
+  return false;
+}}
+""".strip()
+    result = run_json(["openclaw", "browser", "evaluate", "--fn", fn, "--json"])
+    value = result.get("result", result.get("value"))
+    return bool(value)
+
+
 def _iter_snapshot_refs(snapshot: dict):
     # Old CLI shape: {"refs": {"e1": {"role": "button", "name": "..."}}}
     refs = snapshot.get("refs") or {}
@@ -137,11 +179,40 @@ def main() -> None:
         or find_ref(snap4, contains="message chatgpt")
         or find_ref(snap4, contains="send a message")
     )
-    if not box_ref:
-        raise SystemExit("Unable to find message input box on chatgpt.com")
+    send_ref = find_ref(snap4, contains="send prompt") or find_ref(snap4, contains="send")
 
-    run(["openclaw", "browser", "type", box_ref, question, "--json"])
-    run(["openclaw", "browser", "press", "Enter", "--json"])
+    sent = False
+    if box_ref:
+        try:
+            run(["openclaw", "browser", "type", box_ref, question, "--submit", "--json"])
+            sent = True
+        except Exception:
+            try:
+                run(["openclaw", "browser", "type", box_ref, question, "--json"])
+                if send_ref:
+                    run(["openclaw", "browser", "click", send_ref, "--json"])
+                else:
+                    run(["openclaw", "browser", "press", "Enter", "--json"])
+                sent = True
+            except Exception:
+                sent = try_send_with_dom(question)
+                if not sent and send_ref:
+                    try:
+                        run(["openclaw", "browser", "click", send_ref, "--json"])
+                        sent = True
+                    except Exception:
+                        sent = False
+    else:
+        sent = try_send_with_dom(question)
+        if not sent and send_ref:
+            try:
+                run(["openclaw", "browser", "click", send_ref, "--json"])
+                sent = True
+            except Exception:
+                sent = False
+
+    if not sent:
+        raise SystemExit("Failed to send question on chatgpt.com")
 
     # Wait for generation to settle.
     for _ in range(36):
