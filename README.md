@@ -52,6 +52,25 @@ Pitch helper pages:
 - One-page printable guide: `site/quickstart-onepager.html`
 - Detailed checklist: `docs/PITCH_QUICKSTART.md`
 
+## Public Demo Link (No Render Account Needed)
+
+If your Render API is not ready, you can still get a public API URL immediately:
+
+```bash
+bash scripts/start_public_demo.sh
+```
+
+This starts local API on `127.0.0.1:8001`, creates a public HTTPS tunnel, and prints:
+
+- `API URL`
+- `Pitch URL` (GitHub Pages URL prefilled with `?api=...&tour=1`)
+
+Stop it with:
+
+```bash
+bash scripts/stop_public_demo.sh
+```
+
 ## Automation scripts
 
 ```bash

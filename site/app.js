@@ -556,7 +556,7 @@ async function runSolve({ quiet = false } = {}) {
     const result = await callApi("/api/solve", {
       method: "POST",
       body: JSON.stringify(payload),
-      timeoutMs: 30000,
+      timeoutMs: 60000,
     });
 
     state.latestResult = result;
@@ -599,7 +599,7 @@ async function runBenchmark({ quiet = false } = {}) {
     const result = await callApi("/api/benchmark", {
       method: "POST",
       body: JSON.stringify({ ...payload, baseline_samples: 40 }),
-      timeoutMs: 45000,
+      timeoutMs: 120000,
       signal: state.benchmarkController.signal,
     });
 

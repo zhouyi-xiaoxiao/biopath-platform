@@ -18,6 +18,10 @@ Finish one complete demo in 2 minutes:
 2. Serve site: `python -m http.server 8080 --directory site`
 3. Open UI: `http://127.0.0.1:8080/?api=http://127.0.0.1:8001`
 
+Alternative (public demo URL in one command):
+
+`bash scripts/start_public_demo.sh`
+
 ## 30-second startup checklist
 
 1. Click `Auto Connect`.
