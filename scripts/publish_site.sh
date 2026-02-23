@@ -8,10 +8,11 @@ if [[ -f "$ROOT/runs/latest.json" ]]; then
   cp "$ROOT/runs/latest.json" "$ROOT/site/data/latest.json"
 fi
 
-python3 - <<'PY'
+python3 - "$ROOT" <<'PY'
 import json
+import sys
 from pathlib import Path
-root = Path("/Users/zhouyixiaoxiao/Library/CloudStorage/OneDrive-UniversityofBristol/Desktop/biopath")
+root = Path(sys.argv[1])
 rows = []
 for p in sorted(root.glob("runs/*/metrics.json"), reverse=True):
     try:

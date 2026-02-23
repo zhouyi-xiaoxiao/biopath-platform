@@ -453,7 +453,7 @@ async function loadLatestWithFallback() {
     // continue to fallback
   }
 
-  const fallbackCandidates = ["./runs/latest.json", "./data/latest.json"];
+  const fallbackCandidates = ["./data/latest.json", "./runs/latest.json"];
   for (const candidate of fallbackCandidates) {
     try {
       const res = await fetch(candidate);
@@ -524,7 +524,7 @@ async function loadRunList() {
     // continue to fallback
   }
 
-  const fallbackCandidates = ["./runs/runs.json", "./data/runs.json"];
+  const fallbackCandidates = ["./data/runs.json", "./runs/runs.json"];
   for (const candidate of fallbackCandidates) {
     try {
       const res = await fetch(candidate);
@@ -812,10 +812,7 @@ async function setup() {
   await loadRunList();
 
   const forceTour = params.get("tour") === "1";
-  const hasSeenTour = localStorage.getItem(STORAGE_KEYS.tourDone) === "1";
-  if (forceTour || !hasSeenTour) {
-    openTour();
-  }
+  if (forceTour) openTour();
 }
 
 window.addEventListener("DOMContentLoaded", setup);
