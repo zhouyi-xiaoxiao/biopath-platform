@@ -3,9 +3,7 @@ import { expect, test } from "@playwright/test";
 test("pitch ui smoke: auto connect, tour, pitch mode, benchmark refresh", async ({ page }) => {
   await page.goto("/?api=http://127.0.0.1:8001&tour=1");
 
-  await expect(page.locator("h1")).toContainText(
-    "Move from manual trap placement to benchmark-backed decisions"
-  );
+  await expect(page.locator("h1")).toContainText("trap placement");
 
   await expect(page.locator("#tourBackdrop")).toBeVisible();
   await page.click("#tourSkip");

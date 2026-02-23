@@ -3,29 +3,44 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BioPath Pitch Console</title>
+    <title>BioPath Pitch Studio</title>
     <link rel="stylesheet" href="./app.css" />
   </head>
   <body>
+    <div class="bg-layer bg-layer-a" aria-hidden="true"></div>
+    <div class="bg-layer bg-layer-b" aria-hidden="true"></div>
+
     <div id="connectionBanner" class="connection-banner hidden" role="status" aria-live="polite">
       <strong id="bannerTitle">API not connected</strong>
       <span id="bannerMessage">Paste your API URL and click Auto Connect.</span>
       <button id="fixApiBtn" class="btn ghost">Fix in 1 step</button>
     </div>
 
-    <header class="stage-header">
+    <header class="app-topbar">
+      <div class="brand-lockup">
+        <p class="brand-kicker">BioPath</p>
+        <p class="brand-title">Pitch Studio</p>
+      </div>
+      <div class="topbar-links">
+        <a class="text-link" href="./quickstart-onepager.html" target="_blank" rel="noreferrer">One-page Guide</a>
+      </div>
+    </header>
+
+    <section class="stage-header">
       <div class="stage-copy">
-        <p class="eyebrow">BioPath Pitch Console</p>
-        <h1>Move from manual trap placement to benchmark-backed decisions.</h1>
+        <p class="eyebrow">Decision Intelligence for Farm Pest Control</p>
+        <h1>Turn trap placement into a measurable system, not guesswork.</h1>
         <p>
-          Built for mixed audiences: judges, pilot farms, and field operators. Run live optimization,
-          show measurable uplift, then switch to pitch mode instantly.
+          Run live optimization, show baseline uplift, and switch into a clean pitch narrative in one click.
+          Built for judges, pilot farms, and service operators.
         </p>
+
         <div class="hero-tags">
           <span>Cambridge Demo Layout</span>
-          <span>CREGS + ECEF Storyline</span>
-          <span>Real-time API First</span>
+          <span>Monte Carlo Validation</span>
+          <span>CREGS + ECEF Narrative Ready</span>
         </div>
+
         <div class="hero-actions">
           <button id="startDemoBtn" class="btn accent">Start 2-min Demo</button>
           <button id="pitchModeBtn" class="btn">Open Pitch Mode</button>
@@ -43,37 +58,43 @@
       </div>
 
       <aside class="status-card" aria-label="Connection status">
-        <h2>Connection</h2>
+        <h2>Live Connection</h2>
         <p id="connectionPill" class="status-pill checking">Checking...</p>
         <p id="apiLastChecked" class="muted">No health check yet.</p>
+        <div class="status-hint">
+          Real-time API is the default demo path. If unavailable, fallback data is shown.
+        </div>
       </aside>
-    </header>
+    </section>
 
     <main class="layout">
       <section class="panel live-panel" id="livePanel">
         <div class="panel-head">
-          <h2>Live Operations Panel</h2>
-          <p>Configure API, adjust map/params, and run solve or benchmark.</p>
+          <h2>Live Operations</h2>
+          <p>Configure API, tune parameters, and run solve/benchmark from one workspace.</p>
         </div>
 
-        <div class="panel-grid">
-          <article class="subpanel" id="apiSetupPanel">
+        <div class="ops-grid">
+          <article class="subpanel api-panel" id="apiSetupPanel">
             <h3>API Setup</h3>
             <label for="apiBase">API Base URL</label>
             <div class="row">
               <input id="apiBase" type="text" placeholder="https://your-render-service.onrender.com" />
+            </div>
+            <div class="row actions-row">
               <button id="saveApi" class="btn">Save</button>
               <button id="autoConnect" class="btn ghost">Auto Connect</button>
               <button id="healthCheck" class="btn ghost">Health Check</button>
             </div>
-            <p id="apiStatus" class="muted">Auto-detection checks: URL query → saved value → config.json.</p>
+            <p id="apiStatus" class="muted">Auto-detection order: query param -> saved value -> config.json.</p>
           </article>
 
-          <article class="subpanel">
-            <h3>Parameters</h3>
-            <div class="row">
+          <article class="subpanel params-panel">
+            <h3>Solver Parameters</h3>
+            <div class="field-grid">
               <label for="kInput">Traps (k)</label>
               <input id="kInput" type="number" min="1" value="6" />
+
               <label for="objective">Objective</label>
               <select id="objective">
                 <option value="robust_capture">robust_capture</option>
@@ -81,33 +102,37 @@
                 <option value="mean">mean</option>
                 <option value="weighted_mean">weighted_mean</option>
               </select>
-            </div>
-            <div class="row">
+
               <label for="mcRuns">MC Runs</label>
               <input id="mcRuns" type="number" min="20" value="160" />
+
               <label for="horizon">Time Horizon</label>
               <input id="horizon" type="number" min="5" value="48" />
+
               <label for="seed">Seed</label>
               <input id="seed" type="number" value="7" />
             </div>
           </article>
 
           <article class="subpanel map-panel">
-            <h3>Map Input</h3>
+            <div class="subpanel-head">
+              <h3>Map Input</h3>
+              <p>Default map is a publicly inspired Cambridge-region synthetic layout.</p>
+            </div>
             <textarea id="mapJson" spellcheck="false" aria-label="Map JSON"></textarea>
             <p id="mapError" class="field-error hidden"></p>
           </article>
 
-          <article class="subpanel">
+          <article class="subpanel run-panel">
             <h3>Run Controls</h3>
-            <div class="row">
+            <div class="row actions-row">
               <button id="runSolve" class="btn">Run Solve</button>
               <button id="runBenchmark" class="btn">Run Benchmark</button>
               <button id="cancelBenchmark" class="btn ghost hidden">Cancel Benchmark</button>
               <button id="retryBenchmark" class="btn ghost hidden">Retry with lower MC</button>
               <button id="loadLatest" class="btn ghost">Load Latest</button>
             </div>
-            <p id="runHint" class="muted">Tip: Start with Solve, then Benchmark for uplift proof.</p>
+            <p id="runHint" class="muted">Tip: Solve first, then benchmark for proof-grade uplift.</p>
           </article>
         </div>
       </section>
@@ -115,7 +140,7 @@
       <section class="panel proof-panel" id="proofPanel">
         <div class="panel-head">
           <h2>Proof Panel</h2>
-          <p>Single source of truth for the numbers you quote in pitch.</p>
+          <p>The exact numbers you should quote during pitch.</p>
         </div>
 
         <div id="proofMetrics" class="metric-grid"></div>
@@ -130,18 +155,10 @@
         <pre id="compareBox" class="console">No benchmark yet.</pre>
       </section>
 
-      <section class="panel iterations-panel" id="iterationsCard">
-        <div class="panel-head">
-          <h2>Iterations History</h2>
-          <p>Click any run to load details.</p>
-        </div>
-        <ul id="runList" class="runs"></ul>
-      </section>
-
       <section class="panel pitch-panel" id="pitchCard">
         <div class="panel-head">
-          <h2>Pitch Narrative Panel</h2>
-          <p>Use this script block as your speaking backbone.</p>
+          <h2>Pitch Narrative</h2>
+          <p>Speak in this order: Problem -> Solution -> Proof -> Ask.</p>
         </div>
 
         <article class="narrative-block">
@@ -167,6 +184,14 @@
           <p id="askLine">We ask for 2 pilot introductions, a small PoC budget, and practical data access for an 8-week farm trial.</p>
           <button class="copy-btn" data-copy="We ask for 2 pilot introductions, a small PoC budget, and practical data access for an 8-week farm trial.">Copy ask</button>
         </article>
+      </section>
+
+      <section class="panel iterations-panel" id="iterationsCard">
+        <div class="panel-head">
+          <h2>Iterations</h2>
+          <p>Open any run to quickly reference older evidence.</p>
+        </div>
+        <ul id="runList" class="runs"></ul>
       </section>
     </main>
 
