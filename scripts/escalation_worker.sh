@@ -44,12 +44,25 @@ for q in escalations/pending/*.md; do
       continue
     fi
 
-    codex exec \
+    codex_ok=0
+    if codex exec \
       --dangerously-bypass-approvals-and-sandbox \
       -m gpt-5.3-codex \
       -c model_reasoning_effort='"xhigh"' \
       -C "$ROOT" \
-      "Read ${a}. Implement concrete code changes in this repo to address the escalation. Run tests. Write a concise execution report to ${action}." || true
+      "Read ${a}. Implement concrete code changes in this repo to address the escalation. Run tests. Write a concise execution report to ${action}."; then
+      codex_ok=1
+    fi
+
+    if [[ $codex_ok -ne 1 ]]; then
+      echo "codex exec failed; fallback to OpenClaw agent for ${id}." >&2
+      openclaw agent \
+        --json \
+        --agent main \
+        --thinking high \
+        --timeout 1800 \
+        --message "Open ${ROOT} and read ${a}. Implement concrete code changes in this repo to address the escalation. Run tests. Write a concise execution report to ${action}." || true
+    fi
 
     python3 -m pytest -q >> "$action" 2>&1 || true
     mv "$q" "${q}.done"
