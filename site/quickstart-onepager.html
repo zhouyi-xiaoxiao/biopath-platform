@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BioPath One-page Demo Guide</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Manrope:wght@400;600;700;800&family=Sora:wght@600;700;800&display=swap");
+      :root {
+        --ink: #14271f;
+        --muted: #4f675e;
+        --line: #d7e3db;
+        --bg: #f6fbf8;
+        --brand: #2c855d;
+        --accent: #cc7b2a;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        font-family: "Manrope", "Segoe UI", sans-serif;
+        color: var(--ink);
+        background: radial-gradient(500px 220px at 0% 0%, #e5f4ec, transparent 60%), var(--bg);
+      }
+      .page {
+        max-width: 940px;
+        margin: 0 auto;
+        padding: 1.1rem;
+      }
+      .top {
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: #ffffff;
+        padding: 1rem;
+      }
+      h1 {
+        margin: 0;
+        font-family: "Sora", "Manrope", sans-serif;
+        font-size: 1.45rem;
+      }
+      .subtitle {
+        margin: 0.45rem 0 0;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+      .actions {
+        margin-top: 0.85rem;
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+      button, a {
+        text-decoration: none;
+        border: 0;
+        border-radius: 10px;
+        padding: 0.55rem 0.76rem;
+        font: inherit;
+        font-weight: 800;
+        cursor: pointer;
+      }
+      .primary {
+        color: #fff;
+        background: linear-gradient(120deg, var(--brand), #1f5f41);
+      }
+      .ghost {
+        color: var(--ink);
+        border: 1px solid var(--line);
+        background: #fff;
+      }
+      .grid {
+        margin-top: 0.8rem;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.65rem;
+      }
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 0.78rem;
+        background: #fff;
+      }
+      .card h2 {
+        margin: 0;
+        font-family: "Sora", "Manrope", sans-serif;
+        font-size: 0.97rem;
+      }
+      .card p,
+      .card li {
+        font-size: 0.86rem;
+        line-height: 1.48;
+      }
+      .card ul,
+      .card ol {
+        margin: 0.5rem 0 0;
+        padding-left: 1rem;
+      }
+      .script {
+        margin-top: 0.5rem;
+        border: 1px dashed #ccdccf;
+        border-radius: 10px;
+        background: #f8fcf9;
+        padding: 0.55rem;
+      }
+      .script p {
+        margin: 0.3rem 0;
+      }
+      code {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.8rem;
+        background: #edf5f0;
+        padding: 0.05rem 0.28rem;
+        border-radius: 6px;
+      }
+      .ask {
+        border-left: 4px solid var(--accent);
+        padding-left: 0.5rem;
+      }
+      .footer {
+        margin-top: 0.7rem;
+        color: var(--muted);
+        font-size: 0.79rem;
+      }
+      @media print {
+        .actions { display: none; }
+        body { background: #fff; }
+        .page { padding: 0; }
+      }
+      @media (max-width: 760px) {
+        .grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="top">
+        <h1>BioPath Pitch One-page Guide</h1>
+        <p class="subtitle">Goal: finish one full demo in 2 minutes and deliver a clean Problem → Solution → Proof → Ask story.</p>
+        <div class="actions">
+          <button class="primary" onclick="window.print()">Print / Save PDF</button>
+          <a class="ghost" href="./index.html">Back to Pitch UI</a>
+        </div>
+      </section>
+
+      <section class="grid">
+        <article class="card">
+          <h2>30-second startup</h2>
+          <ol>
+            <li>Open BioPath UI and click <code>Auto Connect</code>.</li>
+            <li>If needed, paste API URL and click <code>Health Check</code>.</li>
+            <li>Keep default Cambridge demo map.</li>
+            <li>Check top status is <code>Connected</code>.</li>
+          </ol>
+        </article>
+
+        <article class="card">
+          <h2>2-minute demo script</h2>
+          <ol>
+            <li>Click <code>Run Solve</code> (trap coordinates generated).</li>
+            <li>Click <code>Run Benchmark</code> (proof versus random baseline).</li>
+            <li>Read out <code>Capture Probability</code> and <code>Uplift</code>.</li>
+            <li>Click <code>Open Pitch Mode</code>.</li>
+            <li>Use copy buttons for Problem / Solution / Proof / Ask.</li>
+          </ol>
+        </article>
+
+        <article class="card">
+          <h2>Failure recovery (现场救场)</h2>
+          <ul>
+            <li><strong>API fail:</strong> click <code>Fix in 1 step</code>, then <code>Health Check</code>.</li>
+            <li><strong>Map JSON error:</strong> read line/column hint under map and fix that line only.</li>
+            <li><strong>Benchmark timeout:</strong> click <code>Retry with lower MC</code>.</li>
+            <li><strong>No runs shown:</strong> click <code>Run first benchmark now</code>.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>60-second pitch lines</h2>
+          <div class="script">
+            <p><strong>Problem:</strong> Manual trap placement is inconsistent and misses bottlenecks in complex farm layouts.</p>
+            <p><strong>Solution:</strong> BioPath turns a simple map into optimized trap coordinates and a reproducible plan.</p>
+            <p><strong>Proof:</strong> We benchmark against random baseline with Monte Carlo validation and robust capture metrics.</p>
+            <p class="ask"><strong>Ask:</strong> 2 pilot introductions, small PoC budget, and practical data access for an 8-week farm trial.</p>
+          </div>
+        </article>
+      </section>
+
+      <p class="footer">Reference doc: <code>/docs/PITCH_QUICKSTART.md</code></p>
+    </main>
+  </body>
+</html>

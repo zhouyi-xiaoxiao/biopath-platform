@@ -3,91 +3,193 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BioPath Platform</title>
+    <title>BioPath Pitch Console</title>
     <link rel="stylesheet" href="./app.css" />
   </head>
   <body>
-    <header class="hero">
-      <div class="hero-copy">
-        <p class="eyebrow">BioPath Operations Console</p>
-        <h1>Farm Trap Optimization, Ready for Demo and Pitch</h1>
-        <p>Map in, optimized trap placement out, with benchmark-backed impact and repeatable iteration.</p>
+    <div id="connectionBanner" class="connection-banner hidden" role="status" aria-live="polite">
+      <strong id="bannerTitle">API not connected</strong>
+      <span id="bannerMessage">Paste your API URL and click Auto Connect.</span>
+      <button id="fixApiBtn" class="btn ghost">Fix in 1 step</button>
+    </div>
+
+    <header class="stage-header">
+      <div class="stage-copy">
+        <p class="eyebrow">BioPath Pitch Console</p>
+        <h1>Move from manual trap placement to benchmark-backed decisions.</h1>
+        <p>
+          Built for mixed audiences: judges, pilot farms, and field operators. Run live optimization,
+          show measurable uplift, then switch to pitch mode instantly.
+        </p>
         <div class="hero-tags">
-          <span>Cambridge Demo Map</span>
-          <span>CREGS + ECEF Ready</span>
-          <span>Auto Benchmark Loop</span>
+          <span>Cambridge Demo Layout</span>
+          <span>CREGS + ECEF Storyline</span>
+          <span>Real-time API First</span>
+        </div>
+        <div class="hero-actions">
+          <button id="startDemoBtn" class="btn accent">Start 2-min Demo</button>
+          <button id="pitchModeBtn" class="btn">Open Pitch Mode</button>
+          <button id="helpBtn" class="btn ghost">Guided Tour</button>
+          <a
+            class="btn ghost"
+            href="./quickstart-onepager.html"
+            target="_blank"
+            rel="noreferrer"
+            download="BioPath-One-page-Guide.html"
+          >
+            Download One-page Guide
+          </a>
         </div>
       </div>
-      <button id="pitchModeBtn" class="btn">Pitch Mode</button>
+
+      <aside class="status-card" aria-label="Connection status">
+        <h2>Connection</h2>
+        <p id="connectionPill" class="status-pill checking">Checking...</p>
+        <p id="apiLastChecked" class="muted">No health check yet.</p>
+      </aside>
     </header>
 
-    <section class="card config-card">
-      <h2>API Config</h2>
-      <div class="row">
-        <label for="apiBase">API Base URL</label>
-        <input id="apiBase" type="text" placeholder="https://your-render-service.onrender.com" />
-        <button id="saveApi" class="btn">Save</button>
-        <button id="healthCheck" class="btn ghost">Health</button>
-      </div>
-      <p id="apiStatus" class="muted">No API checked yet.</p>
-    </section>
+    <main class="layout">
+      <section class="panel live-panel" id="livePanel">
+        <div class="panel-head">
+          <h2>Live Operations Panel</h2>
+          <p>Configure API, adjust map/params, and run solve or benchmark.</p>
+        </div>
 
-    <main class="grid">
-      <section class="card live-demo">
-        <h2>Live Demo</h2>
-        <div class="row">
-          <label for="kInput">Traps (k)</label>
-          <input id="kInput" type="number" min="1" value="5" />
-          <label for="objective">Objective</label>
-          <select id="objective">
-            <option value="capture_prob">capture_prob</option>
-            <option value="robust_capture">robust_capture</option>
-            <option value="mean">mean</option>
-            <option value="weighted_mean">weighted_mean</option>
-          </select>
-        </div>
-        <div class="row">
-          <label for="mcRuns">MC Runs</label>
-          <input id="mcRuns" type="number" min="20" value="120" />
-          <label for="horizon">Time Horizon</label>
-          <input id="horizon" type="number" min="5" value="40" />
-          <label for="seed">Seed</label>
-          <input id="seed" type="number" value="7" />
-        </div>
-        <textarea id="mapJson" spellcheck="false"></textarea>
-        <div class="row">
-          <button id="runSolve" class="btn">Run Solve</button>
-          <button id="runBenchmark" class="btn">Run Benchmark</button>
-          <button id="loadLatest" class="btn ghost">Load Latest</button>
+        <div class="panel-grid">
+          <article class="subpanel" id="apiSetupPanel">
+            <h3>API Setup</h3>
+            <label for="apiBase">API Base URL</label>
+            <div class="row">
+              <input id="apiBase" type="text" placeholder="https://your-render-service.onrender.com" />
+              <button id="saveApi" class="btn">Save</button>
+              <button id="autoConnect" class="btn ghost">Auto Connect</button>
+              <button id="healthCheck" class="btn ghost">Health Check</button>
+            </div>
+            <p id="apiStatus" class="muted">Auto-detection checks: URL query → saved value → config.json.</p>
+          </article>
+
+          <article class="subpanel">
+            <h3>Parameters</h3>
+            <div class="row">
+              <label for="kInput">Traps (k)</label>
+              <input id="kInput" type="number" min="1" value="6" />
+              <label for="objective">Objective</label>
+              <select id="objective">
+                <option value="robust_capture">robust_capture</option>
+                <option value="capture_prob">capture_prob</option>
+                <option value="mean">mean</option>
+                <option value="weighted_mean">weighted_mean</option>
+              </select>
+            </div>
+            <div class="row">
+              <label for="mcRuns">MC Runs</label>
+              <input id="mcRuns" type="number" min="20" value="160" />
+              <label for="horizon">Time Horizon</label>
+              <input id="horizon" type="number" min="5" value="48" />
+              <label for="seed">Seed</label>
+              <input id="seed" type="number" value="7" />
+            </div>
+          </article>
+
+          <article class="subpanel map-panel">
+            <h3>Map Input</h3>
+            <textarea id="mapJson" spellcheck="false" aria-label="Map JSON"></textarea>
+            <p id="mapError" class="field-error hidden"></p>
+          </article>
+
+          <article class="subpanel">
+            <h3>Run Controls</h3>
+            <div class="row">
+              <button id="runSolve" class="btn">Run Solve</button>
+              <button id="runBenchmark" class="btn">Run Benchmark</button>
+              <button id="cancelBenchmark" class="btn ghost hidden">Cancel Benchmark</button>
+              <button id="retryBenchmark" class="btn ghost hidden">Retry with lower MC</button>
+              <button id="loadLatest" class="btn ghost">Load Latest</button>
+            </div>
+            <p id="runHint" class="muted">Tip: Start with Solve, then Benchmark for uplift proof.</p>
+          </article>
         </div>
       </section>
 
-      <section class="card compare-card">
-        <h2>Compare</h2>
+      <section class="panel proof-panel" id="proofPanel">
+        <div class="panel-head">
+          <h2>Proof Panel</h2>
+          <p>Single source of truth for the numbers you quote in pitch.</p>
+        </div>
+
+        <div id="proofMetrics" class="metric-grid"></div>
+
+        <div class="proof-footnote">
+          <p><strong>Benchmark Uplift:</strong> <span id="upliftValue">n/a</span></p>
+          <p><strong>Random Baseline Mean:</strong> <span id="baselineValue">n/a</span></p>
+          <p><strong>Benchmark Status:</strong> <span id="benchmarkState">No benchmark yet</span></p>
+          <a id="summaryLink" href="#" target="_blank" rel="noreferrer">Summary not available</a>
+        </div>
+
         <pre id="compareBox" class="console">No benchmark yet.</pre>
       </section>
 
-      <section class="card" id="iterationsCard">
-        <h2>Iterations</h2>
+      <section class="panel iterations-panel" id="iterationsCard">
+        <div class="panel-head">
+          <h2>Iterations History</h2>
+          <p>Click any run to load details.</p>
+        </div>
         <ul id="runList" class="runs"></ul>
       </section>
 
-      <section class="card" id="resultCard">
-        <h2>Latest Result</h2>
-        <div id="metrics"></div>
-        <a id="summaryLink" href="#" target="_blank" rel="noreferrer">Summary</a>
+      <section class="panel pitch-panel" id="pitchCard">
+        <div class="panel-head">
+          <h2>Pitch Narrative Panel</h2>
+          <p>Use this script block as your speaking backbone.</p>
+        </div>
+
+        <article class="narrative-block">
+          <h3>Problem</h3>
+          <p>Manual trap placement is inconsistent, hard to standardize, and misses bottlenecks in complex farm layouts.</p>
+          <button class="copy-btn" data-copy="Manual trap placement is inconsistent, hard to standardize, and misses bottlenecks in complex farm layouts.">Copy line</button>
+        </article>
+
+        <article class="narrative-block">
+          <h3>Solution</h3>
+          <p>BioPath converts a simple map into optimized trap coordinates and a reproducible placement plan.</p>
+          <button class="copy-btn" data-copy="BioPath converts a simple map into optimized trap coordinates and a reproducible placement plan.">Copy line</button>
+        </article>
+
+        <article class="narrative-block">
+          <h3>Proof</h3>
+          <p>We benchmark against random baseline with Monte Carlo validation and report robust capture metrics per run.</p>
+          <button class="copy-btn" data-copy="We benchmark against random baseline with Monte Carlo validation and report robust capture metrics per run.">Copy line</button>
+        </article>
+
+        <article class="narrative-block ask-block">
+          <h3>Ask</h3>
+          <p id="askLine">We ask for 2 pilot introductions, a small PoC budget, and practical data access for an 8-week farm trial.</p>
+          <button class="copy-btn" data-copy="We ask for 2 pilot introductions, a small PoC budget, and practical data access for an 8-week farm trial.">Copy ask</button>
+        </article>
       </section>
     </main>
 
-    <section class="card" id="pitchCard">
-      <h2>Pitch Quick Page</h2>
-      <ol>
-        <li>Problem: manual trap placement is inconsistent and costly.</li>
-        <li>Solution: map in, optimized trap plan out with measurable uplift.</li>
-        <li>Proof: benchmark vs random baseline using repeatable runs.</li>
-        <li>Ask: pilot intros + funding path via Cambridge/CREGS/Ceres.</li>
-      </ol>
-    </section>
+    <div class="mobile-actions" aria-label="Quick actions">
+      <button id="mobileSolve" class="btn">Solve</button>
+      <button id="mobileBenchmark" class="btn">Benchmark</button>
+      <button id="mobilePitch" class="btn ghost">Pitch Mode</button>
+    </div>
+
+    <div id="tourBackdrop" class="tour-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="tourTitle">
+      <div class="tour-card">
+        <p id="tourStepBadge" class="tour-step">Step 1 / 6</p>
+        <h3 id="tourTitle">Welcome</h3>
+        <p id="tourBody">This tour will help you run a full demo in under two minutes.</p>
+        <div class="tour-actions">
+          <button id="tourBack" class="btn ghost" disabled>Back</button>
+          <button id="tourSkip" class="btn ghost">Skip</button>
+          <button id="tourNext" class="btn">Next</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
     <script src="./app.js" defer></script>
   </body>

@@ -41,6 +41,17 @@ python -m http.server 8080 --directory site
 
 Then open `http://127.0.0.1:8080`.
 
+Useful query shortcuts:
+
+- `?api=<url>` prefill and auto-probe API base
+- `?tour=1` force open guided 6-step tour
+- `?pitch=1` launch directly in pitch mode
+
+Pitch helper pages:
+
+- One-page printable guide: `site/quickstart-onepager.html`
+- Detailed checklist: `docs/PITCH_QUICKSTART.md`
+
 ## Automation scripts
 
 ```bash
@@ -140,5 +151,13 @@ Optional flags:
 ## Testing
 
 ```bash
-python -m pytest -q
+python3 -P -m pytest -q tests
+```
+
+UI smoke test (Playwright):
+
+```bash
+npm install
+npx playwright install chromium
+npm run test:ui
 ```
