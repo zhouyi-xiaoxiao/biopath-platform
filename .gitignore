@@ -10,3 +10,10 @@ report.md
 TECH_REPORT_CN_EN.aux
 TECH_REPORT_CN_EN.out
 TECH_REPORT_CN_EN.log
+
+# Generated escalation outputs
+escalations/answers/*.md
+escalations/actions/*.md
+!escalations/answers/TEMPLATE.md
+!escalations/actions/TEMPLATE.md
+escalations/pending/*.md.done
