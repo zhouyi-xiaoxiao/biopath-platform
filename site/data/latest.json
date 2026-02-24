@@ -1,101 +1,96 @@
 {
-  "run_id": "20260224T002717Z-ea8c6c74",
-  "created_at": "2026-02-24T00:27:17.756332+00:00",
+  "run_id": "20260224T012558Z-c61b237d",
+  "created_at": "2026-02-24T01:25:58.074505+00:00",
   "solver_version": "v0.2-auto",
   "map": {
-    "name": "Cambridgeshire Photo-informed Demo Farm (Synthetic Geometry + Publicly Inspired Risk Prior)",
+    "name": "Cambridgeshire Demo Farm (Publicly Inspired Synthetic)",
     "cell_size_m": 1.0,
     "height": 13,
     "width": 28
   },
   "objective": {
     "name": "robust_capture",
-    "raw": -0.5625,
-    "value": 0.5625
+    "raw": -0.575,
+    "value": 0.48125
   },
   "traps": [
     {
       "row": 10,
-      "col": 22,
-      "x_m": 22.0,
+      "col": 23,
+      "x_m": 23.0,
       "y_m": 10.0
     },
     {
       "row": 3,
-      "col": 6,
-      "x_m": 6.0,
+      "col": 11,
+      "x_m": 11.0,
       "y_m": 3.0
     },
     {
-      "row": 7,
-      "col": 10,
-      "x_m": 10.0,
-      "y_m": 7.0
+      "row": 6,
+      "col": 7,
+      "x_m": 7.0,
+      "y_m": 6.0
+    },
+    {
+      "row": 2,
+      "col": 17,
+      "x_m": 17.0,
+      "y_m": 2.0
+    },
+    {
+      "row": 11,
+      "col": 15,
+      "x_m": 15.0,
+      "y_m": 11.0
     },
     {
       "row": 3,
-      "col": 16,
-      "x_m": 16.0,
-      "y_m": 3.0
-    },
-    {
-      "row": 7,
-      "col": 18,
-      "x_m": 18.0,
-      "y_m": 7.0
-    },
-    {
-      "row": 3,
-      "col": 22,
-      "x_m": 22.0,
+      "col": 3,
+      "x_m": 3.0,
       "y_m": 3.0
     }
   ],
   "metrics": {
-    "mean_distance_m": 4.491666666666666,
-    "weighted_mean_distance_m": 3.884936562769576,
+    "mean_distance_m": 4.520833333333333,
+    "weighted_mean_distance_m": 4.520833333333333,
     "max_distance_m": 13.0,
-    "p95_distance_m": 11.0,
+    "p95_distance_m": 10.0,
     "coverage_within_radius": null,
     "weighted_coverage_within_radius": null
   },
-  "capture_probability": 0.5625,
-  "expected_time_to_capture": 31.35,
-  "ci95_low": 0.48563186006218184,
-  "ci95_high": 0.6393681399378182,
-  "robust_score": 0.5625,
+  "capture_probability": 0.48125,
+  "expected_time_to_capture": 34.325,
+  "ci95_low": 0.40382869166453594,
+  "ci95_high": 0.5586713083354641,
+  "robust_score": 0.48125,
   "scenario_scores": [
     {
       "name": "lazy_neutral",
+      "capture_probability": 0.48125,
+      "expected_time_to_capture": 34.9625,
+      "ci95_low": 0.40382869166453594,
+      "ci95_high": 0.5586713083354641
+    },
+    {
+      "name": "biased_right",
       "capture_probability": 0.5625,
-      "expected_time_to_capture": 31.01875,
+      "expected_time_to_capture": 30.2375,
       "ci95_low": 0.48563186006218184,
       "ci95_high": 0.6393681399378182
     },
     {
-      "name": "biased_right",
-      "capture_probability": 0.6,
-      "expected_time_to_capture": 29.83125,
-      "ci95_low": 0.5240895264143346,
-      "ci95_high": 0.6759104735856654
-    },
-    {
       "name": "biased_down",
-      "capture_probability": 0.58125,
-      "expected_time_to_capture": 30.35,
-      "ci95_low": 0.5048039635796924,
-      "ci95_high": 0.6576960364203077
+      "capture_probability": 0.5,
+      "expected_time_to_capture": 32.2125,
+      "ci95_low": 0.4225241973258747,
+      "ci95_high": 0.5774758026741253
     }
   ],
   "artifacts": {
-    "run_dir": "./assets",
-    "heatmap": "./assets/cambridge-photo-informed-heatmap.png",
-    "summary": "./assets/cambridge-photo-informed-summary.md",
-    "metrics": "./assets/cambridge-photo-informed-solve.json"
-  },
-  "source": {
-    "photo_url": "https://commons.wikimedia.org/wiki/File:Cambridge_University_Farm_-_geograph.org.uk_-_3363476.jpg",
-    "license": "CC BY-SA 2.0",
-    "method": "synthetic geometry + photo-informed prior"
+    "run_dir": "runs/20260224T012558Z-c61b237d",
+    "heatmap": "runs/20260224T012558Z-c61b237d/heatmap.png",
+    "summary": "runs/20260224T012558Z-c61b237d/summary.md",
+    "metrics": "runs/20260224T012558Z-c61b237d/metrics.json"
   }
 }
