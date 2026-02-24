@@ -13,16 +13,16 @@ BioPath is decision-support software that takes a farm layout and outputs optimi
 
 Must include these sections:
 1) Title + one-liner value proposition.
-2) Problem: manual trap placement is inconsistent and inefficient.
-3) Solution: map -> optimization -> executable trap plan.
-4) Cambridge synthetic layout image (placeholder).
-5) Optimization heatmap with traps (placeholder).
-6) Proof metrics:
+2) Chosen delivery plan: 7 min narrative + 2 min live demo + 1 min ask.
+3) Problem: manual trap placement is inconsistent and inefficient.
+4) Technical implementation: map representation, optimization objective, Monte Carlo validation, API + web stack.
+5) Cambridge synthetic layout image (placeholder).
+6) Optimization heatmap with traps (placeholder).
+7) Proof metrics:
    - robust score 0.5167
    - random baseline mean 0.2933
    - uplift +0.2233 absolute (+76.1% relative)
-7) Market & customer: farms + pest control operators.
-8) Business model & finance realism: pilot-first, conservative assumptions.
+8) Market + business + funding context: farms + pest control operators, pilot-first model, Cambridge farm funding application in progress.
 9) Explicit mapping to 5 judging criteria:
    - Clarity of communicating idea
    - Market and customer understanding
@@ -42,4 +42,3 @@ Do not add fabricated customer names, legal claims, or unverified financial proj
 Suggested images to upload into Gamma:
 - `site/assets/cambridge-layout.png`
 - `site/assets/cambridge-heatmap.png`
-

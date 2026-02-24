@@ -343,6 +343,55 @@ body {
   color: #effef6;
 }
 
+.plan-strip {
+  margin-top: 0.72rem;
+  border: 1px solid rgba(238, 255, 248, 0.26);
+  border-radius: 14px;
+  background: linear-gradient(155deg, rgba(6, 21, 15, 0.36), rgba(10, 33, 25, 0.36));
+  padding: 0.64rem 0.72rem;
+}
+
+.plan-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.58rem;
+  flex-wrap: wrap;
+}
+
+.plan-head strong {
+  font-family: "Sora", "Manrope", sans-serif;
+  font-size: 0.86rem;
+}
+
+.plan-head span {
+  font-size: 0.76rem;
+  color: rgba(225, 248, 236, 0.9);
+}
+
+.plan-chips {
+  margin-top: 0.46rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.46rem;
+}
+
+.plan-chips span {
+  border: 1px solid rgba(233, 255, 245, 0.3);
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 999px;
+  font-size: 0.73rem;
+  font-weight: 700;
+  padding: 0.28rem 0.52rem;
+  color: #effef5;
+}
+
+.plan-note {
+  margin: 0.52rem 0 0;
+  font-size: 0.77rem;
+  line-height: 1.42;
+  color: rgba(230, 250, 240, 0.95);
+}
+
 .status-card {
   border: 1px solid rgba(15, 43, 32, 0.14);
   background: linear-gradient(165deg, rgba(255, 255, 255, 0.95), rgba(245, 251, 247, 0.92));
