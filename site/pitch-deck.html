@@ -284,7 +284,10 @@
     <header class="top">
       <strong>BioPath | 10-min Pitch Deck</strong>
       <span>Keys: <code>PgDown/PgUp</code> or scroll</span>
-      <a href="./">Back to Pitch Studio</a>
+      <span style="display:flex; gap:0.8rem; align-items:center; flex-wrap:wrap;">
+        <a href="./pitch-script.html">Speaker Script</a>
+        <a href="./">Back to Pitch Studio</a>
+      </span>
     </header>
 
     <main class="deck" id="deckRoot">
@@ -310,7 +313,7 @@
             </div>
           </article>
           <figure>
-            <img src="./assets/cambridge-heatmap.png" alt="Optimized heatmap preview" />
+            <img src="./assets/cambridge-photo-informed-heatmap.png" alt="Photo-informed optimized heatmap preview" />
             <p class="image-caption">Visual proof shown during the live segment.</p>
           </figure>
         </div>
@@ -394,30 +397,30 @@
       </section>
 
       <section class="slide" id="s6">
-        <p class="kicker">Slide 6 · Demo Map and Output</p>
-        <h2>From Cambridge-inspired synthetic map to optimised trap layout.</h2>
-        <div class="grid2">
-          <figure>
-            <img src="./assets/cambridge-layout.png" alt="Cambridge synthetic farm layout" />
-            <p class="image-caption">Input map used in live demo.</p>
-          </figure>
-          <figure>
-            <img src="./assets/cambridge-heatmap.png" alt="Optimized heatmap and trap placement" />
-            <p class="image-caption">Output heatmap and trap coordinates.</p>
-          </figure>
-        </div>
+        <p class="kicker">Slide 6 · Source-to-Solve Conversion</p>
+        <h2>How we transparently convert real context into a computable optimisation input.</h2>
+        <img src="./assets/cambridge-photo-informed-transform.png" alt="Source-to-solve conversion chain from real photo to weighted risk prior" />
+        <p class="image-caption">Real photo + synthetic geometry + explicit risk prior. All assumptions are inspectable and rerunnable.</p>
       </section>
 
       <section class="slide" id="s7">
-        <p class="kicker">Slide 7 · Proof</p>
-        <h2>Benchmark shows strong uplift under equal trap budget.</h2>
+        <p class="kicker">Slide 7 · Demo Output and Proof</p>
+        <h2>Photo-informed distribution run: optimised traps and benchmark uplift.</h2>
         <div class="grid2">
-          <div class="metric"><span>Capture Probability</span><strong>48.1%</strong></div>
-          <div class="metric"><span>Robust Score</span><strong>48.1%</strong></div>
-          <div class="metric"><span>Random Baseline Mean</span><strong>29.3%</strong></div>
-          <div class="metric"><span>Relative Uplift</span><strong class="accent">+64.2%</strong></div>
+          <figure>
+            <img src="./assets/cambridge-photo-informed-heatmap.png" alt="Photo-informed heatmap and optimized trap locations" />
+            <p class="image-caption">Optimized traps on photo-informed distribution.</p>
+          </figure>
+          <figure>
+            <div class="grid2" style="height:100%;">
+              <div class="metric"><span>Capture Probability</span><strong>56.3%</strong></div>
+              <div class="metric"><span>Robust Score</span><strong>56.3%</strong></div>
+              <div class="metric"><span>Random Baseline Mean</span><strong>30.3%</strong></div>
+              <div class="metric"><span>Relative Uplift</span><strong class="accent">+85.5%</strong></div>
+            </div>
+            <p class="image-caption">Run artifacts are generated per run for auditability.</p>
+          </figure>
         </div>
-        <p>Evidence is generated per run and can be audited through run-level summaries.</p>
       </section>
 
       <section class="slide" id="s8">

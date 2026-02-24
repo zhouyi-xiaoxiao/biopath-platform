@@ -4,7 +4,9 @@ const STORAGE_KEYS = {
   uiMode: "biopath_ui_mode",
 };
 
-const DEFAULT_MAP = {
+const DEFAULT_MAP_URL = "./data/cambridge-photo-informed-map.json";
+
+const DEFAULT_MAP_FALLBACK = {
   name: "Cambridgeshire Demo Farm (Publicly Inspired Synthetic)",
   cell_size_m: 1,
   ascii: [
@@ -37,7 +39,7 @@ const TOUR_STEPS = [
   },
   {
     title: "Load Default Cambridge Map",
-    body: "The map textarea starts with the Cambridge demo layout. Keep it for your standard demo.",
+    body: "The map textarea starts with the photo-informed Cambridge demo map. Keep it for your standard demo.",
     focusId: "mapJson",
   },
   {
@@ -272,6 +274,20 @@ async function readConfigDefaultApi() {
     return state.configDefaultApi;
   } catch (_) {
     return "";
+  }
+}
+
+async function loadDefaultMap() {
+  try {
+    const res = await fetch(DEFAULT_MAP_URL, { cache: "no-store" });
+    if (!res.ok) return DEFAULT_MAP_FALLBACK;
+    const data = await res.json();
+    if (!data || typeof data !== "object" || !Array.isArray(data.ascii)) {
+      return DEFAULT_MAP_FALLBACK;
+    }
+    return data;
+  } catch (_) {
+    return DEFAULT_MAP_FALLBACK;
   }
 }
 
@@ -852,7 +868,8 @@ function bindEvents() {
 }
 
 async function setup() {
-  $("mapJson").value = pretty(DEFAULT_MAP);
+  const defaultMap = await loadDefaultMap();
+  $("mapJson").value = pretty(defaultMap);
   $("proofMetrics").innerHTML = '<article class="metric metric--wide"><span class="metric-label">Status</span><strong class="metric-value">Waiting for first run...</strong></article>';
   updateJourneyOutcome(null, null);
 
