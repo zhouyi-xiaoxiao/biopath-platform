@@ -1,96 +1,96 @@
 {
-  "run_id": "20260224T012558Z-c61b237d",
-  "created_at": "2026-02-24T01:25:58.074505+00:00",
+  "run_id": "20260224T032425Z-889ca2a6",
+  "created_at": "2026-02-24T03:24:25.847384+00:00",
   "solver_version": "v0.2-auto",
   "map": {
-    "name": "Cambridgeshire Demo Farm (Publicly Inspired Synthetic)",
+    "name": "Cambridgeshire Photo-informed Demo Farm (Synthetic Geometry + Publicly Inspired Risk Prior)",
     "cell_size_m": 1.0,
     "height": 13,
     "width": 28
   },
   "objective": {
     "name": "robust_capture",
-    "raw": -0.575,
-    "value": 0.48125
+    "raw": -0.625,
+    "value": 0.625
   },
   "traps": [
     {
       "row": 10,
-      "col": 23,
-      "x_m": 23.0,
+      "col": 25,
+      "x_m": 25.0,
       "y_m": 10.0
+    },
+    {
+      "row": 6,
+      "col": 18,
+      "x_m": 18.0,
+      "y_m": 6.0
+    },
+    {
+      "row": 3,
+      "col": 17,
+      "x_m": 17.0,
+      "y_m": 3.0
+    },
+    {
+      "row": 7,
+      "col": 8,
+      "x_m": 8.0,
+      "y_m": 7.0
+    },
+    {
+      "row": 2,
+      "col": 3,
+      "x_m": 3.0,
+      "y_m": 2.0
     },
     {
       "row": 3,
       "col": 11,
       "x_m": 11.0,
       "y_m": 3.0
-    },
-    {
-      "row": 6,
-      "col": 7,
-      "x_m": 7.0,
-      "y_m": 6.0
-    },
-    {
-      "row": 2,
-      "col": 17,
-      "x_m": 17.0,
-      "y_m": 2.0
-    },
-    {
-      "row": 11,
-      "col": 15,
-      "x_m": 15.0,
-      "y_m": 11.0
-    },
-    {
-      "row": 3,
-      "col": 3,
-      "x_m": 3.0,
-      "y_m": 3.0
     }
   ],
   "metrics": {
-    "mean_distance_m": 4.520833333333333,
-    "weighted_mean_distance_m": 4.520833333333333,
-    "max_distance_m": 13.0,
-    "p95_distance_m": 10.0,
+    "mean_distance_m": 4.6,
+    "weighted_mean_distance_m": 4.2039799427272735,
+    "max_distance_m": 14.0,
+    "p95_distance_m": 11.0,
     "coverage_within_radius": null,
     "weighted_coverage_within_radius": null
   },
-  "capture_probability": 0.48125,
-  "expected_time_to_capture": 34.325,
-  "ci95_low": 0.40382869166453594,
-  "ci95_high": 0.5586713083354641,
-  "robust_score": 0.48125,
+  "capture_probability": 0.475,
+  "expected_time_to_capture": 35.625,
+  "ci95_low": 0.3202422053659332,
+  "ci95_high": 0.6297577946340668,
+  "robust_score": 0.625,
   "scenario_scores": [
     {
       "name": "lazy_neutral",
-      "capture_probability": 0.48125,
-      "expected_time_to_capture": 34.9625,
-      "ci95_low": 0.40382869166453594,
-      "ci95_high": 0.5586713083354641
+      "capture_probability": 0.625,
+      "expected_time_to_capture": 29.775,
+      "ci95_low": 0.47496875325453036,
+      "ci95_high": 0.7750312467454696
     },
     {
       "name": "biased_right",
-      "capture_probability": 0.5625,
-      "expected_time_to_capture": 30.2375,
-      "ci95_low": 0.48563186006218184,
-      "ci95_high": 0.6393681399378182
+      "capture_probability": 0.625,
+      "expected_time_to_capture": 29.25,
+      "ci95_low": 0.47496875325453036,
+      "ci95_high": 0.7750312467454696
     },
     {
       "name": "biased_down",
-      "capture_probability": 0.5,
-      "expected_time_to_capture": 32.2125,
-      "ci95_low": 0.4225241973258747,
-      "ci95_high": 0.5774758026741253
+      "capture_probability": 0.625,
+      "expected_time_to_capture": 29.675,
+      "ci95_low": 0.47496875325453036,
+      "ci95_high": 0.7750312467454696
     }
   ],
   "artifacts": {
-    "run_dir": "runs/20260224T012558Z-c61b237d",
-    "heatmap": "runs/20260224T012558Z-c61b237d/heatmap.png",
-    "summary": "runs/20260224T012558Z-c61b237d/summary.md",
-    "metrics": "runs/20260224T012558Z-c61b237d/metrics.json"
+    "run_dir": "/Users/zhouyixiaoxiao/Library/CloudStorage/OneDrive-UniversityofBristol/Desktop/biopath/runs/20260224T032425Z-889ca2a6",
+    "heatmap": "/Users/zhouyixiaoxiao/Library/CloudStorage/OneDrive-UniversityofBristol/Desktop/biopath/runs/20260224T032425Z-889ca2a6/heatmap.png",
+    "summary": "/Users/zhouyixiaoxiao/Library/CloudStorage/OneDrive-UniversityofBristol/Desktop/biopath/runs/20260224T032425Z-889ca2a6/summary.md",
+    "metrics": "/Users/zhouyixiaoxiao/Library/CloudStorage/OneDrive-UniversityofBristol/Desktop/biopath/runs/20260224T032425Z-889ca2a6/metrics.json"
   }
 }

@@ -61,7 +61,7 @@ Solution: BioPath turns a simple map into optimized trap coordinates and a repro
 
 Proof: We benchmark against random baseline with Monte Carlo validation and robust capture metrics.
 
-Ask: We ask for 2 pilot introductions, a small PoC budget, and practical data access for an 8-week farm trial.
+Ask: We ask for 2 pilot introductions, support for a £5k–£20k LINCAM PoC pathway (currently applying with CREGS + LINCAM), and practical data access for an 8-week farm trial.
 
 ## Query shortcuts
 

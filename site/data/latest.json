@@ -92,5 +92,9 @@
     "heatmap": "runs/20260224T012558Z-c61b237d/heatmap.png",
     "summary": "runs/20260224T012558Z-c61b237d/summary.md",
     "metrics": "runs/20260224T012558Z-c61b237d/metrics.json"
+  },
+  "artifacts_site": {
+    "heatmap": "./data/latest-heatmap.png",
+    "summary": "./data/latest-summary.md"
   }
 }

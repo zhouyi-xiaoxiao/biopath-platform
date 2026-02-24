@@ -7,235 +7,222 @@
     <link rel="stylesheet" href="./app.css" />
   </head>
   <body>
-    <div class="bg-layer bg-layer-a" aria-hidden="true"></div>
-    <div class="bg-layer bg-layer-b" aria-hidden="true"></div>
-
     <div id="connectionBanner" class="connection-banner hidden" role="status" aria-live="polite">
       <strong id="bannerTitle">API not connected</strong>
       <span id="bannerMessage">Paste your API URL and click Auto Connect.</span>
-      <button id="fixApiBtn" class="btn ghost">Fix in 1 step</button>
+      <button id="fixApiBtn" class="btn btn-ghost">Fix in 1 step</button>
     </div>
 
-    <header class="app-topbar">
-      <div class="brand-lockup">
-        <p class="brand-kicker">BioPath</p>
-        <p class="brand-title">Pitch Studio</p>
+    <header class="topbar">
+      <div class="brand">
+        <span class="kicker">BioPath</span>
+        <strong>Pitch Studio</strong>
+        <span id="modeBadge" class="mode-badge">Pitch Safe</span>
       </div>
-      <div class="topbar-links">
-        <a class="text-link" href="./pitch-deck.html" target="_blank" rel="noreferrer">Online Deck</a>
-        <a class="text-link" href="./pitch-script.html" target="_blank" rel="noreferrer">Speaker Script</a>
-        <a class="text-link" href="./quickstart-onepager.html" target="_blank" rel="noreferrer">One-page Guide</a>
-      </div>
+      <nav class="toplinks">
+        <a href="./pitch-deck.html" target="_blank" rel="noreferrer">Online Deck</a>
+        <a href="./pitch-script.html" target="_blank" rel="noreferrer">Speaker Script</a>
+        <a href="./finance-pricing.html" target="_blank" rel="noreferrer">Finance & Pricing</a>
+        <a href="./quickstart-onepager.html" target="_blank" rel="noreferrer">One-page Guide</a>
+      </nav>
     </header>
 
-    <section class="stage-header">
-      <div class="stage-copy">
+    <section class="hero-shell">
+      <article class="hero-card">
         <p class="eyebrow">Decision Intelligence for Farm Pest Control</p>
         <h1>From map to measurable farm impact in under 2 minutes.</h1>
-        <p>
-          BioPath turns layout complexity into an execution-ready trap placement plan with simulation-backed proof,
-          built for farm teams, pest-control operators, and funding reviewers.
+        <p class="sub">
+          BioPath converts complex layouts into reproducible trap-placement decisions with simulation-backed proof.
+          Built by <strong>Xiaoxiao Zhouyi</strong>, Founder & Sole Builder, PhD Candidate in stochastic processes.
         </p>
 
-        <div class="hero-tags">
-          <span>Real Farm Context + Synthetic Demo</span>
-          <span>Stochastic Modelling + Monte Carlo</span>
-          <span>CREGS + LINCAM PoC Narrative Ready</span>
+        <div class="chips">
+          <span>Real farm context + synthetic geometry</span>
+          <span>Stochastic modelling + Monte Carlo</span>
+          <span>Currently applying CREGS + LINCAM PoC</span>
         </div>
 
         <div class="hero-actions">
-          <button id="startDemoBtn" class="btn accent">Start 2-min Demo</button>
-          <button id="pitchModeBtn" class="btn">Open Pitch Mode</button>
-          <button id="helpBtn" class="btn ghost">Guided Tour</button>
-          <a class="btn ghost" href="./pitch-deck.html" target="_blank" rel="noreferrer">Open Online Deck</a>
+          <button id="startDemoBtn" class="btn btn-accent">Start 2-min Demo</button>
+          <button id="pitchModeBtn" class="btn">Open Pitch Safe</button>
+          <button id="liveModeBtn" class="btn btn-ghost" disabled>Use Live API</button>
+          <button id="resetDemoBtn" class="btn btn-ghost">Reset Demo</button>
+          <button id="helpBtn" class="btn btn-ghost">Guided Tour</button>
         </div>
 
-        <div class="hero-secondary-links">
-          <a href="./pitch-script.html" target="_blank" rel="noreferrer">Open Speaker Script</a>
-          <a href="./quickstart-onepager.html" target="_blank" rel="noreferrer" download="BioPath-One-page-Guide.html">Download One-page Guide</a>
-        </div>
-
-        <div class="hero-script" aria-label="Two-minute script">
-          <div class="script-head">
-            <span class="script-dot"></span>
-            <strong>Live Demo Rhythm</strong>
-            <span>2:00 target</span>
+        <div class="rhythm">
+          <div class="rhythm-head">
+            <strong>2-min Demo Rhythm</strong>
+            <span>for tomorrow's live segment</span>
           </div>
-          <div class="script-grid">
-            <article>
-              <p class="time">0:00-0:30</p>
-              <p class="step">Auto-connect API and confirm health.</p>
-            </article>
-            <article>
-              <p class="time">0:30-1:00</p>
-              <p class="step">Run solve on the Cambridge-style map.</p>
-            </article>
-            <article>
-              <p class="time">1:00-1:30</p>
-              <p class="step">Run benchmark and read uplift.</p>
-            </article>
-            <article>
-              <p class="time">1:30-2:00</p>
-              <p class="step">Switch Pitch Mode and deliver Ask.</p>
-            </article>
+          <div class="rhythm-grid">
+            <article><p>0:00-0:30</p><span>Auto connect + health check.</span></article>
+            <article><p>0:30-1:00</p><span>Run solve on Cambridge map.</span></article>
+            <article><p>1:00-1:30</p><span>Run benchmark and read uplift.</span></article>
+            <article><p>1:30-2:00</p><span>Switch Pitch Mode and deliver ask.</span></article>
           </div>
         </div>
 
-        <div class="plan-strip" aria-label="Recommended ten-minute plan">
-          <div class="plan-head">
-            <strong>Recommended 10-min Plan</strong>
-            <span>Tomorrow's fixed structure</span>
-          </div>
-          <div class="plan-chips">
-            <span>7 min: Story + Market + Tech</span>
-            <span>2 min: Live Solve + Benchmark</span>
-            <span>1 min: Ask + Funding Path</span>
-          </div>
-          <p class="plan-note">
-            Cambridge farm pilot funding application is in progress, and this structure maps directly to the five judging criteria.
-          </p>
+        <div class="hero-proof-snapshot">
+          <article>
+            <span>Latest Run</span>
+            <strong id="heroRunId">n/a</strong>
+          </article>
+          <article>
+            <span>Capture</span>
+            <strong id="heroCapture">n/a</strong>
+          </article>
+          <article>
+            <span>Robust</span>
+            <strong id="heroRobust">n/a</strong>
+          </article>
+          <article>
+            <span>Trap Count</span>
+            <strong id="heroTrapCount">0</strong>
+          </article>
+          <article class="wide">
+            <span>Uplift</span>
+            <strong id="heroUplift">Run benchmark to compute uplift</strong>
+          </article>
         </div>
-      </div>
+      </article>
 
-      <aside class="status-stack">
-        <article class="status-card" aria-label="Connection status">
+      <aside class="hero-side">
+        <article class="side-card">
           <h2>Live Connection</h2>
           <p id="connectionPill" class="status-pill checking">Checking...</p>
           <p id="apiLastChecked" class="muted">No health check yet.</p>
-          <div class="status-hint">
-            Real-time API is the default demo path. If unavailable, fallback data is shown.
-          </div>
-        </article>
-
-        <article class="funding-card" aria-label="Funding context">
-          <h2>Funding Signal</h2>
-          <p class="funding-quote">
-            Target pathway for this pitch: <strong>LINCAM Proof of Concept Awards</strong>, officially listed as
-            <strong>£5,000–£20,000 per project (no FEC)</strong>.
-          </p>
-          <p class="funding-sub">
-            Official format notes a <strong>7-minute pitch</strong> to the Ceres Investment Committee for PoC applications.
-          </p>
-          <p class="funding-meta">
-            Source: Ceres Agri-Tech official LINCAM pages (accessed 24 Feb 2026).
-          </p>
-          <a class="funding-link" href="https://www.ceresagritech.org/lincam-linc-camb/contact/" target="_blank" rel="noreferrer">Open PoC award details (official)</a>
-          <a class="funding-link secondary" href="https://www.ceresagritech.org/lincam-linc-camb/" target="_blank" rel="noreferrer">Open Cambridge-Lincoln collaboration page</a>
-        </article>
-
-        <article class="criteria-card" aria-label="Official judging criteria">
-          <h2>Judging Criteria (Outlook)</h2>
-          <p class="criteria-meta">Source: Basecamp Outlook email “Week 5 - Resources and Partners and information about pitching”, 12 Feb 2026.</p>
-          <ol class="criteria-list">
-            <li>Clarity of communicating idea</li>
-            <li>Level of market and customer knowledge and understanding</li>
-            <li>Degree of understanding and appropriateness of chosen business model</li>
-            <li>Logic of pitch deck order and quality of presentation skills</li>
-            <li>Robustness and reality of finance</li>
-          </ol>
-          <p class="criteria-scale">Scoring rubric: 5 = Excellent, 4 = Good, 3 = Acceptable, 2 = More depth/detail/explanation needed, 1 = Poor or insufficient detail.</p>
-          <p class="criteria-note">Pitch Studio sections are arranged to cover these five points explicitly.</p>
+          <p class="small-note">Pitch Safe mode remains available even without API.</p>
         </article>
       </aside>
     </section>
 
-    <section class="context-band">
-      <article class="context-card context-photo">
-        <h2>Real Cambridgeshire Farm Context</h2>
-        <figure class="photo-figure">
-          <img src="./assets/cambridge-university-farm.jpg" alt="Real farm landscape at Cambridge University Farm" loading="lazy" />
-          <figcaption>
-            Cambridge University Farm (photo: Chris Boland / Geograph, CC BY-SA 2.0)
-            <a href="https://commons.wikimedia.org/wiki/File:Cambridge_University_Farm_-_geograph.org.uk_-_3363476.jpg" target="_blank" rel="noreferrer">source</a>
-          </figcaption>
-        </figure>
-      </article>
-
-      <article class="context-card context-maps">
-        <h2>Source-to-Solve Chain You Can Explain</h2>
-        <div class="context-grid">
-          <figure class="context-figure transform-figure">
-            <img src="./assets/cambridge-photo-informed-transform.png" alt="Source-to-solve conversion chain from real photo to grid and risk prior" loading="lazy" />
-            <figcaption>Real photo -> geometry extraction -> photo-informed risk prior</figcaption>
-          </figure>
-          <figure class="context-figure heatmap-figure">
-            <img id="cambridgeHeatmapPreview" src="./assets/cambridge-photo-informed-heatmap.png" alt="Optimized heatmap and trap placement for photo-informed distribution" loading="lazy" />
-            <figcaption>Optimized trap overlay + distance heatmap on photo-informed distribution</figcaption>
-          </figure>
-        </div>
-      </article>
-    </section>
-
-    <main class="layout">
-      <section class="panel journey-panel" id="journeyPanel">
+    <main class="main-grid">
+      <section class="panel panel-proof" id="proofPanel">
         <div class="panel-head">
-          <h2>User Flow and Effect</h2>
-          <p>Show judges exactly what users do and what measurable effect they get in one run.</p>
+          <h2>Proof Panel</h2>
+          <p>Use these values directly in your 10-minute narrative.</p>
         </div>
 
-        <div class="journey-grid">
-          <article class="journey-card">
-            <h3>How A User Uses BioPath</h3>
-            <ol class="journey-steps">
-              <li><strong>Connect API</strong> with Auto Connect.</li>
-              <li><strong>Load map</strong> (default Cambridge synthetic layout).</li>
-              <li><strong>Run Solve</strong> to get trap coordinates.</li>
-              <li><strong>Run Benchmark</strong> versus random baseline.</li>
-              <li><strong>Switch to Pitch Mode</strong> and narrate Problem -> Solution -> Proof -> Ask.</li>
-            </ol>
-          </article>
+        <div id="proofMetrics" class="metric-grid"></div>
 
-          <article class="journey-card effect-card">
-            <h3>What Effect Users Get</h3>
-            <div class="effect-grid">
-              <div class="effect-metric">
-                <span>Latest Run</span>
-                <strong id="journeyRunId">n/a</strong>
-              </div>
-              <div class="effect-metric">
-                <span>Trap Plan</span>
-                <strong id="journeyTraps">n/a</strong>
-              </div>
-              <div class="effect-metric">
-                <span>Capture Probability</span>
-                <strong id="journeyCapture">n/a</strong>
-              </div>
-              <div class="effect-metric">
-                <span>Robust Score</span>
-                <strong id="journeyRobust">n/a</strong>
-              </div>
-              <div class="effect-metric effect-metric-wide">
-                <span>Uplift vs Random</span>
-                <strong id="journeyUplift">Run benchmark to compute uplift</strong>
-              </div>
-            </div>
-            <p id="journeyOutcome" class="journey-outcome">Connect API and run solve to generate the first executable trap plan.</p>
-          </article>
+        <div class="proof-foot">
+          <p><strong>Benchmark Uplift:</strong> <span id="upliftValue">n/a</span></p>
+          <p><strong>Random Baseline Mean:</strong> <span id="baselineValue">n/a</span></p>
+          <p><strong>Benchmark Status:</strong> <span id="benchmarkState">No benchmark yet</span></p>
+          <a id="summaryLink" href="#" target="_blank" rel="noreferrer" class="hidden">Open run summary</a>
+          <p id="summaryFallback" class="small-note">Summary link is optional for live pitch.</p>
+        </div>
+
+        <pre id="compareBox" class="console">Loading baseline...</pre>
+      </section>
+
+      <section class="panel panel-pitch" id="pitchCard">
+        <div class="panel-head">
+          <h2>Pitch Mode Narrative</h2>
+          <p>Problem -> Solution -> Proof -> Ask</p>
+        </div>
+
+        <article class="narrative-block">
+          <h3>Problem</h3>
+          <p>Manual trap placement is experience-heavy, hard to standardize, and can miss bottlenecks in complex layouts.</p>
+          <button class="copy-btn" data-copy="Manual trap placement is experience-heavy, hard to standardize, and can miss bottlenecks in complex layouts.">Copy line</button>
+        </article>
+
+        <article class="narrative-block">
+          <h3>Solution</h3>
+          <p>BioPath converts one map into an optimized trap plan with reproducible, auditable coordinates.</p>
+          <button class="copy-btn" data-copy="BioPath converts one map into an optimized trap plan with reproducible, auditable coordinates.">Copy line</button>
+        </article>
+
+        <article class="narrative-block">
+          <h3>Proof</h3>
+          <p id="narrativeProof">Latest run evidence is loading.</p>
+          <button id="proofCopy" class="copy-btn" data-copy="Latest run shows capture probability and robust score with benchmark uplift versus random baseline.">Copy line</button>
+        </article>
+
+        <article class="narrative-block ask">
+          <h3>Ask</h3>
+          <p id="askLine">We ask for 2 pilot introductions, one 8-week data trial, and support for a £5k-£20k LINCAM PoC application.</p>
+          <button id="askCopy" class="copy-btn" data-copy="We ask for 2 pilot introductions, one 8-week data trial, and support for a £5k-£20k LINCAM PoC application.">Copy ask</button>
+        </article>
+      </section>
+
+      <section class="panel panel-funding">
+        <div class="panel-head">
+          <h2>Funding Signal (official)</h2>
+          <p>This section supports the finance criterion and your explicit funding pathway.</p>
+        </div>
+        <p>
+          We are currently applying through <strong>CREGS + LINCAM PoC</strong>. Official Ceres pages list PoC
+          support at <strong>£5,000-£20,000</strong> and a <strong>7-minute pitch</strong> format.
+        </p>
+        <div class="link-group">
+          <a href="https://www.ceresagritech.org/lincam-linc-camb/contact/" target="_blank" rel="noreferrer">Open LINCAM PoC details</a>
+          <a href="https://www.ceresagritech.org/lincam-linc-camb/" target="_blank" rel="noreferrer">Open Ceres collaboration page</a>
+        </div>
+        <p class="source">Source: Ceres Agri-Tech official pages (accessed 24 Feb 2026).</p>
+      </section>
+
+      <section class="panel panel-criteria">
+        <div class="panel-head">
+          <h2>Judging Criteria (Outlook)</h2>
+          <p>Your deck and script are mapped to these five scoring points.</p>
+        </div>
+        <ol>
+          <li>Clarity of communicating idea</li>
+          <li>Level of market and customer knowledge and understanding</li>
+          <li>Degree of understanding and appropriateness of chosen business model</li>
+          <li>Logic of pitch deck order and quality of presentation skills</li>
+          <li>Robustness and reality of finance</li>
+        </ol>
+        <p class="source">Source: Basecamp email “Week 5 - Resources and Partners and information about pitching”, 12 Feb 2026.</p>
+      </section>
+
+      <section class="panel panel-context">
+        <div class="panel-head">
+          <h2>Source -> Model -> Solve (explainable)</h2>
+          <p>Real public context is transformed into transparent computation space.</p>
+        </div>
+        <div class="context-grid">
+          <figure>
+            <img src="./assets/cambridge-university-farm.jpg" alt="Cambridge University Farm real context" loading="lazy" />
+            <figcaption>
+              Public context photo: Cambridge University Farm (Chris Boland / Geograph, CC BY-SA 2.0)
+              <a href="https://commons.wikimedia.org/wiki/File:Cambridge_University_Farm_-_geograph.org.uk_-_3363476.jpg" target="_blank" rel="noreferrer">source</a>
+            </figcaption>
+          </figure>
+          <figure>
+            <img src="./assets/cambridge-photo-informed-transform.png" alt="Conversion chain from photo to geometry to risk prior" loading="lazy" />
+            <figcaption>Photo context -> synthetic walkable geometry -> photo-informed risk prior.</figcaption>
+          </figure>
+          <figure class="wide">
+            <img id="cambridgeHeatmapPreview" src="./data/latest-heatmap.png" alt="Optimized heatmap and trap positions" loading="lazy" />
+            <figcaption>Optimized traps + distance heatmap used in live proof segment.</figcaption>
+          </figure>
         </div>
       </section>
 
-      <section class="panel live-panel" id="livePanel">
+      <section class="panel panel-ops ops-section" id="livePanel">
         <div class="panel-head">
           <h2>Live Operations</h2>
-          <p>Configure API, tune parameters, and run solve/benchmark from one workspace.</p>
+          <p>Use this section only for live mode. Pitch Safe can be presented without it.</p>
         </div>
 
         <div class="ops-grid">
-          <article class="subpanel api-panel" id="apiSetupPanel">
+          <article class="subpanel" id="apiSetupPanel">
             <h3>API Setup</h3>
             <label for="apiBase">API Base URL</label>
-            <div class="row">
-              <input id="apiBase" type="text" placeholder="https://your-render-service.onrender.com" />
-            </div>
+            <input id="apiBase" type="text" placeholder="https://your-render-service.onrender.com" />
             <div class="row actions-row">
               <button id="saveApi" class="btn">Save</button>
-              <button id="autoConnect" class="btn ghost">Auto Connect</button>
-              <button id="healthCheck" class="btn ghost">Health Check</button>
+              <button id="autoConnect" class="btn btn-ghost">Auto Connect</button>
+              <button id="healthCheck" class="btn btn-ghost">Health Check</button>
             </div>
-            <p id="apiStatus" class="muted">Auto-detection order: query param -> saved value -> config.json.</p>
+            <p id="apiStatus" class="muted">Auto-detection order: query -> saved -> config.json.</p>
           </article>
 
-          <article class="subpanel params-panel">
+          <article class="subpanel">
             <h3>Solver Parameters</h3>
             <div class="field-grid">
               <label for="kInput">Traps (k)</label>
@@ -250,7 +237,7 @@
               </select>
 
               <label for="mcRuns">MC Runs</label>
-              <input id="mcRuns" type="number" min="20" value="160" />
+              <input id="mcRuns" type="number" min="20" value="140" />
 
               <label for="horizon">Time Horizon</label>
               <input id="horizon" type="number" min="5" value="48" />
@@ -260,115 +247,43 @@
             </div>
           </article>
 
-          <article class="subpanel map-panel">
-            <div class="subpanel-head">
-              <h3>Map Input</h3>
-              <p>Default map is the photo-informed Cambridge demo distribution (synthetic geometry + weighted prior).</p>
-            </div>
+          <article class="subpanel">
+            <h3>Map JSON</h3>
             <textarea id="mapJson" spellcheck="false" aria-label="Map JSON"></textarea>
             <p id="mapError" class="field-error hidden"></p>
           </article>
 
-          <article class="subpanel run-panel">
+          <article class="subpanel">
             <h3>Run Controls</h3>
             <div class="row actions-row">
               <button id="runSolve" class="btn">Run Solve</button>
               <button id="runBenchmark" class="btn">Run Benchmark</button>
-              <button id="cancelBenchmark" class="btn ghost hidden">Cancel Benchmark</button>
-              <button id="retryBenchmark" class="btn ghost hidden">Retry with lower MC</button>
-              <button id="loadLatest" class="btn ghost">Load Latest</button>
+              <button id="cancelBenchmark" class="btn btn-ghost hidden">Cancel Benchmark</button>
+              <button id="retryBenchmark" class="btn btn-ghost hidden">Retry</button>
+              <button id="loadLatest" class="btn btn-ghost">Load Latest</button>
             </div>
-            <p id="runHint" class="muted">Tip: Solve first, then benchmark for proof-grade uplift.</p>
+            <p id="runHint" class="muted">Tip: Solve first, then benchmark.</p>
           </article>
         </div>
       </section>
 
-      <section class="panel proof-panel" id="proofPanel">
+      <section class="panel panel-runs ops-section" id="iterationsCard">
         <div class="panel-head">
-          <h2>Proof Panel</h2>
-          <p>The exact numbers you can quote during pitch.</p>
-        </div>
-
-        <div id="proofMetrics" class="metric-grid"></div>
-
-        <div class="proof-footnote">
-          <p><strong>Benchmark Uplift:</strong> <span id="upliftValue">n/a</span></p>
-          <p><strong>Random Baseline Mean:</strong> <span id="baselineValue">n/a</span></p>
-          <p><strong>Benchmark Status:</strong> <span id="benchmarkState">No benchmark yet</span></p>
-          <a id="summaryLink" href="#" target="_blank" rel="noreferrer">Summary not available</a>
-        </div>
-
-        <pre id="compareBox" class="console">No benchmark yet.</pre>
-      </section>
-
-      <section class="panel pitch-panel" id="pitchCard">
-        <div class="panel-head">
-          <h2>Pitch Narrative</h2>
-          <p>Speak in this order: Problem -> Solution -> Proof -> Ask.</p>
-        </div>
-
-        <article class="narrative-block">
-          <h3>Problem</h3>
-          <p>Manual trap placement is inconsistent, hard to standardize, and misses bottlenecks in complex farm layouts.</p>
-          <button class="copy-btn" data-copy="Manual trap placement is inconsistent, hard to standardize, and misses bottlenecks in complex farm layouts.">Copy line</button>
-        </article>
-
-        <article class="narrative-block">
-          <h3>Solution</h3>
-          <p>BioPath converts a simple map into optimized trap coordinates and a reproducible placement plan.</p>
-          <button class="copy-btn" data-copy="BioPath converts a simple map into optimized trap coordinates and a reproducible placement plan.">Copy line</button>
-        </article>
-
-        <article class="narrative-block">
-          <h3>Proof</h3>
-          <p>We benchmark against random baseline with Monte Carlo validation and report robust capture metrics per run.</p>
-          <button class="copy-btn" data-copy="We benchmark against random baseline with Monte Carlo validation and report robust capture metrics per run.">Copy line</button>
-        </article>
-
-        <article class="narrative-block">
-          <h3>Source and Conversion</h3>
-          <p>We start from a public real-farm photo context, convert it into synthetic walkable geometry, then use a transparent photo-informed risk prior for optimisation and benchmarking.</p>
-          <button class="copy-btn" data-copy="We start from a public real-farm photo context, convert it into synthetic walkable geometry, then use a transparent photo-informed risk prior for optimisation and benchmarking.">Copy line</button>
-        </article>
-
-        <article class="narrative-block ask-block">
-          <h3>Ask</h3>
-          <p id="askLine">
-            We ask for 2 pilot introductions, practical data access for an 8-week farm trial, and support for a
-            LINCAM PoC funding application in the £5k–£20k range.
-          </p>
-          <button
-            class="copy-btn"
-            data-copy="We ask for 2 pilot introductions, practical data access for an 8-week farm trial, and support for a LINCAM PoC funding application in the £5k–£20k range."
-          >
-            Copy ask
-          </button>
-        </article>
-      </section>
-
-      <section class="panel iterations-panel" id="iterationsCard">
-        <div class="panel-head">
-          <h2>Iterations</h2>
-          <p>Open any run to quickly reference older evidence.</p>
+          <h2>Run History</h2>
+          <p>Optional evidence references for Q&A.</p>
         </div>
         <ul id="runList" class="runs"></ul>
       </section>
     </main>
 
-    <div class="mobile-actions" aria-label="Quick actions">
-      <button id="mobileSolve" class="btn">Solve</button>
-      <button id="mobileBenchmark" class="btn">Benchmark</button>
-      <button id="mobilePitch" class="btn ghost">Pitch Mode</button>
-    </div>
-
     <div id="tourBackdrop" class="tour-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="tourTitle">
       <div class="tour-card">
         <p id="tourStepBadge" class="tour-step">Step 1 / 6</p>
         <h3 id="tourTitle">Welcome</h3>
-        <p id="tourBody">This tour will help you run a full demo in under two minutes.</p>
+        <p id="tourBody">This tour helps you finish a full demo in under 2 minutes.</p>
         <div class="tour-actions">
-          <button id="tourBack" class="btn ghost" disabled>Back</button>
-          <button id="tourSkip" class="btn ghost">Skip</button>
+          <button id="tourBack" class="btn btn-ghost" disabled>Back</button>
+          <button id="tourSkip" class="btn btn-ghost">Skip</button>
           <button id="tourNext" class="btn">Next</button>
         </div>
       </div>

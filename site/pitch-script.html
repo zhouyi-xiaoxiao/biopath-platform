@@ -5,197 +5,193 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BioPath Speaker Script (10 min)</title>
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap");
 
       :root {
-        --bg: #f3f6f7;
-        --surface: #ffffff;
-        --ink: #112b28;
-        --muted: #496864;
-        --line: #d8e4e1;
-        --brand: #0f7a59;
-        --accent: #c77a45;
+        --bg: #f2f6f4;
+        --card: #ffffff;
+        --ink: #102d24;
+        --soft: #47695d;
+        --line: rgba(16, 45, 36, 0.14);
       }
 
       * { box-sizing: border-box; }
       html, body { margin: 0; padding: 0; }
 
       body {
-        font-family: "DM Sans", sans-serif;
+        font-family: "Inter", sans-serif;
         color: var(--ink);
         background:
-          radial-gradient(820px 520px at -10% -20%, rgba(15, 122, 89, 0.12), transparent 60%),
-          radial-gradient(760px 460px at 110% -18%, rgba(199, 122, 69, 0.11), transparent 58%),
-          var(--bg);
+          radial-gradient(960px 520px at -10% -20%, rgba(20, 107, 78, 0.1), transparent 62%),
+          radial-gradient(820px 480px at 110% -16%, rgba(191, 118, 62, 0.08), transparent 58%),
+          linear-gradient(170deg, #f8fbf9, var(--bg));
       }
 
       .top {
         position: sticky;
         top: 0;
-        z-index: 20;
-        background: rgba(255, 255, 255, 0.92);
-        backdrop-filter: blur(10px);
+        z-index: 10;
+        background: rgba(248, 251, 249, 0.92);
         border-bottom: 1px solid var(--line);
-        padding: 0.72rem 1rem;
+        backdrop-filter: blur(10px);
+        padding: 0.74rem 1rem;
         display: flex;
-        align-items: center;
         justify-content: space-between;
+        align-items: center;
         gap: 0.8rem;
       }
 
-      .top strong {
-        font-family: "Plus Jakarta Sans", sans-serif;
-        font-size: 1.05rem;
-      }
-
-      .top-links {
-        display: flex;
-        gap: 0.86rem;
-        flex-wrap: wrap;
-      }
-
+      .top strong { font-family: "Manrope", sans-serif; font-size: 1.04rem; }
+      .top nav { display: flex; gap: 0.68rem; flex-wrap: wrap; }
       .top a {
-        color: #1f4f46;
         text-decoration: none;
+        color: #1d4f3e;
         font-weight: 700;
-        border-bottom: 2px solid rgba(31, 79, 70, 0.24);
+        border-bottom: 2px solid rgba(29, 79, 62, 0.25);
       }
 
       .page {
-        width: min(1120px, calc(100% - 1.2rem));
-        margin: 0.96rem auto 1.2rem;
+        width: min(1160px, calc(100% - 1.2rem));
+        margin: 0.95rem auto 1.2rem;
         display: grid;
-        gap: 0.88rem;
+        gap: 0.86rem;
       }
 
       .hero,
       .block,
-      .tips {
+      .item {
         border: 1px solid var(--line);
-        border-radius: 22px;
-        background: var(--surface);
-        box-shadow: 0 14px 30px rgba(12, 33, 30, 0.08);
+        border-radius: 20px;
+        background: var(--card);
+        box-shadow: 0 14px 30px rgba(12, 33, 30, 0.07);
       }
 
-      .hero { padding: 1rem; }
-
+      .hero { padding: 0.95rem; }
       .hero h1 {
         margin: 0;
-        font-family: "Plus Jakarta Sans", sans-serif;
-        font-size: clamp(1.8rem, 4.3vw, 3rem);
-        line-height: 1.08;
+        font-family: "Manrope", sans-serif;
+        font-size: clamp(1.9rem, 4.6vw, 3rem);
+        line-height: 1.06;
         letter-spacing: -0.02em;
       }
 
       .hero p {
-        margin: 0.6rem 0 0;
-        color: var(--muted);
-        line-height: 1.56;
+        margin: 0.56rem 0 0;
+        color: var(--soft);
+        line-height: 1.54;
       }
 
       .chips {
-        margin-top: 0.72rem;
+        margin-top: 0.7rem;
         display: flex;
         flex-wrap: wrap;
-        gap: 0.48rem;
+        gap: 0.45rem;
       }
 
       .chip {
-        border: 1px solid var(--line);
+        border: 1px solid rgba(16, 45, 36, 0.15);
         border-radius: 999px;
         background: #f8fcfa;
-        padding: 0.32rem 0.6rem;
+        padding: 0.3rem 0.58rem;
         font-size: 0.74rem;
         font-weight: 700;
       }
 
       .block { padding: 0.9rem; }
-
       .block h2 {
         margin: 0;
-        font-family: "Plus Jakarta Sans", sans-serif;
-        font-size: 1.18rem;
+        font-family: "Manrope", sans-serif;
+        font-size: 1.2rem;
       }
 
-      .line {
-        margin: 0.44rem 0 0;
-        color: #33554f;
-        line-height: 1.54;
+      .meta {
+        margin: 0.45rem 0 0;
+        color: #36584d;
+        line-height: 1.5;
+      }
+
+      .criteria {
+        margin: 0.58rem 0 0;
+        border: 1px solid rgba(16, 45, 36, 0.14);
+        border-radius: 14px;
+        background: #f9fcfb;
+        padding: 0.7rem;
+      }
+
+      .criteria ol {
+        margin: 0;
+        padding-left: 1rem;
+        display: grid;
+        gap: 0.3rem;
       }
 
       .timeline {
-        margin-top: 0.64rem;
         display: grid;
         gap: 0.62rem;
+        margin-top: 0.6rem;
       }
 
-      .item {
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        background: linear-gradient(168deg, #fcfffe, #f7fbf9);
-        padding: 0.68rem;
-      }
+      .item { padding: 0.72rem; }
 
       .time {
         margin: 0;
         font-family: "JetBrains Mono", monospace;
         font-size: 0.74rem;
-        color: #456a63;
+        color: #4b6e62;
       }
 
       .title {
-        margin: 0.2rem 0 0;
-        font-family: "Plus Jakarta Sans", sans-serif;
+        margin: 0.22rem 0 0;
+        font-family: "Manrope", sans-serif;
         font-size: 1rem;
       }
 
-      .say {
-        margin: 0.34rem 0 0;
-        line-height: 1.56;
+      .tag {
+        margin: 0.24rem 0 0;
+        display: inline-flex;
+        border: 1px solid rgba(16, 45, 36, 0.18);
+        border-radius: 999px;
+        background: #f3faf6;
+        padding: 0.2rem 0.45rem;
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #2f6050;
       }
 
-      .say strong { color: #123b34; }
+      .line {
+        margin-top: 0.35rem;
+        line-height: 1.58;
+        color: #2f5448;
+      }
+
+      .line strong { color: #143a2f; }
 
       .cn {
-        margin-top: 0.2rem;
+        margin-top: 0.24rem;
+        font-size: 0.82rem;
+        color: #5f7e73;
+      }
+
+      .note {
+        margin-top: 0.3rem;
+        border-left: 3px solid rgba(191, 118, 62, 0.7);
+        padding-left: 0.52rem;
+        color: #21453b;
         font-size: 0.84rem;
-        color: #607f77;
-      }
-
-      .quote {
-        margin-top: 0.42rem;
-        border-left: 3px solid rgba(199, 122, 69, 0.74);
-        padding-left: 0.56rem;
-        color: #21463f;
         font-weight: 700;
-      }
-
-      .tips { padding: 0.9rem; }
-
-      .tips h2 {
-        margin: 0;
-        font-family: "Plus Jakarta Sans", sans-serif;
-        font-size: 1.08rem;
-      }
-
-      .tips ul {
-        margin: 0.56rem 0 0;
-        padding-left: 1rem;
-        display: grid;
-        gap: 0.36rem;
       }
 
       .footer {
         text-align: center;
-        color: #65847c;
         font-size: 0.8rem;
-        padding-bottom: 0.32rem;
+        color: #628176;
+        padding-bottom: 0.4rem;
       }
 
       @media (max-width: 760px) {
         .top {
-          align-items: flex-start;
           flex-direction: column;
+          align-items: flex-start;
         }
       }
     </style>
@@ -203,128 +199,179 @@
   <body>
     <header class="top">
       <strong>BioPath Speaker Script · iPad Mode</strong>
-      <div class="top-links">
+      <nav>
         <a href="./">Pitch Studio</a>
         <a href="./pitch-deck.html">Online Deck</a>
-        <a href="./quickstart-onepager.html">One-page Guide</a>
-      </div>
+        <a href="./finance-pricing.html">Finance & Pricing</a>
+      </nav>
     </header>
 
     <main class="page">
       <section class="hero">
         <h1>10-minute speaker script built for clarity first</h1>
         <p>
-          This is a word-for-word flow: clear opening, concrete example, measurable proof, practical funding ask.
-          Structure: 7 min narrative + 2 min live demo + 1 min ask.
+          This script is written for a fast but natural delivery pace. Total is exactly 10:00 (600 seconds):
+          7 minutes narrative, 2 minutes live demo, 1 minute explicit ask.
         </p>
         <div class="chips">
           <span class="chip">Audience: judges + potential customers</span>
-          <span class="chip">Tone: clear, concise, concrete</span>
-          <span class="chip">Timing: 10:00 exact (600s)</span>
-          <span class="chip">Core proof: benchmark uplift</span>
+          <span class="chip">Tone: concise, concrete, credible</span>
+          <span class="chip">Founder: Xiaoxiao Zhouyi (sole builder)</span>
+          <span class="chip">Timing target: 1450-1600 spoken words</span>
         </div>
       </section>
 
       <section class="block">
         <h2>Official judging criteria reference</h2>
-        <p class="line">Source: Basecamp Outlook email "Week 5 - Resources and Partners and information about pitching" (12 Feb 2026).</p>
-        <div class="timeline">
-          <article class="item">
-            <ol style="margin:0; padding-left:1rem; display:grid; gap:0.34rem;">
-              <li>Clarity of communicating idea</li>
-              <li>Level of market and customer knowledge and understanding</li>
-              <li>Degree of understanding and appropriateness of chosen business model</li>
-              <li>Logic of pitch deck order and quality of presentation skills</li>
-              <li>Robustness and reality of finance</li>
-            </ol>
-            <p class="line"><strong>Scoring scale:</strong> each criterion marked out of 5 (5 Excellent, 4 Good, 3 Acceptable, 2 needs more depth/detail, 1 poor or insufficient detail).</p>
-          </article>
+        <p class="meta">Source: Basecamp Outlook email “Week 5 - Resources and Partners and information about pitching”, sent on 12 Feb 2026.</p>
+        <div class="criteria">
+          <ol>
+            <li>Clarity of communicating idea</li>
+            <li>Level of market and customer knowledge and understanding</li>
+            <li>Degree of understanding and appropriateness of chosen business model</li>
+            <li>Logic of pitch deck order and quality of presentation skills</li>
+            <li>Robustness and reality of finance</li>
+          </ol>
+          <p class="meta"><strong>Scoring:</strong> 5 excellent, 4 good, 3 acceptable, 2 more detail needed, 1 poor/insufficient detail.</p>
         </div>
       </section>
 
       <section class="block">
         <h2>Full 10-minute verbatim timeline</h2>
-        <p class="line"><strong>Timing check:</strong> all segments sum to exactly 10:00 (600 seconds).</p>
+        <p class="meta"><strong>Timing check:</strong> all segments below sum to exactly 10:00 (600 seconds).</p>
 
         <div class="timeline">
           <article class="item">
-            <p class="time">0:00-0:50 · Opening · Criterion 1</p>
-            <p class="title">Two-sentence definition (investor version)</p>
-            <p class="say"><strong>Say:</strong> "BioPath turns a farm map into optimized trap coordinates with measurable uplift, so placement is evidence-based rather than guesswork."</p>
-            <p class="say"><strong>Say:</strong> "Our model is pilot-to-subscription decision software for farms and pest-control operators."</p>
-            <p class="cn">中文提示：开场不要讲算法，先两句话讲清“做什么 + 怎么赚钱”。</p>
+            <p class="time">0:00-0:50 · Segment 1</p>
+            <p class="title">Clear definition in two lines</p>
+            <span class="tag">Criteria: 1 + 4</span>
+            <p class="line"><strong>Say:</strong> "BioPath turns a farm map into optimized trap coordinates with measurable uplift, so placement becomes evidence-based instead of guesswork."</p>
+            <p class="line"><strong>Say:</strong> "Our commercial model is paid pilot first, then annual subscription decision-support software for farms and pest-control operators."</p>
+            <p class="line"><strong>Say:</strong> "For the panel, the practical distinction is that we do not stop at visualization. We provide a repeatable decision cycle with explicit assumptions, fixed trap budget, and output metrics that another reviewer can rerun and verify."</p>
+            <p class="line"><strong>Transition:</strong> "Now I will make this concrete with one short, specific scene."</p>
+            <p class="line"><strong>Recovery (if interrupted):</strong> "Before method details, the key point is simple: we output decisions that are measurable and auditable."</p>
+            <p class="cn">中文提示：先讲“做什么+怎么赚钱”，不要先讲算法。</p>
           </article>
 
           <article class="item">
-            <p class="time">0:50-1:40 · Concrete example · Criteria 1 + 2</p>
-            <p class="title">One specific scene, not abstract language</p>
-            <p class="say"><strong>Say:</strong> "In a Cambridge-style layout, operators repeatedly miss one feed-corridor and one storage-edge bottleneck under manual placement. We run BioPath and return six specific trap points plus benchmark uplift in one workflow."</p>
-            <p class="quote">Key line: "Specific scene first, then method."</p>
+            <p class="time">0:50-1:40 · Segment 2</p>
+            <p class="title">Concrete scene, not abstract description</p>
+            <span class="tag">Criteria: 1 + 2</span>
+            <p class="line"><strong>Say:</strong> "In a Cambridge-style farm layout, teams repeatedly miss one feed-corridor route and one storage-edge bottleneck under manual placement. In one run, BioPath returns six specific trap points and a benchmark-ready proof output."</p>
+            <p class="line"><strong>Say:</strong> "This is why operators can move from trial-and-error to repeatable decisions in minutes, not days."</p>
+            <p class="line"><strong>Say:</strong> "The value in this scene is operational clarity: instead of debating intuition, teams can point to explicit coordinates and explain why those points were selected under a transparent objective and benchmark regime."</p>
+            <p class="line"><strong>Say:</strong> "If a manager asks what changed after using BioPath, the answer is concrete: fewer blind spots, clearer handover between shifts, and a written rationale for every trap position."</p>
+            <p class="line"><strong>Transition:</strong> "Next, I will show exactly where this context comes from and how we convert it transparently."</p>
+            <p class="line"><strong>Recovery:</strong> "The memory anchor is this: one map in, six coordinates out, measurable proof attached."</p>
+            <p class="note">Key line: specific scene first, then method.</p>
           </article>
 
           <article class="item">
-            <p class="time">1:40-2:40 · Real context + source · Criteria 1 + 2</p>
-            <p class="title">Explain the real-photo conversion transparently</p>
-            <p class="say"><strong>Say:</strong> "This image is Cambridge University Farm from a public Wikimedia source. We use public imagery only as contextual grounding, not private telemetry."</p>
-            <p class="say"><strong>Say:</strong> "For reproducibility, we convert context into synthetic walkable geometry and a transparent photo-informed prior distribution."</p>
+            <p class="time">1:40-2:35 · Segment 3</p>
+            <p class="title">Real context and source attribution</p>
+            <span class="tag">Criteria: 1 + 2</span>
+            <p class="line"><strong>Say:</strong> "This real farm context image is from Cambridge University Farm, sourced from a public Wikimedia record. We use public imagery as contextual grounding, not as private telemetry."</p>
+            <p class="line"><strong>Say:</strong> "For reproducible optimization, we convert context into synthetic walkable geometry plus a transparent photo-informed prior. That gives us a computable map with clear assumptions."</p>
+            <p class="line"><strong>Say:</strong> "So the claim is intentionally bounded: real photo for context, synthetic model for computation. We separate those two layers to stay scientifically honest and to keep the optimization space fully inspectable by reviewers."</p>
+            <p class="line"><strong>Transition:</strong> "With source clarified, I can now explain the solve pipeline in plain language."</p>
+            <p class="line"><strong>Recovery:</strong> "If needed, the shortest version is: real context informs a transparent synthetic computation space."</p>
+            <p class="cn">中文提示：强调“公开来源+透明转换”，降低评委对数据合法性的担忧。</p>
           </article>
 
           <article class="item">
-            <p class="time">2:40-3:50 · Product + method · Criteria 1 + 4</p>
-            <p class="title">Keep method understandable</p>
-            <p class="say"><strong>Say:</strong> "Pipeline is map to graph, stochastic movement simulation, optimization under fixed trap budget, then Monte Carlo benchmark against random baseline."</p>
-            <p class="say"><strong>Say:</strong> "The point is not fancy visuals. The point is reproducible, auditable decisions."</p>
+            <p class="time">2:35-3:30 · Segment 4</p>
+            <p class="title">How it works under the hood</p>
+            <span class="tag">Criteria: 1 + 4</span>
+            <p class="line"><strong>Say:</strong> "The technical flow is map to graph representation, stochastic movement modelling, optimization under a fixed trap budget, then Monte Carlo benchmarking against random placement."</p>
+            <p class="line"><strong>Say:</strong> "Our originality is robustness under uncertainty. We do not rely on one deterministic rule list."</p>
+            <p class="line"><strong>Say:</strong> "In plain terms, we do not accept a plan just because it looks good in one simulation. We test across plausible movement behaviors and prefer decisions that remain strong even when assumptions are perturbed."</p>
+            <p class="line"><strong>Say:</strong> "This is where my stochastic-process background matters: the model is designed to handle uncertainty explicitly, so recommendations remain reliable when field behavior is noisy or partially observed."</p>
+            <p class="line"><strong>Transition:</strong> "Now let me show why this is not only technically valid but also executable in practice."</p>
+            <p class="line"><strong>Recovery:</strong> "The business-relevant summary is that every run produces reproducible, reviewable artifacts."</p>
           </article>
 
           <article class="item">
-            <p class="time">3:50-5:10 · Traction speed · Criteria 2 + 4</p>
-            <p class="title">Execution velocity, with dates</p>
-            <p class="say"><strong>Say:</strong> "In the last cycle, we shipped solver CLI, benchmark API, online pitch studio, and run-level artifacts for review. That velocity is the traction signal at this stage."</p>
-            <p class="say"><strong>Say:</strong> "Our latest demo evidence reports capture probability, robust score, and uplift versus random in one run."</p>
+            <p class="time">3:30-4:20 · Segment 5</p>
+            <p class="title">Team credibility and execution fit</p>
+            <span class="tag">Criteria: 1 + 4</span>
+            <p class="line"><strong>Say:</strong> "I am Xiaoxiao Zhouyi, Founder and Sole Builder of BioPath, and a PhD Candidate in stochastic processes with direct relevance to movement uncertainty modelling."</p>
+            <p class="line"><strong>Say:</strong> "I built this stack end-to-end: solver, API, benchmark loop, and web pitch interface. That allows fast iteration with tight quality control."</p>
+            <p class="line"><strong>Say:</strong> "This matters for risk control. If judges question model assumptions, I can explain every layer from objective design to deployment behavior. That reduces translation loss between research, engineering, and commercial decision-making."</p>
+            <p class="line"><strong>Transition:</strong> "Execution trust matters only if it converts into measurable progress, so I will show traction next."</p>
+            <p class="line"><strong>Recovery:</strong> "The key message is founder-problem fit plus shipping capability, not just research theory."</p>
           </article>
 
           <article class="item">
-            <p class="time">5:10-6:20 · Market + business model · Criteria 2 + 3</p>
-            <p class="title">Bottom-up market logic</p>
-            <p class="say"><strong>Say:</strong> "We start with pilot customers, price per site per year, and convert through operator portfolios. This is a bottom-up path, not a top-down market-size slogan."</p>
-            <p class="say"><strong>Say:</strong> "Business model is paid pilot first, then recurring decision-support subscription with service layer."</p>
+            <p class="time">4:20-5:20 · Segment 6</p>
+            <p class="title">Traction and progress speed</p>
+            <span class="tag">Criteria: 2 + 4</span>
+            <p class="line"><strong>Say:</strong> "At this stage, traction is velocity plus evidence quality. We shipped a full solve-benchmark pipeline, stable API endpoints, and a presentation-ready web interface that can run in safe mode or live mode."</p>
+            <p class="line"><strong>Say:</strong> "Our run artifacts show capture probability, robust score, trap coordinates, and benchmark uplift. This allows reviewers to inspect outcomes instead of trusting slides."</p>
+            <p class="line"><strong>Say:</strong> "The progress signal I want you to see is not feature count. It is loop closure: each iteration improved reliability of the same decision path that users and judges care about, including stable fallback behavior when live services are unavailable."</p>
+            <p class="line"><strong>Say:</strong> "From a judging perspective, this is the difference between activity and momentum. Activity is having many partial outputs. Momentum is having one integrated pipeline that repeatedly produces decision-grade artifacts under operational constraints."</p>
+            <p class="line"><strong>Say:</strong> "So even at pre-scale stage, the execution quality is visible: we can demonstrate, rerun, and explain the same workflow consistently under both online and offline presentation conditions."</p>
+            <p class="line"><strong>Transition:</strong> "Now I will connect this technical progress to a realistic commercial path."</p>
+            <p class="line"><strong>Recovery:</strong> "If we skip details, the headline is simple: we already turned model output into deployable decision artifacts."</p>
           </article>
 
           <article class="item">
-            <p class="time">6:20-7:00 · Funding reality · Criteria 3 + 5</p>
-            <p class="title">Use practical funding band</p>
-            <p class="say"><strong>Say:</strong> "For the next step, we target LINCAM Proof of Concept Awards, officially listed at £5,000 to £20,000 with a 7-minute pitch format."</p>
-            <p class="say"><strong>Say:</strong> "That funding range matches our immediate pilot-evidence milestones."</p>
+            <p class="time">5:20-6:20 · Segment 7</p>
+            <p class="title">Market logic and pricing rationale</p>
+            <span class="tag">Criteria: 2 + 3 + 5</span>
+            <p class="line"><strong>Say:</strong> "Our go-to-market is bottom-up. We start with paid pilots for farms and operators, prove uplift, then convert successful pilots to annual subscriptions. We do not rely on top-down market slogans."</p>
+            <p class="line"><strong>Say:</strong> "Current pricing structure is £5k for an 8-week pilot and £9k per site per year for subscription. The reason is practical: buyers de-risk through pilots first, then pay for repeatable decision quality and auditability."</p>
+            <p class="line"><strong>Say:</strong> "For planning assumptions, we use 35 percent pilot-to-subscription conversion and target 8 paid sites in year one."</p>
+            <p class="line"><strong>Say:</strong> "Why this pricing is persuasive to buyers is simple: pilot pricing limits adoption risk, while annual pricing captures ongoing operational value. We are charging for measurable decision quality and governance continuity, not just for software access."</p>
+            <p class="line"><strong>Say:</strong> "If a reviewer asks whether this is too high or too low, the answer is that price is anchored to avoided inefficiency and decision confidence. We would rather defend a transparent, testable price logic than present artificially low pricing that cannot sustain delivery."</p>
+            <p class="line"><strong>Transition:</strong> "I will now place this pricing into a finance and funding reality check."</p>
+            <p class="line"><strong>Recovery:</strong> "The key point: price is tied to operational value and purchasing behavior, not arbitrary software benchmarks."</p>
           </article>
 
           <article class="item">
-            <p class="time">7:00-9:00 · Live demo · Criteria 1 + 4</p>
-            <p class="title">Two-minute operational proof</p>
-            <p class="say"><strong>Say while clicking:</strong> "Now I run solve and benchmark in one interface. You can see trap coordinates, capture probability, robust score, and uplift versus random baseline."</p>
-            <p class="say"><strong>Say:</strong> "This output is what teams can act on immediately and what reviewers can audit."</p>
-            <p class="say"><strong>Ask audience:</strong> "Is this clear so far, or should I show one more concrete map example?"</p>
+            <p class="time">6:20-7:00 · Segment 8</p>
+            <p class="title">Finance reality and funding pathway</p>
+            <span class="tag">Criteria: 3 + 5</span>
+            <p class="line"><strong>Say:</strong> "Our year-one cost baseline is £28k, covering people time, cloud, and pilot execution essentials. The goal is disciplined evidence generation, not premature scaling burn."</p>
+            <p class="line"><strong>Say:</strong> "We are currently applying through CREGS plus LINCAM PoC. Official Ceres pages list PoC awards at £5,000 to £20,000, with a 7-minute pitch format. This funding band is realistic for our immediate milestones."</p>
+            <p class="line"><strong>Say:</strong> "This is why the finance story is robust: each pound is connected to an output we can verify, such as pilot evidence, conversion validation, and contract-ready documentation. The plan is intentionally staged to reduce both technical and commercial uncertainty."</p>
+            <p class="line"><strong>Say:</strong> "Just as important, we are not claiming an oversized near-term market capture. We are claiming a disciplined first phase: prove repeatable uplift, convert pilots into recurring contracts, and only then scale with stronger evidence and lower execution risk."</p>
+            <p class="line"><strong>Say:</strong> "If challenged on realism, we can show the chain directly: pilot fee funds the field cycle, field cycle produces benchmark evidence, evidence drives conversion, and conversion supports subscription continuity."</p>
+            <p class="line"><strong>Transition:</strong> "With business and finance clarified, I will now run the live product flow in two minutes."</p>
+            <p class="line"><strong>Recovery:</strong> "If asked in one sentence: money in is converted into pilot evidence, conversion proof, and contract-ready outputs."</p>
           </article>
 
           <article class="item">
-            <p class="time">9:00-10:00 · Ask · Criteria 3 + 5</p>
-            <p class="title">Explicit ask tied to 18-24 month outcomes</p>
-            <p class="say"><strong>Say:</strong> "We ask for two pilot introductions, practical data access for one 8-week trial, and support for a LINCAM PoC application in the £5k–£20k range."</p>
-            <p class="say"><strong>Say:</strong> "In return, we deliver run-level uplift evidence, first recurring customer conversions, and a funding-ready scale package over the next 18 to 24 months."</p>
-            <p class="cn">中文提示：最后一句一定要是“钱换里程碑”，不要只说“钱要拿来招人”。</p>
+            <p class="time">7:00-9:00 · Segment 9</p>
+            <p class="title">Two-minute live demo script</p>
+            <span class="tag">Criteria: 1 + 4</span>
+            <p class="line"><strong>Say while clicking:</strong> "I start from the default Cambridge-style map. First, I run solve to get trap coordinates. Then I run benchmark to compare against random placement under the same trap budget."</p>
+            <p class="line"><strong>Say:</strong> "Now we read proof in one panel: capture probability, robust score, mean distances, and uplift against random baseline. This is the evidence layer that operators and reviewers both need."</p>
+            <p class="line"><strong>Say:</strong> "If API is unavailable, Pitch Safe mode still presents a curated, reproducible baseline so the narrative remains complete and transparent."</p>
+            <p class="line"><strong>Say:</strong> "In this two-minute segment, I intentionally keep metrics concise: trap count, capture probability, robust score, and uplift. This keeps the demo comprehensible under time pressure while preserving technical credibility."</p>
+            <p class="line"><strong>Say:</strong> "Notice that this is not a black-box demo. You can inspect map assumptions, objective choice, and run metadata. That visibility is important because customers need confidence to act, and judges need confidence to score execution quality."</p>
+            <p class="line"><strong>Transition:</strong> "I will close with an explicit ask tied to 18-to-24-month milestones."</p>
+            <p class="line"><strong>Recovery:</strong> "If demo timing gets tight: show proof panel first, then summarise solve-benchmark flow in one sentence."</p>
+            <p class="cn">中文提示：演示时只报关键四个值，不要读太多面板文字。</p>
+          </article>
+
+          <article class="item">
+            <p class="time">9:00-10:00 · Segment 10</p>
+            <p class="title">Explicit ask and milestone contract</p>
+            <span class="tag">Criteria: 3 + 5</span>
+            <p class="line"><strong>Say:</strong> "Our ask is three-part: two pilot introductions, practical data access for one 8-week trial, and support for a £5k-£20k LINCAM PoC application."</p>
+            <p class="line"><strong>Say:</strong> "In return over 18 to 24 months, we commit to validated uplift evidence across pilots, conversion from pilots to recurring contracts, and a funding-ready package for controlled expansion."</p>
+            <p class="line"><strong>Say:</strong> "This is a clear exchange: support now for measurable execution outcomes, not vague ambition."</p>
+            <p class="line"><strong>Say:</strong> "To summarize risk clearly: technical risk is managed by reproducible benchmarking, market risk by pilot-first conversion, and finance risk by conservative assumptions tied to milestones. That is why this ask is realistic and stage-appropriate."</p>
+            <p class="line"><strong>Say:</strong> "If you decide to support us, you will be able to track progress with concrete checkpoints: pilot launched, benchmark evidence delivered, conversion decision made, and recurring revenue established. That transparency is how we intend to earn trust at each step."</p>
+            <p class="line"><strong>Say:</strong> "And if we miss a milestone, we will report it with the same transparency, explain why, and adjust assumptions openly, because credibility comes from measurable accountability, not optimistic storytelling."</p>
+            <p class="line"><strong>Transition to Q&A:</strong> "I can now go deeper on model assumptions, pricing logic, or pilot rollout depending on what matters most to you."</p>
+            <p class="line"><strong>Recovery:</strong> "If time is cut short, end on this sentence: we are asking for practical pilot support to convert measurable proof into recurring revenue."</p>
+            <p class="note">Closing discipline: ask clearly, then stop speaking and invite questions.</p>
           </article>
         </div>
       </section>
-
-      <section class="tips">
-        <h2>High-probability Q&A lines</h2>
-        <ul>
-          <li><strong>"Is the heatmap real?"</strong> "The photo context is real and public. The optimization space is a transparent synthetic geometry for reproducible benchmarking."</li>
-          <li><strong>"Why not full CV/satellite now?"</strong> "At this stage we prioritize repeatable decisions and pilot evidence; richer site data integration is next-stage work."</li>
-          <li><strong>"Why should we trust this team?"</strong> "Because the same team built the solver, API, benchmark, and deployment loop, and we can show run-level evidence end-to-end."</li>
-        </ul>
-      </section>
-
-      <p class="footer">BioPath script v2 · clarity first, measurable second, ask explicit</p>
     </main>
+
+    <p class="footer">BioPath script · clarity first, concrete example, measurable proof, explicit ask</p>
   </body>
 </html>

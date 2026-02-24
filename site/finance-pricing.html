@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BioPath Finance & Pricing</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap");
+
+      :root {
+        --bg: #f3f7f5;
+        --card: #ffffff;
+        --ink: #102d24;
+        --soft: #45675b;
+        --line: rgba(16, 45, 36, 0.15);
+      }
+
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+
+      body {
+        font-family: "Inter", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(980px 520px at -10% -20%, rgba(20, 107, 78, 0.1), transparent 62%),
+          radial-gradient(820px 520px at 110% -20%, rgba(191, 118, 62, 0.09), transparent 58%),
+          linear-gradient(165deg, #f8faf9, var(--bg));
+      }
+
+      .top {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: rgba(248, 251, 249, 0.92);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--line);
+        padding: 0.74rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.8rem;
+      }
+
+      .top strong { font-family: "Manrope", sans-serif; font-size: 1.04rem; }
+      .top nav { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+      .top a {
+        text-decoration: none;
+        color: #1f4f3e;
+        font-weight: 700;
+        border-bottom: 2px solid rgba(31, 79, 62, 0.25);
+      }
+
+      .page {
+        width: min(1180px, calc(100% - 1.2rem));
+        margin: 0.95rem auto 1.1rem;
+        display: grid;
+        gap: 0.84rem;
+      }
+
+      .hero,
+      .block {
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: var(--card);
+        box-shadow: 0 14px 30px rgba(12, 33, 30, 0.07);
+      }
+
+      .hero { padding: 0.95rem; }
+      .hero h1 {
+        margin: 0;
+        font-family: "Manrope", sans-serif;
+        font-size: clamp(1.9rem, 4.3vw, 3rem);
+        line-height: 1.05;
+      }
+
+      .hero p {
+        margin: 0.6rem 0 0;
+        color: var(--soft);
+        line-height: 1.55;
+      }
+
+      .chips {
+        margin-top: 0.72rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.46rem;
+      }
+
+      .chip {
+        border: 1px solid rgba(16, 45, 36, 0.15);
+        border-radius: 999px;
+        padding: 0.3rem 0.58rem;
+        background: #f8fcfa;
+        font-size: 0.74rem;
+        font-weight: 700;
+      }
+
+      .block { padding: 0.9rem; }
+      .block h2 {
+        margin: 0;
+        font-family: "Manrope", sans-serif;
+        font-size: 1.18rem;
+      }
+
+      .block p {
+        margin: 0.45rem 0 0;
+        color: #35584d;
+        line-height: 1.54;
+      }
+
+      .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.72rem; margin-top: 0.62rem; }
+      .grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.62rem; margin-top: 0.62rem; }
+
+      .card {
+        border: 1px solid rgba(16, 45, 36, 0.16);
+        border-radius: 14px;
+        background: #f9fcfb;
+        padding: 0.66rem;
+      }
+
+      .card h3 {
+        margin: 0;
+        font-family: "Manrope", sans-serif;
+        font-size: 0.98rem;
+      }
+
+      .card ul {
+        margin: 0.4rem 0 0;
+        padding-left: 1rem;
+        display: grid;
+        gap: 0.3rem;
+      }
+
+      .metric {
+        border: 1px solid rgba(16, 45, 36, 0.16);
+        border-radius: 12px;
+        background: #fbfefd;
+        padding: 0.56rem;
+      }
+
+      .metric span {
+        display: block;
+        font-size: 0.73rem;
+        color: #5a786d;
+        font-weight: 700;
+      }
+
+      .metric strong {
+        display: block;
+        margin-top: 0.12rem;
+        font-family: "Manrope", sans-serif;
+        font-size: 1.3rem;
+      }
+
+      .mono {
+        margin-top: 0.5rem;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.74rem;
+        color: #4f7164;
+      }
+
+      .source {
+        margin-top: 0.45rem;
+        font-size: 0.76rem;
+        color: #5e7a6e;
+      }
+
+      .footer {
+        text-align: center;
+        color: #648277;
+        font-size: 0.8rem;
+        padding-bottom: 0.45rem;
+      }
+
+      @media (max-width: 900px) {
+        .grid2,
+        .grid3 { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="top">
+      <strong>BioPath Finance & Pricing</strong>
+      <nav>
+        <a href="./">Pitch Studio</a>
+        <a href="./pitch-deck.html">Online Deck</a>
+        <a href="./pitch-script.html">Speaker Script</a>
+      </nav>
+    </header>
+
+    <main class="page">
+      <section class="hero">
+        <h1>Finance that judges can follow in one pass</h1>
+        <p>
+          This page is the “10分钟之外” deep-dive: why the price is set this way, what assumptions are used,
+          and how funding translates into milestones. Founder profile: <strong>Xiaoxiao Zhouyi</strong>, Founder & Sole Builder,
+          PhD Candidate in stochastic processes.
+        </p>
+        <div class="chips">
+          <span class="chip">Pilot: £5k / 8 weeks</span>
+          <span class="chip">Subscription: £9k / site / year</span>
+          <span class="chip">Pilot -> Subscription: 35%</span>
+          <span class="chip">Year-1 Cost Baseline: £28k</span>
+          <span class="chip">Year-end target: 8 paid sites</span>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2>Why this price</h2>
+        <div class="grid2">
+          <article class="card">
+            <h3>Buyer behavior alignment</h3>
+            <ul>
+              <li>Early buyers prefer a short paid pilot to reduce adoption risk.</li>
+              <li>The pilot price is low enough for practical approval, high enough to validate willingness to pay.</li>
+              <li>Annual subscription reflects ongoing decision value and reproducible reporting value.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Value justification</h3>
+            <ul>
+              <li>BioPath does not only suggest points; it produces benchmark-backed evidence.</li>
+              <li>This reduces rework and avoids ad-hoc placement cycles.</li>
+              <li>The price is tied to measurable operational outcomes, not feature count.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2>Unit economics (starter model)</h2>
+        <div class="grid3">
+          <article class="metric">
+            <span>Pilot price</span>
+            <strong>£5,000</strong>
+          </article>
+          <article class="metric">
+            <span>Annual subscription</span>
+            <strong>£9,000</strong>
+          </article>
+          <article class="metric">
+            <span>Conversion assumption</span>
+            <strong>35%</strong>
+          </article>
+        </div>
+        <p class="mono">Replace slots (if needed): pilot_days, support_hours_per_site, cloud_cost_per_site, field_visit_cost.</p>
+      </section>
+
+      <section class="block">
+        <h2>Bottom-up forecast logic</h2>
+        <div class="grid2">
+          <article class="card">
+            <h3>Year-1 planning assumptions</h3>
+            <ul>
+              <li>8 paid sites by year end.</li>
+              <li>35% conversion from pilot to subscription.</li>
+              <li>Cost baseline £28k (people + cloud + essential field execution).</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>How to explain in Q&A</h3>
+            <ul>
+              <li>Show the formula first: customers × price × conversion.</li>
+              <li>State each assumption and why it is conservative.</li>
+              <li>Invite reviewers to stress-test assumptions openly.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2>Milestones in 18-24 months</h2>
+        <div class="grid2">
+          <article class="card">
+            <h3>Execution milestones</h3>
+            <ul>
+              <li>Two controlled pilots with complete run-level artifacts.</li>
+              <li>Demonstrated uplift repeatability across pilot cycles.</li>
+              <li>First recurring subscription conversions and case studies.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Funding milestones</h3>
+            <ul>
+              <li>Currently applying CREGS + LINCAM PoC for near-term validation phase.</li>
+              <li>LINCAM PoC published range: £5,000-£20,000 (official Ceres pages).</li>
+              <li>Funding ask is tied to pilot evidence and conversion milestones, not headcount-only spending.</li>
+            </ul>
+            <p class="source">
+              Official pages:
+              <a href="https://www.ceresagritech.org/lincam-linc-camb/contact/" target="_blank" rel="noreferrer">LINCAM PoC details</a>
+              ·
+              <a href="https://www.ceresagritech.org/lincam-linc-camb/" target="_blank" rel="noreferrer">Ceres collaboration page</a>
+              (accessed 24 Feb 2026)
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <p class="footer">BioPath finance module · practical assumptions, explicit milestones, review-ready logic</p>
+  </body>
+</html>

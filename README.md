@@ -50,6 +50,8 @@ Useful query shortcuts:
 Pitch helper pages:
 
 - One-page printable guide: `site/quickstart-onepager.html`
+- Finance & pricing deep dive: `site/finance-pricing.html`
+- Judge Q&A bank: `docs/PITCH_QA_BANK.md`
 - Detailed checklist: `docs/PITCH_QUICKSTART.md`
 
 ## Public Demo Link (No Render Account Needed)

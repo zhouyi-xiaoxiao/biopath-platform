@@ -38,6 +38,7 @@ if latest.exists():
     except Exception:
         latest_data = {}
     heatmap = latest_data.get("artifacts", {}).get("heatmap")
+    summary = latest_data.get("artifacts", {}).get("summary")
     if heatmap:
         hp = Path(str(heatmap))
         if not hp.is_absolute():
@@ -45,4 +46,23 @@ if latest.exists():
         if hp.exists():
             target = root / "site" / "data" / "latest-heatmap.png"
             shutil.copyfile(hp, target)
+    if summary:
+        sp = Path(str(summary))
+        if not sp.is_absolute():
+            sp = (root / sp).resolve()
+        if sp.exists():
+            target = root / "site" / "data" / "latest-summary.md"
+            shutil.copyfile(sp, target)
+
+site_latest = root / "site" / "data" / "latest.json"
+if site_latest.exists():
+    try:
+        latest_site_data = json.loads(site_latest.read_text())
+    except Exception:
+        latest_site_data = {}
+    latest_site_data["artifacts_site"] = {
+        "heatmap": "./data/latest-heatmap.png",
+        "summary": "./data/latest-summary.md" if (root / "site" / "data" / "latest-summary.md").exists() else "./assets/cambridge-photo-informed-summary.md",
+    }
+    site_latest.write_text(json.dumps(latest_site_data, indent=2) + "\n")
 PY
