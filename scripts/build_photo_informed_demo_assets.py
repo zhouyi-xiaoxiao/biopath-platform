@@ -91,36 +91,47 @@ def _save_transform_figure(
     mask = geom == 0
     weight_masked = np.ma.array(weight_arr, mask=mask)
 
-    fig, axes = plt.subplots(1, 3, figsize=(14, 4.8), dpi=160)
+    fig, axes = plt.subplots(1, 3, figsize=(15.2, 5.6), dpi=180, facecolor="#08110d")
+    panel_bg = "#0f1b16"
+
+    for ax in axes:
+        ax.set_facecolor(panel_bg)
+        for spine in ax.spines.values():
+            spine.set_color("#2d463b")
+            spine.set_linewidth(0.9)
 
     axes[0].imshow(photo)
-    axes[0].set_title("1) Real Farm Photo (Public Source)", fontsize=10, pad=8)
+    axes[0].set_title("1) Real farm context (public source)", fontsize=10, pad=9, color="#e6f8ef")
     axes[0].axis("off")
 
     cmap_geom = plt.cm.Greens.copy()
-    axes[1].imshow(geom, cmap=cmap_geom, origin="upper", vmin=0, vmax=1)
-    axes[1].set_title("2) Geometry Extraction -> Walkable Grid", fontsize=10, pad=8)
+    axes[1].imshow(geom, cmap=cmap_geom, origin="upper", vmin=0, vmax=1, interpolation="nearest")
+    axes[1].set_title("2) Geometry extraction -> walkable grid", fontsize=10, pad=9, color="#e6f8ef")
     axes[1].set_xticks([])
     axes[1].set_yticks([])
-    axes[1].set_xlabel("Synthetic geometry for computation", fontsize=8)
+    axes[1].set_xlabel("Synthetic geometry for reproducible optimisation", fontsize=8, color="#bddbcc")
 
-    cmap_w = plt.cm.magma.copy()
-    cmap_w.set_bad(color="#161616")
-    im = axes[2].imshow(weight_masked, cmap=cmap_w, origin="upper")
+    cmap_w = plt.cm.inferno.copy()
+    cmap_w.set_bad(color="#101418")
+    im = axes[2].imshow(weight_masked, cmap=cmap_w, origin="upper", interpolation="nearest")
     if traps:
         rows, cols = zip(*traps)
-        axes[2].scatter(cols, rows, c="#d5fff0", marker="x", s=34, linewidths=2)
-    axes[2].set_title("3) Photo-informed Risk Prior + Optimized Traps", fontsize=10, pad=8)
+        axes[2].scatter(cols, rows, c="#d8fef0", marker="x", s=40, linewidths=2.2)
+    axes[2].set_title("3) Photo-informed prior + optimised traps", fontsize=10, pad=9, color="#e6f8ef")
     axes[2].set_xticks([])
     axes[2].set_yticks([])
-    axes[2].set_xlabel("Brighter = higher prior rodent activity", fontsize=8)
+    axes[2].set_xlabel("Brighter = higher prior rodent activity", fontsize=8, color="#bddbcc")
 
-    cbar = fig.colorbar(im, ax=axes[2], fraction=0.046, pad=0.04)
-    cbar.set_label("Relative activity prior", fontsize=8)
+    cbar = fig.colorbar(im, ax=axes[2], fraction=0.046, pad=0.035)
+    cbar.set_label("Relative activity prior", fontsize=8, color="#e6f8ef")
+    cbar.ax.tick_params(labelsize=8, colors="#d5efe2")
+    cbar.outline.set_edgecolor("#2d463b")
 
-    fig.suptitle("BioPath Source-to-Solve Conversion Chain", fontsize=12, y=0.98)
-    fig.tight_layout(rect=[0, 0, 1, 0.95])
-    fig.savefig(out_path)
+    fig.text(0.333, 0.52, "→", fontsize=28, color="#d2ede0", ha="center", va="center")
+    fig.text(0.665, 0.52, "→", fontsize=28, color="#d2ede0", ha="center", va="center")
+    fig.suptitle("BioPath Source-to-Solve Conversion Chain", fontsize=13, y=0.97, color="#effaf4")
+    fig.tight_layout(rect=[0, 0, 1, 0.94])
+    fig.savefig(out_path, facecolor=fig.get_facecolor())
     plt.close(fig)
 
 

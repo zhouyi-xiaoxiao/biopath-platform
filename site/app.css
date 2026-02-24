@@ -244,6 +244,27 @@ body {
   gap: 0.56rem;
 }
 
+.hero-secondary-links {
+  margin-top: 0.58rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.82rem;
+  align-items: center;
+}
+
+.hero-secondary-links a {
+  color: rgba(230, 249, 239, 0.96);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(230, 249, 239, 0.38);
+  line-height: 1.3;
+}
+
+.hero-secondary-links a:hover {
+  border-bottom-color: rgba(230, 249, 239, 0.74);
+}
+
 .hero-script {
   margin-top: 1.04rem;
   border: 1px solid rgba(233, 252, 243, 0.25);
@@ -1158,6 +1179,10 @@ body.pitch-mode .pitch-panel {
     grid-template-columns: 1fr 1fr;
   }
 
+  .hero-secondary-links {
+    gap: 0.58rem;
+  }
+
   .script-grid {
     grid-template-columns: 1fr;
   }
@@ -1201,6 +1226,11 @@ body.pitch-mode .pitch-panel {
 
   .hero-actions {
     grid-template-columns: 1fr;
+  }
+
+  .hero-secondary-links {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .layout {

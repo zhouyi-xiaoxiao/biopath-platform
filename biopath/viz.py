@@ -15,7 +15,7 @@ def save_heatmap(
     traps: Iterable[Tuple[int, int]],
     out_path: str | Path,
 ) -> None:
-    """Save a distance heatmap with trap overlay to a PNG file."""
+    """Save a polished distance heatmap with trap overlay to a PNG file."""
     out_path = Path(out_path)
 
     try:
@@ -27,28 +27,55 @@ def save_heatmap(
         _save_heatmap_fallback(grid_map, distance_map, traps, out_path)
         return
 
-    data = [
-        [math.nan if value is None else value for value in row] for row in distance_map
-    ]
+    data = [[math.nan if value is None else value for value in row] for row in distance_map]
     cmap = plt.cm.viridis.copy()
-    cmap.set_bad(color="#1a1a1a")
+    cmap.set_bad(color="#161a1d")
 
-    fig, ax = plt.subplots(figsize=(6, 6))
-    im = ax.imshow(data, cmap=cmap, origin="upper")
-    fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04, label="Distance (m)")
+    fig, ax = plt.subplots(figsize=(7.6, 4.6), dpi=180)
+    fig.patch.set_facecolor("#0c1512")
+    ax.set_facecolor("#0f1a16")
+
+    im = ax.imshow(data, cmap=cmap, origin="upper", interpolation="nearest")
+    cbar = fig.colorbar(im, ax=ax, fraction=0.038, pad=0.03)
+    cbar.set_label("Distance (m)", color="#e7f6ee", fontsize=8)
+    cbar.ax.tick_params(labelsize=8, colors="#d8efe4")
+    cbar.outline.set_edgecolor("#2f4a3e")
 
     traps_list = list(traps)
     if traps_list:
         rows, cols = zip(*traps_list)
-        ax.scatter(cols, rows, c="#e74c3c", s=30, marker="x", linewidths=2, label="Traps")
-        ax.legend(loc="upper right")
+        ax.scatter(cols, rows, c="#fff4e8", s=44, marker="x", linewidths=2.2, label="Traps")
+        leg = ax.legend(
+            loc="upper right",
+            frameon=True,
+            fontsize=7,
+            facecolor="#182520",
+            edgecolor="#2f4a3e",
+            labelcolor="#eaf8f0",
+        )
+        for txt in leg.get_texts():
+            txt.set_color("#eaf8f0")
 
-    ax.set_title(f"{grid_map.name} - Distance to Nearest Trap")
+    for spine in ax.spines.values():
+        spine.set_color("#2f4a3e")
+        spine.set_linewidth(0.9)
+
     ax.set_xticks([])
     ax.set_yticks([])
+    ax.text(
+        0.01,
+        1.02,
+        "Distance-to-nearest-trap heatmap",
+        transform=ax.transAxes,
+        ha="left",
+        va="bottom",
+        fontsize=8,
+        color="#d4eee1",
+        fontweight="bold",
+    )
 
-    fig.tight_layout()
-    fig.savefig(out_path, dpi=150)
+    fig.tight_layout(pad=0.2)
+    fig.savefig(out_path, dpi=180, facecolor=fig.get_facecolor(), bbox_inches="tight", pad_inches=0.08)
     plt.close(fig)
 
 
