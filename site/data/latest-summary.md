@@ -1,21 +1,22 @@
-# BioPath Report: Cambridgeshire Demo Farm (Publicly Inspired Synthetic)
+# BioPath Report: Cambridgeshire Farmyard Demo (Synthetic Geometry + Publicly Inspired Risk Prior)
 
 - Cell size (m): 1.0
 - Walkable cells: 240
 - Trap count: 6
-- Objective (robust_capture): 0.481
-- Mean distance (m): 4.521
-- Weighted mean distance (m): 4.521
-- Max distance (m): 13.000
-- P95 distance (m): 10.000
+- Objective (robust_capture): 0.536
+- Mean distance (m): 4.275
+- Weighted mean distance (m): 3.861
+- Max distance (m): 10.000
+- P95 distance (m): 8.000
+- Weight total: 434.236
 
 ## Traps (row, col)
-- (10, 23)
-- (3, 11)
-- (6, 7)
-- (2, 17)
-- (11, 15)
-- (3, 3)
+- (7, 8)
+- (3, 10)
+- (8, 22)
+- (11, 10)
+- (1, 7)
+- (3, 18)
 
 ## Heatmap
 

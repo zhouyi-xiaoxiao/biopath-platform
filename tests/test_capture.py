@@ -69,5 +69,23 @@ def test_robust_capture_keeps_directional_scenarios_on_dense_map():
     )
 
     scenario_names = {str(s["name"]) for s in robust.scenario_scores}
+    assert "lazy_neutral" in scenario_names
     assert "biased_down" in scenario_names
     assert "sparse_stress" not in scenario_names
+
+
+def test_robust_capture_uses_primary_movement_model_for_neutral_scenario():
+    grid_map = load_map(Path("tests/fixtures/simple_room.json"))
+
+    robust = robust_capture_score(
+        grid_map,
+        [(2, 2)],
+        mc_runs=80,
+        time_horizon_steps=24,
+        seed=5,
+        primary_movement_model="unbiased",
+    )
+
+    scenario_names = {str(s["name"]) for s in robust.scenario_scores}
+    assert "unbiased_neutral" in scenario_names
+    assert "lazy_neutral" not in scenario_names

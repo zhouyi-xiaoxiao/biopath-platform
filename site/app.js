@@ -63,7 +63,7 @@ const TOUR_STEPS = [
   },
   {
     title: "Run Benchmark",
-    body: "Benchmark shows uplift against random baseline. This is your proof metric.",
+    body: "Benchmark shows uplift against heuristic baseline (with random as secondary reference).",
     focusId: "runBenchmark",
   },
   {
@@ -470,6 +470,49 @@ function setBenchmarkUi(running) {
   }
 }
 
+function getBaselineSummary(benchmark = null) {
+  const fallback = {
+    label: "Heuristic baseline",
+    mean: null,
+    samples: null,
+    upliftMean: null,
+    upliftPct: null,
+  };
+  if (!benchmark || typeof benchmark !== "object") return fallback;
+
+  let label = String(benchmark.baseline_label || "").trim();
+  let mean = null;
+  let samples = null;
+  if (benchmark.baseline && typeof benchmark.baseline === "object") {
+    if (typeof benchmark.baseline.mean === "number") mean = benchmark.baseline.mean;
+    if (typeof benchmark.baseline.samples === "number") samples = benchmark.baseline.samples;
+  }
+
+  let upliftMean = typeof benchmark.uplift_vs_baseline_mean === "number" ? benchmark.uplift_vs_baseline_mean : null;
+  let upliftPct = typeof benchmark.uplift_vs_baseline_pct === "number" ? benchmark.uplift_vs_baseline_pct : null;
+
+  if (mean === null && typeof benchmark?.baseline?.mean === "number") {
+    mean = benchmark.baseline.mean;
+  }
+
+  // Backward compatibility with old random-only benchmark payload.
+  if (upliftMean === null && typeof benchmark.uplift_vs_random_mean === "number") {
+    upliftMean = benchmark.uplift_vs_random_mean;
+  }
+  if (upliftPct === null && typeof benchmark.uplift_vs_random_pct === "number") {
+    upliftPct = benchmark.uplift_vs_random_pct;
+  }
+  if (!label) {
+    const mode = String(benchmark.baseline_mode || "").toLowerCase();
+    label = mode === "random" ? "Random baseline" : "Heuristic baseline";
+    if (mode !== "random" && benchmark.uplift_vs_baseline_mean == null && benchmark.uplift_vs_random_mean != null) {
+      label = "Random baseline";
+    }
+  }
+
+  return { label, mean, samples, upliftMean, upliftPct };
+}
+
 function suggestLowerMcRuns() {
   const current = Number($("mcRuns").value || 140);
   const next = Math.max(40, Math.floor(current * 0.65));
@@ -483,12 +526,9 @@ function updateHeroProof(result, benchmark = null) {
   const runId = result?.run_id || "n/a";
   const trapCount = Array.isArray(result?.traps) ? result.traps.length : 0;
 
-  const uplift = benchmark && typeof benchmark.uplift_vs_random_mean === "number"
-    ? benchmark.uplift_vs_random_mean
-    : null;
-  const baseline = benchmark && benchmark.baseline && typeof benchmark.baseline.mean === "number"
-    ? benchmark.baseline.mean
-    : null;
+  const baselineSummary = getBaselineSummary(benchmark);
+  const uplift = baselineSummary.upliftMean;
+  const baseline = baselineSummary.mean;
 
   $("heroRunId").textContent = runId;
   $("heroCapture").textContent = cp;
@@ -498,10 +538,13 @@ function updateHeroProof(result, benchmark = null) {
   if (uplift === null) {
     $("heroUplift").textContent = "Run benchmark to compute uplift";
   } else if (baseline && baseline > 0) {
-    const relPct = typeof benchmark?.uplift_vs_random_pct === "number"
-      ? benchmark.uplift_vs_random_pct
+    const relPct = baselineSummary.upliftPct !== null
+      ? baselineSummary.upliftPct
       : (uplift / baseline) * 100;
-    $("heroUplift").textContent = `+${relPct.toFixed(1)}% vs random`;
+    const shortLabel = baselineSummary.label.toLowerCase().includes("heuristic")
+      ? "heuristic baseline"
+      : "baseline";
+    $("heroUplift").textContent = `+${relPct.toFixed(1)}% vs ${shortLabel}`;
   } else {
     $("heroUplift").textContent = `+${(uplift * 100).toFixed(1)} pp`;
   }
@@ -541,15 +584,12 @@ function renderProof(result, benchmark = null) {
     </article>
   `;
 
-  const uplift = benchmark && typeof benchmark.uplift_vs_random_mean === "number"
-    ? benchmark.uplift_vs_random_mean
-    : null;
-  const baseline = benchmark && benchmark.baseline && typeof benchmark.baseline.mean === "number"
-    ? benchmark.baseline.mean
-    : null;
-  const baselineSamples = benchmark?.baseline?.samples;
-  const upliftRelPct = benchmark && typeof benchmark.uplift_vs_random_pct === "number"
-    ? benchmark.uplift_vs_random_pct
+  const baselineSummary = getBaselineSummary(benchmark);
+  const uplift = baselineSummary.upliftMean;
+  const baseline = baselineSummary.mean;
+  const baselineSamples = baselineSummary.samples;
+  const upliftRelPct = baselineSummary.upliftPct !== null
+    ? baselineSummary.upliftPct
     : (uplift !== null && baseline && baseline > 0 ? (uplift / baseline) * 100 : null);
 
   if (uplift === null) {
@@ -567,7 +607,21 @@ function renderProof(result, benchmark = null) {
   } else {
     $("baselineValue").textContent = `${(baseline * 100).toFixed(1)}%`;
   }
+  $("baselineLabel").textContent = `${baselineSummary.label} mean`;
   $("benchmarkState").textContent = benchmark ? "Benchmark complete" : "No benchmark yet";
+
+  const distanceNoteEl = $("distanceNote");
+  const meanVal = Number(metrics.mean_distance_m);
+  const weightedVal = Number(metrics.weighted_mean_distance_m);
+  if (Number.isFinite(meanVal) && Number.isFinite(weightedVal)) {
+    if (Math.abs(meanVal - weightedVal) < 1e-6) {
+      distanceNoteEl.textContent = "Mean and weighted mean are equal in this run; this can happen when effective risk weights are near-uniform around selected traps.";
+    } else {
+      distanceNoteEl.textContent = "Weighted mean uses photo-informed risk weights, so it highlights high-priority risk corridors differently from plain mean distance.";
+    }
+  } else {
+    distanceNoteEl.textContent = "Distance metrics update after solve/benchmark completes.";
+  }
 
   const summaryPath = extractArtifact(result, "summary");
   const link = $("summaryLink");
@@ -605,23 +659,20 @@ function setPitchNarrative(result, benchmark = null) {
   const cp = typeof result?.capture_probability === "number" ? `${(result.capture_probability * 100).toFixed(1)}%` : "n/a";
   const rb = typeof result?.robust_score === "number" ? `${(result.robust_score * 100).toFixed(1)}%` : "n/a";
 
-  const uplift = benchmark && typeof benchmark.uplift_vs_random_mean === "number"
-    ? benchmark.uplift_vs_random_mean
-    : null;
-  const baseline = benchmark && benchmark.baseline && typeof benchmark.baseline.mean === "number"
-    ? benchmark.baseline.mean
-    : null;
+  const baselineSummary = getBaselineSummary(benchmark);
+  const uplift = baselineSummary.upliftMean;
+  const baseline = baselineSummary.mean;
 
   let proofLine = `With k=${trapCount} traps, optimized capture is ${cp} and robust capture is ${rb}.`;
   if (uplift !== null && baseline && baseline > 0) {
     const baselinePct = `${(baseline * 100).toFixed(1)}%`;
-    const relPct = typeof benchmark?.uplift_vs_random_pct === "number"
-      ? benchmark.uplift_vs_random_pct
+    const relPct = baselineSummary.upliftPct !== null
+      ? baselineSummary.upliftPct
       : (uplift / baseline) * 100;
     const upliftPct = `+${relPct.toFixed(1)}%`;
-    proofLine = `With k=${trapCount} traps, BioPath achieves capture ${cp} vs random baseline ${baselinePct}, delivering uplift ${upliftPct}. Robust capture is ${rb} (conservative performance across uncertainty scenarios), validated with Monte Carlo N=${mcRuns}.`;
+    proofLine = `With k=${trapCount} traps, BioPath achieves capture ${cp} vs ${baselineSummary.label.toLowerCase()} ${baselinePct}, delivering uplift ${upliftPct}. Robust capture is ${rb} (conservative performance across uncertainty scenarios), validated with Monte Carlo N=${mcRuns}.`;
   } else {
-    proofLine += ` Run benchmark to add random baseline and uplift. Robust capture means conservative performance across uncertainty scenarios.`;
+    proofLine += " Run benchmark to add heuristic-baseline uplift. Robust capture means conservative performance across uncertainty scenarios.";
   }
 
   const askLine = "We are currently applying CREGS + LINCAM PoC and ask for 2 pilot introductions, one 8-week data access trial, and support for a £5k-£20k PoC application.";
@@ -633,9 +684,7 @@ function setPitchNarrative(result, benchmark = null) {
 }
 
 function setNoApiFriendlyState() {
-  setCompareBox(
-    "Live API is not connected. Pitch Safe mode is active with curated evidence, so you can continue the demo without interruption."
-  );
+  setCompareBox("Pitch Safe mode active: curated optimized vs heuristic-baseline evidence is ready for stage demo.");
   const fallback = $("summaryFallback");
   fallback.textContent = "Pitch Safe mode uses curated run artifacts for reliable presentation.";
 }
@@ -816,7 +865,7 @@ async function runBenchmark({ quiet = false } = {}) {
   try {
     const result = await callApi("/api/benchmark", {
       method: "POST",
-      body: JSON.stringify({ ...payload, baseline_samples: 40 }),
+      body: JSON.stringify({ ...payload, baseline_samples: 40, baseline_mode: "heuristic" }),
       timeoutMs: 120000,
       signal: state.benchmarkController.signal,
     });
@@ -825,8 +874,15 @@ async function runBenchmark({ quiet = false } = {}) {
     state.latestResult = result.run;
     renderProof(result.run, result);
     setPitchNarrative(result.run, result);
-    setCompareBox(pretty(result));
-    $("runHint").textContent = "Benchmark complete. Quote uplift and robust score in your proof segment.";
+    const baselineSummary = getBaselineSummary(result);
+    const cp = typeof result?.run?.capture_probability === "number" ? `${(result.run.capture_probability * 100).toFixed(1)}%` : "n/a";
+    const rb = typeof result?.run?.robust_score === "number" ? `${(result.run.robust_score * 100).toFixed(1)}%` : "n/a";
+    const base = baselineSummary.mean !== null ? `${(baselineSummary.mean * 100).toFixed(1)}%` : "n/a";
+    const uplift = baselineSummary.upliftPct !== null ? `+${baselineSummary.upliftPct.toFixed(1)}%` : "n/a";
+    setCompareBox(
+      `Benchmark complete.\nOptimized capture: ${cp}\n${baselineSummary.label}: ${base}\nUplift: ${uplift}\nRobust capture: ${rb}\nMC runs: ${result.mc_runs || payload.mc_runs || "n/a"}`
+    );
+    $("runHint").textContent = "Benchmark complete. Quote optimized vs heuristic baseline + uplift + robust score.";
     await loadRunList();
     if (!quiet) showToast("Benchmark completed");
   } catch (error) {
@@ -993,6 +1049,20 @@ function bindEvents() {
   });
   $("autoConnectHero")?.addEventListener("click", () => autoDetectAndConnect());
   $("healthCheckHero")?.addEventListener("click", () => runHealthCheck());
+  $("copyDemoCommand")?.addEventListener("click", async () => {
+    const cmd = "bash scripts/start_public_demo.sh";
+    try {
+      await navigator.clipboard.writeText(cmd);
+    } catch (_) {
+      const area = document.createElement("textarea");
+      area.value = cmd;
+      document.body.appendChild(area);
+      area.select();
+      document.execCommand("copy");
+      document.body.removeChild(area);
+    }
+    showToast("Start command copied");
+  });
 
   $("runSolve").addEventListener("click", () => runSolve());
   $("runBenchmark").addEventListener("click", () => runBenchmark());

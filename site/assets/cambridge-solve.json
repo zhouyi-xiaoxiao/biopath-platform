@@ -1,0 +1,89 @@
+{
+  "map": "Cambridgeshire Demo Farm (Publicly Inspired Synthetic)",
+  "cell_size_m": 1.0,
+  "k": 6,
+  "objective": {
+    "name": "robust_capture",
+    "value": 0.45
+  },
+  "metrics": {
+    "mean_distance_m": 4.5375,
+    "weighted_mean_distance_m": 4.5375,
+    "max_distance_m": 13.0,
+    "p95_distance_m": 10.0,
+    "coverage_within_radius": null,
+    "weighted_coverage_within_radius": null
+  },
+  "capture_probability": 0.48125,
+  "expected_time_to_capture": 35.125,
+  "ci95_low": 0.40382869166453594,
+  "ci95_high": 0.5586713083354641,
+  "robust_score": 0.45,
+  "scenario_scores": [
+    {
+      "name": "lazy_neutral",
+      "capture_probability": 0.45,
+      "expected_time_to_capture": 35.50625,
+      "ci95_low": 0.3729125496594939,
+      "ci95_high": 0.5270874503405062
+    },
+    {
+      "name": "biased_right",
+      "capture_probability": 0.55,
+      "expected_time_to_capture": 31.11875,
+      "ci95_low": 0.4729125496594939,
+      "ci95_high": 0.6270874503405062
+    },
+    {
+      "name": "biased_down",
+      "capture_probability": 0.475,
+      "expected_time_to_capture": 33.48125,
+      "ci95_low": 0.3976211026829666,
+      "ci95_high": 0.5523788973170334
+    }
+  ],
+  "movement_model": "lazy",
+  "mc_runs": 160,
+  "time_horizon_steps": 48,
+  "seed": 7,
+  "weights_provided": false,
+  "coverage_radius_m": null,
+  "traps": [
+    {
+      "row": 10,
+      "col": 23,
+      "x_m": 23.0,
+      "y_m": 10.0
+    },
+    {
+      "row": 3,
+      "col": 11,
+      "x_m": 11.0,
+      "y_m": 3.0
+    },
+    {
+      "row": 2,
+      "col": 2,
+      "x_m": 2.0,
+      "y_m": 2.0
+    },
+    {
+      "row": 6,
+      "col": 7,
+      "x_m": 7.0,
+      "y_m": 6.0
+    },
+    {
+      "row": 2,
+      "col": 17,
+      "x_m": 17.0,
+      "y_m": 2.0
+    },
+    {
+      "row": 11,
+      "col": 15,
+      "x_m": 15.0,
+      "y_m": 11.0
+    }
+  ]
+}

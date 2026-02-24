@@ -68,7 +68,7 @@ body.ui-pitch-live .connection-banner {
 .connection-banner span { flex: 1; font-size: 0.84rem; }
 
 .topbar {
-  width: min(1520px, calc(100% - 1.4rem));
+  width: min(1680px, calc(100% - 1.4rem));
   margin: 0.9rem auto 0;
   padding: 0.9rem 1.1rem;
   border: 1px solid rgba(255, 255, 255, 0.84);
@@ -128,10 +128,10 @@ body.ui-pitch-live .connection-banner {
 }
 
 .hero-shell {
-  width: min(1520px, calc(100% - 1.4rem));
+  width: min(1680px, calc(100% - 1.4rem));
   margin: 1rem auto 0;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 380px);
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 350px);
   gap: 1rem;
   align-items: start;
 }
@@ -353,7 +353,7 @@ body.ui-pitch-live .connection-banner {
   margin-top: 0.62rem;
   display: grid;
   gap: 0.48rem;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 }
 
 .side-actions .btn {
@@ -465,7 +465,7 @@ body.ui-pitch-live .connection-banner {
 }
 
 .main-grid {
-  width: min(1520px, calc(100% - 1.4rem));
+  width: min(1680px, calc(100% - 1.4rem));
   margin: 1rem auto 3rem;
   display: grid;
   grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
@@ -561,6 +561,20 @@ body.ui-pitch-live .connection-banner {
 .proof-foot p {
   margin: 0.12rem 0;
   font-size: 0.82rem;
+}
+
+.metric-definitions {
+  margin-top: 0.42rem;
+  border: 1px solid rgba(16, 44, 35, 0.14);
+  border-radius: 10px;
+  background: rgba(247, 252, 249, 0.9);
+  padding: 0.42rem 0.52rem;
+}
+
+.metric-definitions p {
+  margin: 0.12rem 0;
+  font-size: 0.76rem;
+  color: #36594d;
 }
 
 #summaryLink {
@@ -866,9 +880,19 @@ body.ui-pitch-live .ops-section {
   display: none;
 }
 
+body.ui-pitch-safe .hero-shell,
+body.ui-pitch-live .hero-shell {
+  grid-template-columns: 1fr;
+}
+
+body.ui-pitch-safe .hero-side,
+body.ui-pitch-live .hero-side {
+  max-width: 620px;
+}
+
 body.ui-pitch-safe .main-grid,
 body.ui-pitch-live .main-grid {
-  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+  grid-template-columns: 1fr;
 }
 
 body.ui-pitch-safe .panel-proof,
@@ -876,8 +900,10 @@ body.ui-pitch-live .panel-proof,
 body.ui-pitch-safe .panel-pitch,
 body.ui-pitch-live .panel-pitch,
 body.ui-pitch-safe .panel-context,
-body.ui-pitch-live .panel-context {
-  grid-column: auto;
+body.ui-pitch-live .panel-context,
+body.ui-pitch-safe .panel-funding,
+body.ui-pitch-live .panel-funding {
+  grid-column: 1;
 }
 
 body.ui-pitch-live .mode-badge {
