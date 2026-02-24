@@ -35,8 +35,8 @@ from biopath.run_pipeline import SolveOptions, run_solve
 from biopath.viz import save_heatmap
 
 PHOTO_PATH = SITE_ASSETS / "cambridge-university-farm.jpg"
-PHOTO_URL = "Founder-provided Cambridgeshire farmyard context photo"
-PHOTO_CREDIT = "Founder-provided contextual image for demo narrative"
+PHOTO_URL = "https://commons.wikimedia.org/wiki/File:Cambridge_University_Farm_-_geograph.org.uk_-_3363476.jpg"
+PHOTO_CREDIT = "Peter Bower / Geograph (via Wikimedia Commons)"
 
 ASCII_ROWS = [
     "############################",
@@ -171,9 +171,10 @@ def _write_summary(
         "# BioPath Photo-informed Demo Summary",
         "",
         f"- Map: {map_data['name']}",
-        "- Source photo: Founder-provided Cambridgeshire farmyard context (for demo only)",
+        "- Source photo: Cambridge University Farm (public reference image from Wikimedia Commons)",
         f"- Photo credit: {PHOTO_CREDIT}",
         f"- Source URL: {PHOTO_URL}",
+        "- Source license: CC BY-SA 2.0",
         "- Conversion method: publicly inspired synthetic geometry + photo-informed risk prior",
         "",
         "## Core outputs",
@@ -205,7 +206,7 @@ def main() -> None:
     weights = _build_weights(ascii_rows)
 
     photo_map = {
-        "name": "Cambridgeshire Farmyard Demo (Synthetic Geometry + Publicly Inspired Risk Prior)",
+        "name": "Cambridgeshire Photo-informed Demo Farm (Synthetic Geometry + Publicly Inspired Risk Prior)",
         "cell_size_m": 1.0,
         "ascii": ascii_rows,
         "weights": weights,
@@ -246,6 +247,7 @@ def main() -> None:
     solve_payload = {
         "source": {
             "photo_url": PHOTO_URL,
+            "photo_credit": PHOTO_CREDIT,
             "license": "CC BY-SA 2.0",
             "method": "synthetic geometry + photo-informed prior",
         },

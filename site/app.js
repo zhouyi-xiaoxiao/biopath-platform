@@ -701,6 +701,18 @@ async function loadCuratedLatest() {
     } catch (_) {
       curatedBenchmark = null;
     }
+
+    const latestRunId = String(data?.run_id || "").trim();
+    const benchmarkRunId = String(
+      curatedBenchmark?.run_id || curatedBenchmark?.run?.run_id || ""
+    ).trim();
+    if (curatedBenchmark && latestRunId && benchmarkRunId && latestRunId !== benchmarkRunId) {
+      curatedBenchmark = null;
+      setCompareBox(
+        `Curated benchmark ignored: run_id mismatch (${benchmarkRunId} vs ${latestRunId}). Run benchmark to regenerate evidence.`
+      );
+    }
+
     state.latestResult = data;
     state.latestBenchmark = curatedBenchmark;
     renderProof(data, curatedBenchmark);

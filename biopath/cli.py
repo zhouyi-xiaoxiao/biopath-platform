@@ -127,6 +127,7 @@ def solve(
         mc_runs=mc_runs,
         time_horizon_steps=time_horizon_steps,
         seed=seed,
+        primary_movement_model=movement_model,
     )
     if objective_name == "mean":
         objective_value = metrics["mean_distance_m"]
@@ -182,6 +183,18 @@ def solve(
             coverage_radius_m=coverage_radius_m,
             out_path=report,
             image_path=image_path,
+            proof={
+                "capture_probability": capture.capture_probability,
+                "robust_score": robust.robust_score,
+                "ci95_low": capture.ci95_low,
+                "ci95_high": capture.ci95_high,
+                "expected_time_to_capture": capture.expected_time_to_capture,
+                "mc_runs": mc_runs,
+                "time_horizon_steps": time_horizon_steps,
+                "movement_model": movement_model,
+                "seed": seed,
+                "scenario_scores": robust.scenario_scores,
+            },
         )
 
     if isinstance(objective_value, float) and math.isfinite(objective_value):

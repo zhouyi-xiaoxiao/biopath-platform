@@ -1,36 +1,37 @@
 {
   "source": {
-    "photo_url": "Founder-provided Cambridgeshire farmyard context photo",
+    "photo_url": "https://commons.wikimedia.org/wiki/File:Cambridge_University_Farm_-_geograph.org.uk_-_3363476.jpg",
+    "photo_credit": "Peter Bower / Geograph (via Wikimedia Commons)",
     "license": "CC BY-SA 2.0",
     "method": "synthetic geometry + photo-informed prior"
   },
   "result": {
-    "run_id": "20260224T080556Z-ce3b1d2e",
-    "created_at": "2026-02-24T08:05:56.111096+00:00",
+    "run_id": "20260224T204100Z-dc384c1e",
+    "created_at": "2026-02-24T20:41:00.295281+00:00",
     "solver_version": "v0.2-auto",
     "map": {
-      "name": "Cambridgeshire Farmyard Demo (Synthetic Geometry + Publicly Inspired Risk Prior)",
+      "name": "Cambridgeshire Photo-informed Demo Farm (Synthetic Geometry + Publicly Inspired Risk Prior)",
       "cell_size_m": 1.0,
       "height": 13,
       "width": 28
     },
     "objective": {
-      "name": "robust_capture",
-      "raw": -0.5875,
-      "value": 0.53125
+      "name": "capture_prob",
+      "raw": -0.6857142857142857,
+      "value": 0.5928571428571429
     },
     "traps": [
       {
-        "row": 8,
-        "col": 24,
-        "x_m": 24.0,
-        "y_m": 8.0
+        "row": 10,
+        "col": 21,
+        "x_m": 21.0,
+        "y_m": 10.0
       },
       {
-        "row": 3,
-        "col": 5,
-        "x_m": 5.0,
-        "y_m": 3.0
+        "row": 2,
+        "col": 6,
+        "x_m": 6.0,
+        "y_m": 2.0
       },
       {
         "row": 7,
@@ -40,64 +41,68 @@
       },
       {
         "row": 7,
-        "col": 21,
-        "x_m": 21.0,
+        "col": 23,
+        "x_m": 23.0,
         "y_m": 7.0
       },
       {
-        "row": 11,
-        "col": 7,
-        "x_m": 7.0,
-        "y_m": 11.0
+        "row": 2,
+        "col": 15,
+        "x_m": 15.0,
+        "y_m": 2.0
       },
       {
         "row": 3,
-        "col": 20,
-        "x_m": 20.0,
+        "col": 21,
+        "x_m": 21.0,
         "y_m": 3.0
       }
     ],
     "metrics": {
-      "mean_distance_m": 4.225,
-      "weighted_mean_distance_m": 3.934650742913989,
-      "max_distance_m": 10.0,
-      "p95_distance_m": 8.0,
+      "mean_distance_m": 4.533333333333333,
+      "weighted_mean_distance_m": 4.268415703914954,
+      "max_distance_m": 12.0,
+      "p95_distance_m": 10.0,
       "coverage_within_radius": null,
       "weighted_coverage_within_radius": null
     },
-    "capture_probability": 0.55,
-    "expected_time_to_capture": 31.44375,
-    "ci95_low": 0.4729125496594939,
-    "ci95_high": 0.6270874503405062,
-    "robust_score": 0.53125,
+    "capture_probability": 0.5928571428571429,
+    "expected_time_to_capture": 29.957142857142856,
+    "ci95_low": 0.5114728691920176,
+    "ci95_high": 0.6742414165222681,
+    "robust_score": 0.38571428571428573,
     "scenario_scores": [
       {
         "name": "lazy_neutral",
-        "capture_probability": 0.55,
-        "expected_time_to_capture": 31.44375,
-        "ci95_low": 0.4729125496594939,
-        "ci95_high": 0.6270874503405062
+        "capture_probability": 0.4714285714285714,
+        "expected_time_to_capture": 34.82857142857143,
+        "ci95_low": 0.388738789714021,
+        "ci95_high": 0.5541183531431219
       },
       {
         "name": "biased_right",
-        "capture_probability": 0.55,
-        "expected_time_to_capture": 32.25,
-        "ci95_low": 0.4729125496594939,
-        "ci95_high": 0.6270874503405062
+        "capture_probability": 0.6071428571428571,
+        "expected_time_to_capture": 30.82857142857143,
+        "ci95_low": 0.5262416828621336,
+        "ci95_high": 0.6880440314235806
       },
       {
         "name": "biased_down",
-        "capture_probability": 0.53125,
-        "expected_time_to_capture": 30.7625,
-        "ci95_low": 0.45392566531566536,
-        "ci95_high": 0.6085743346843346
+        "capture_probability": 0.38571428571428573,
+        "expected_time_to_capture": 37.52142857142857,
+        "ci95_low": 0.3050817860630905,
+        "ci95_high": 0.46634678536548096
       }
     ],
     "artifacts": {
-      "run_dir": "/Users/zhouyixiaoxiao/Library/CloudStorage/OneDrive-UniversityofBristol/Desktop/biopath/runs/20260224T080556Z-ce3b1d2e",
-      "heatmap": "/Users/zhouyixiaoxiao/Library/CloudStorage/OneDrive-UniversityofBristol/Desktop/biopath/runs/20260224T080556Z-ce3b1d2e/heatmap.png",
-      "summary": "/Users/zhouyixiaoxiao/Library/CloudStorage/OneDrive-UniversityofBristol/Desktop/biopath/runs/20260224T080556Z-ce3b1d2e/summary.md",
-      "metrics": "/Users/zhouyixiaoxiao/Library/CloudStorage/OneDrive-UniversityofBristol/Desktop/biopath/runs/20260224T080556Z-ce3b1d2e/metrics.json"
+      "run_dir": "runs/20260224T204100Z-dc384c1e",
+      "heatmap": "runs/20260224T204100Z-dc384c1e/heatmap.png",
+      "summary": "runs/20260224T204100Z-dc384c1e/summary.md",
+      "metrics": "runs/20260224T204100Z-dc384c1e/metrics.json"
+    },
+    "artifacts_site": {
+      "heatmap": "./data/latest-heatmap.png",
+      "summary": "./data/latest-summary.md"
     }
   }
 }

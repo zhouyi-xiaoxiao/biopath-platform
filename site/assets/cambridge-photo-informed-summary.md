@@ -1,24 +1,25 @@
 # BioPath Photo-informed Demo Summary
 
-- Map: Cambridgeshire Farmyard Demo (Synthetic Geometry + Publicly Inspired Risk Prior)
-- Source photo: Founder-provided Cambridgeshire farmyard context (for demo only)
-- Photo credit: Founder-provided contextual image for demo narrative
-- Source URL: Founder-provided Cambridgeshire farmyard context photo
+- Map: Cambridgeshire Photo-informed Demo Farm (Synthetic Geometry + Publicly Inspired Risk Prior)
+- Source photo: Cambridge University Farm (public reference image from Wikimedia Commons)
+- Photo credit: Peter Bower / Geograph (via Wikimedia Commons)
+- Source URL: https://commons.wikimedia.org/wiki/File:Cambridge_University_Farm_-_geograph.org.uk_-_3363476.jpg
+- Source license: CC BY-SA 2.0
 - Conversion method: publicly inspired synthetic geometry + photo-informed risk prior
 
 ## Core outputs
-- Capture probability: 0.5500
-- Robust score: 0.5312
-- Mean distance (m): 4.225
-- Weighted mean distance (m): 3.935
+- Capture probability: 0.5929
+- Robust score: 0.3857
+- Mean distance (m): 4.533
+- Weighted mean distance (m): 4.268
 
 ## Trap coordinates (row, col)
-- (8, 24)
-- (3, 5)
+- (10, 21)
+- (2, 6)
 - (7, 9)
-- (7, 21)
-- (11, 7)
-- (3, 20)
+- (7, 23)
+- (2, 15)
+- (3, 21)
 
 ## Important transparency note
 - Geometry and activity prior are demonstration-grade approximations based on public context, not private farm telemetry.

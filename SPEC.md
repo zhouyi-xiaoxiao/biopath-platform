@@ -1,38 +1,111 @@
-# BioPath MVP Spec
+# BioPath Spec (Current MVP)
+
+## Product Contract
+
+BioPath takes a grid-style site map and fixed trap budget `k`, then returns:
+
+1. Trap coordinates.
+2. Scenario-aware capture metrics.
+3. A reproducible artifact bundle (`metrics.json`, `summary.md`, `heatmap.png`, optional `benchmark.json`).
+
+The public demo relies on one fixed proof contract:
+
+- Optimized score (under selected objective)
+- Baseline mean (primary: heuristic, secondary: random)
+- Uplift vs baseline
+- Robust score (worst-case across stress scenarios)
+- Monte Carlo run count
 
 ## Inputs
 
-- JSON map with `name`, `cell_size_m`, and `ascii` (list of strings).
-- Optional `weights` list of lists (same shape as `ascii`) with non-negative numbers for
-  walkable cells. Obstacles should be `0` or `null`.
-- `#` indicates obstacles and `.` indicates walkable cells.
+Map JSON:
 
-## Candidates
+- `name`: string
+- `cell_size_m`: number
+- `ascii`: list of strings (`#` = obstacle, `.` = walkable)
+- optional `weights`: non-negative matrix (same shape as `ascii`)
+
+Solve options:
+
+- `k`
+- `objective`: `mean | weighted_mean | capture_prob | robust_capture`
+- `candidate_rule`: `all_walkable | adjacent_to_wall`
+- `min_wall_neighbors`
+- `local_improve`
+- `mc_runs`
+- `time_horizon_steps`
+- `movement_model`: `lazy | unbiased | biased`
+- `seed`
+
+## Candidate Generation
 
 - `all_walkable`: every walkable cell is eligible.
-- `adjacent_to_wall`: walkable cells with at least `min_wall_neighbors` adjacent wall cells (4-neighborhood). Out-of-bounds counts as a wall.
+- `adjacent_to_wall`: walkable cells with at least `min_wall_neighbors` wall neighbors in 4-neighborhood.
 
-## Objective
+## Optimization Objectives
 
-- Mean shortest-path distance from each walkable cell to the nearest trap, or a
-  weighted mean when `weights` are provided and the `weighted_mean` objective is used.
-- Distances are computed via multi-source BFS on a 4-neighborhood.
-- If any walkable cell is unreachable from all traps, the objective is infinite.
+- `mean`: minimize mean shortest-path distance to nearest trap.
+- `weighted_mean`: minimize weighted mean shortest-path distance.
+- `capture_prob`: maximize Monte Carlo capture probability.
+- `robust_capture`: maximize worst-case scenario capture probability.
 
-## Metrics
+Internally, capture-based objectives are solved through greedy selection with objective caching.
 
-- Mean, weighted mean, max, and p95 distance summaries.
-- Optional coverage within a user-defined radius (both unweighted and weighted).
+## Capture and Robust Metrics
 
-## Optimizer
+`capture_probability` is estimated by Monte Carlo random-walk simulation:
 
-- Greedy selection of `K` traps that minimize the objective.
-- Optional local improvement: swap an in-set trap with an out-of-set candidate if it improves the objective.
+- random start point from walkable cells (or entry points)
+- movement model (`lazy`, `unbiased`, `biased`)
+- finite horizon (`time_horizon_steps`)
+- confidence interval via normal approximation
 
-## Visualization
+`robust_score` is scenario-based:
 
-- Distance heatmap with trap overlay saved to PNG.
+- evaluate multiple stress scenarios (for example neutral + directional bias + sparse stress)
+- `robust_score = min(scenario capture probabilities)`
 
-## Reporting
+## Baselines
 
-- Markdown summary with trap list and optional image link.
+Benchmarking supports two baselines under the same budget `k`:
+
+- `heuristic` (primary): edge + spacing + prior weighting rules
+- `random` (secondary): random trap placements over candidate cells
+
+Uplift fields:
+
+- `uplift_vs_baseline_mean`
+- `uplift_vs_baseline_pct`
+- `uplift_vs_random_mean`
+- `uplift_vs_random_pct`
+
+## Outputs
+
+From `/api/solve`:
+
+- run metadata (`run_id`, `created_at`, map info)
+- objective value
+- trap coordinates
+- distance metrics
+- capture metrics (`capture_probability`, `ci95_low/high`, `expected_time_to_capture`)
+- robust metrics (`robust_score`, `scenario_scores`)
+- artifact paths (`run_dir`, `summary`, `heatmap`, `metrics`)
+
+From `/api/benchmark`:
+
+- all solve outputs above
+- baseline details (`baseline`, `baselines`, `baseline_mode`)
+- uplift metrics
+- benchmark artifact persisted to `runs/<run_id>/benchmark.json`
+
+## Site Publishing Contract
+
+`bash scripts/publish_site.sh` must publish a single-source evidence bundle to `site/data/`:
+
+- `latest.json`
+- `latest-summary.md`
+- `latest-heatmap.png`
+- `latest-benchmark.json` (if present for the same run)
+- `runs.json`
+
+This prevents mixed-run data in Pitch Safe mode.

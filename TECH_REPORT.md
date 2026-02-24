@@ -1,125 +1,136 @@
 # BioPath MVP Technical Report
 
-## 1. Overview
+## 1. System Overview
 
-BioPath is a lightweight optimization tool that recommends trap locations on a grid map. It
-minimizes average walking distance to the nearest trap using bio-inspired search principles.
-The MVP accepts ASCII maps, generates candidate trap locations, solves a greedy placement
-problem, and outputs metrics, plots, and reports. A local web UI provides visual interaction.
+BioPath is a decision-support platform for trap placement under uncertainty.
+It converts a structured site map into trap coordinates, uncertainty-aware performance metrics,
+and rerunnable artifacts for audit and benchmarking.
+
+Core principle: optimize under a fixed trap budget and prove value against explicit baselines.
 
 ## 2. Architecture
 
-- Core map parsing and data model: `biopath/mapio.py`
+- Map parsing and validation: `biopath/mapio.py`
 - Candidate generation: `biopath/candidates.py`
-- Objective functions and metrics: `biopath/objective.py`
-- Greedy optimizer with optional local swap: `biopath/optimizer.py`
-- Reporting and visualization: `biopath/report.py`, `biopath/viz.py`
-- CLI entry point: `biopath/cli.py`
-- Local web UI server and assets: `biopath/web.py`, `biopath/web/`
+- Distance metrics: `biopath/objective.py`
+- Capture + robust scoring: `biopath/capture.py`
+- Greedy solver pipeline and run artifacts: `biopath/run_pipeline.py`
+- Report and heatmap output: `biopath/report.py`, `biopath/viz.py`
+- API endpoints: `api/main.py`
+- Demo website and pitch UI: `site/`
+- Automation/publishing scripts: `scripts/`
 
 ## 3. Data Model
 
-The system uses a `GridMap` dataclass with:
+A `GridMap` includes:
 
-- `ascii`: list of strings with `.` for walkable cells and `#` for obstacles.
-- `cell_size_m`: meters per grid cell.
-- `weights` (optional): same shape as `ascii`, with non-negative values for walkable cells.
-  Obstacles must be `0` or `null`. When omitted, all walkable cells have weight `1.0`.
-- Derived fields: height, width, walkable mask, walkable count, and weight totals.
+- `ascii` walkability grid
+- `cell_size_m`
+- optional `weights` (risk/activity prior)
 
-Parsing is implemented in `load_map_data` and `load_map` in `biopath/mapio.py`.
+Derived fields include dimensions, walkable count, and aggregate weights.
 
-## 4. Optimization Algorithms
+## 4. Optimization and Scoring
 
-### 4.1 Distance Map (Multi-source BFS)
+### 4.1 Candidate Sets
 
-Distances are computed via multi-source breadth-first search on the 4-neighborhood. All
-traps are enqueued as sources with distance `0`, and distances propagate through walkable
-cells in increments of `cell_size_m`. This yields the shortest-path distance to the nearest
-trap for every cell. Implementation: `compute_distance_map` in `biopath/objective.py`.
+- `all_walkable`: full feasible set
+- `adjacent_to_wall`: edge-favoring subset
 
-Complexity: `O(H * W)` per distance map, where `H` and `W` are grid height and width.
+### 4.2 Objectives
 
-### 4.2 Objective Functions
+- `mean`: minimize unweighted nearest-trap shortest-path distance
+- `weighted_mean`: minimize weighted nearest-trap shortest-path distance
+- `capture_prob`: maximize Monte Carlo-estimated capture probability
+- `robust_capture`: maximize conservative (worst-case) scenario score
 
-- Mean distance: average of all walkable cell distances.
-- Weighted mean distance: average weighted by cell weights.
+Capture-based objectives are optimized with greedy trap selection and cached candidate evaluation.
 
-Implementation: `mean_distance_to_traps` and `weighted_mean_distance_to_traps` in
-`biopath/objective.py`.
+### 4.3 Monte Carlo Capture Estimation
 
-### 4.3 Greedy Placement
+For each run:
 
-The optimizer selects traps iteratively. At each step, it evaluates all remaining candidates
-and chooses the one that minimizes the objective with the current set. Optional local
-improvement attempts single swaps to further reduce the objective.
+1. Sample start position.
+2. Simulate movement by model (`lazy`, `unbiased`, `biased`).
+3. Stop on trap hit or horizon expiry.
+4. Aggregate capture probability and expected time to capture.
+5. Compute 95% CI from Bernoulli approximation.
 
-Implementation: `greedy_optimize` in `biopath/optimizer.py`.
+### 4.4 Scenario-Robust Score
 
-Complexity: `O(K * C * H * W)` for greedy selection where `K` is the trap count and `C` is
-candidate count. Local improvement adds `O(S * C * H * W)` where `S` is the number of swaps.
+`robust_capture_score` evaluates multiple stress scenarios (neutral + directional/sparse stress)
+and returns:
 
-## 5. Metrics
+- per-scenario capture metrics
+- `robust_score = min(scenario capture probabilities)`
 
-The MVP reports:
+This is scenario-robust evaluation (worst-case over predefined stress scenarios), not a full
+uncertainty-set RO formulation.
 
-- Mean distance
-- Weighted mean distance
-- Max distance
-- P95 distance
-- Optional coverage within a user-defined radius (unweighted and weighted)
+## 5. Baseline and Uplift Framework
 
-Implementation: `distance_metrics` in `biopath/objective.py`.
+`/api/benchmark` and `scripts/run_benchmark.py` evaluate optimized output against:
 
-## 6. Web UI Implementation
+- primary baseline: heuristic (edge + spacing + prior)
+- secondary baseline: random placements
 
-### 6.1 Server
+Reported uplift metrics:
 
-`biopath/web.py` runs a local HTTP server using Python standard library modules. Endpoints:
+- absolute and relative uplift vs selected baseline
+- absolute and relative uplift vs random baseline
 
-- `GET /api/samples`: lists sample maps from `tests/fixtures`
-- `GET /api/sample?name=...`: returns the JSON map
-- `POST /api/solve`: runs optimization on a provided map JSON
+Benchmark output is persisted to `runs/<run_id>/benchmark.json`.
 
-The server uses `load_map_data`, candidate rules, and `greedy_optimize` to compute traps,
-then returns metrics and a serialized distance map for visualization.
+## 6. Artifact Contract and Reproducibility
 
-### 6.2 Frontend
+Each solve run writes:
 
-`biopath/web/index.html`, `app.css`, and `app.js` provide a two-panel UI with:
+- `runs/<run_id>/metrics.json`
+- `runs/<run_id>/summary.md`
+- `runs/<run_id>/heatmap.png`
 
-- Map preview canvas and legend
-- Map builder to create blank grids, edit metadata, and paint obstacles or weights
-- Solver controls (k, objective, candidate rules, coverage radius)
-- Results panel with metrics and trap list
-- One-click export of map and results JSON
+Benchmark runs additionally write:
 
-The heatmap renders directly on a canvas by mapping distance values to an HSL color scale,
-and traps are drawn as red cross markers.
+- `runs/<run_id>/benchmark.json`
 
-## 7. Validation and Error Handling
+`summary.md` now includes a proof contract block:
 
-- Map input validation: shape, allowed characters, numeric weights.
-- Parameter validation: non-negative counts, valid objective names.
-- Unreachable cells: objective returns infinity; the UI renders unreachable cells in gray.
+- capture probability
+- robust score
+- capture CI
+- MC run count
+- seed and movement model
+- scenario scores
 
-Errors are returned as JSON with an `error` field in the web API and surfaced in the UI.
+## 7. Website Publishing Model
 
-## 8. Web UI Usage
+`scripts/publish_site.sh` publishes a coherent site bundle:
 
-1. Start the server: `python3 -m biopath.web --port 8000`.
-2. Open `http://127.0.0.1:8000` in a browser.
-3. Use **Map Input** to load a sample or upload a JSON map, or use **Map Builder** to:
-   - Create a blank grid and set name/cell size.
-   - Paint obstacles, walkable cells, or custom weights on the canvas.
-4. Configure solver settings (k, objective, candidate rule).
-5. Click **Run Optimization** to generate traps and metrics.
-6. Download JSON via **Download map/results** when needed.
+- `site/data/latest.json`
+- `site/data/latest-summary.md`
+- `site/data/latest-heatmap.png`
+- `site/data/latest-benchmark.json` (same run when available)
+- `site/data/runs.json`
 
-## 9. Limitations and Next Steps
+The script avoids stale benchmark carry-over if no benchmark exists for the latest run.
 
-- Greedy optimization is fast but not globally optimal; consider simulated annealing or
-  integer programming for larger maps.
-- Real-world geometry could be imported from GIS formats rather than ASCII grids.
-- Multi-objective extensions (cost, accessibility, regulatory constraints) can be added.
-- Add authentication and job queueing if deployed beyond local use.
+## 8. API Endpoints
+
+- `POST /api/solve`: compute optimized traps and solve metrics
+- `POST /api/benchmark`: solve + baselines + uplift + benchmark artifact
+- `GET /api/runs/latest`: latest run payload
+- `GET /api/runs/{run_id}`: run metrics by id
+- `GET /api/runs`: recent runs summary
+
+## 9. Limitations
+
+- Greedy optimization is fast and practical but not globally optimal.
+- Movement dynamics are demonstration-grade proxies, not biologically calibrated models.
+- Scenario set is predefined and should be calibrated with pilot telemetry.
+
+## 10. Next Technical Milestones
+
+- Add calibrated entry-point priors from pilot observations.
+- Introduce confidence-aware decision thresholds (for low-CI runs).
+- Add run-to-run regression checks for proof contract stability.
+- Expand export templates for compliance workflows.

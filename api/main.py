@@ -13,8 +13,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from biopath.mapio import load_map_data
 from biopath.run_pipeline import (
     SolveOptions,
-    evaluate_heuristic_baseline,
-    evaluate_random_baseline,
+    build_benchmark_payload,
     run_solve,
 )
 
@@ -119,76 +118,19 @@ def benchmark(payload: dict[str, Any]) -> dict[str, Any]:
     else:
         candidates = all_walkable(grid_map)
 
-    random_baseline = evaluate_random_baseline(
-        grid_map,
-        candidates,
-        k=options.k,
-        objective=options.objective,
-        samples=baseline_samples,
-        seed=options.seed + 101,
-        mc_runs=options.mc_runs,
-        time_horizon_steps=options.time_horizon_steps,
-        movement_model=options.movement_model,
-    )
-    heuristic_baseline = evaluate_heuristic_baseline(
-        grid_map,
-        candidates,
-        k=options.k,
-        objective=options.objective,
-        seed=options.seed + 303,
-        mc_runs=options.mc_runs,
-        time_horizon_steps=options.time_horizon_steps,
-        movement_model=options.movement_model,
-        min_spacing_cells=int(payload.get("heuristic_spacing_cells", 5)),
-    )
+    try:
+        payload_out = build_benchmark_payload(
+            result=result,
+            grid_map=grid_map,
+            candidates=candidates,
+            options=options,
+            baseline_samples=baseline_samples,
+            baseline_mode=baseline_mode,
+            heuristic_spacing_cells=int(payload.get("heuristic_spacing_cells", 5)),
+        )
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
 
-    baseline = heuristic_baseline if baseline_mode == "heuristic" else random_baseline
-
-    objective_name = options.objective.lower()
-    if objective_name in ("mean", "weighted_mean"):
-        optimized = -float(result["objective"]["value"])
-    elif objective_name == "capture_prob":
-        optimized = float(result["capture_probability"])
-    else:
-        optimized = float(result["robust_score"])
-
-    uplift_vs_baseline = optimized - float(baseline["mean"])
-    uplift_vs_baseline_pct = (
-        (uplift_vs_baseline / float(baseline["mean"])) * 100.0
-        if float(baseline["mean"]) > 0
-        else None
-    )
-    uplift_vs_random = optimized - float(random_baseline["mean"])
-    uplift_vs_random_pct = (
-        (uplift_vs_random / float(random_baseline["mean"])) * 100.0
-        if float(random_baseline["mean"]) > 0
-        else None
-    )
-
-    payload_out = {
-        "run_id": result.get("run_id"),
-        "traps": result.get("traps"),
-        "metrics": result.get("metrics"),
-        "artifacts": result.get("artifacts"),
-        "solver_version": result.get("solver_version"),
-        "run": result,
-        "baseline_mode": baseline_mode,
-        "baseline": baseline,
-        "baselines": {
-            "heuristic": heuristic_baseline,
-            "random": random_baseline,
-        },
-        "baseline_label": "Heuristic rule baseline" if baseline_mode == "heuristic" else "Random baseline",
-        "optimized_score": optimized,
-        "uplift_vs_baseline_mean": uplift_vs_baseline,
-        "uplift_vs_baseline_pct": uplift_vs_baseline_pct,
-        "uplift_vs_random_mean": uplift_vs_random,
-        "uplift_vs_random_pct": uplift_vs_random_pct,
-        "objective": objective_name,
-    }
-
-    run_dir = Path(result["artifacts"]["run_dir"])
-    (run_dir / "benchmark.json").write_text(json.dumps(payload_out, indent=2))
     return payload_out
 
 

@@ -8,7 +8,7 @@ import json
 import math
 from pathlib import Path
 import random
-from typing import Callable, Iterable, Tuple
+from typing import Any, Callable, Iterable, Tuple
 from uuid import uuid4
 
 from .candidates import adjacent_to_wall, all_walkable
@@ -181,14 +181,15 @@ def evaluate_random_baseline(
     mc_runs: int,
     time_horizon_steps: int,
     movement_model: str,
-) -> dict[str, float]:
+) -> dict[str, float | int]:
     rng = random.Random(seed)
+    sample_count = max(1, samples)
     if not candidates:
-        return {"best": 0.0, "mean": 0.0}
+        return {"best": 0.0, "mean": 0.0, "samples": sample_count}
 
     scores: list[float] = []
 
-    for i in range(max(1, samples)):
+    for i in range(sample_count):
         traps = rng.sample(candidates, min(k, len(candidates)))
         score = _score_traps_for_objective(
             grid_map,
@@ -204,6 +205,7 @@ def evaluate_random_baseline(
     return {
         "best": max(scores),
         "mean": sum(scores) / len(scores),
+        "samples": sample_count,
     }
 
 
@@ -225,7 +227,7 @@ def evaluate_heuristic_baseline(
     preference + spacing) and serves as a stronger baseline than pure random.
     """
     if not candidates:
-        return {"mean": 0.0, "best": 0.0, "traps": []}
+        return {"mean": 0.0, "best": 0.0, "traps": [], "samples": 1}
 
     def _wall_neighbors(row: int, col: int) -> int:
         count = 0
@@ -281,7 +283,109 @@ def evaluate_heuristic_baseline(
         "best": score,
         "mean": score,
         "traps": [{"row": r, "col": c} for r, c in selected],
+        "samples": 1,
     }
+
+
+def _optimized_score_from_result(result: dict[str, Any], objective_name: str) -> float:
+    if objective_name in ("mean", "weighted_mean"):
+        return -float(result["objective"]["value"])
+    if objective_name == "capture_prob":
+        return float(result["capture_probability"])
+    if objective_name == "robust_capture":
+        return float(result["robust_score"])
+    raise ValueError("objective must be one of mean, weighted_mean, capture_prob, robust_capture")
+
+
+def build_benchmark_payload(
+    *,
+    result: dict[str, Any],
+    grid_map: GridMap,
+    candidates: list[Trap],
+    options: SolveOptions,
+    baseline_samples: int = 40,
+    baseline_mode: str = "heuristic",
+    heuristic_spacing_cells: int = 5,
+) -> dict[str, Any]:
+    mode = str(baseline_mode).strip().lower()
+    if mode not in {"heuristic", "random"}:
+        raise ValueError("baseline_mode must be 'heuristic' or 'random'")
+
+    random_baseline = evaluate_random_baseline(
+        grid_map,
+        candidates,
+        k=options.k,
+        objective=options.objective,
+        samples=baseline_samples,
+        seed=options.seed + 101,
+        mc_runs=options.mc_runs,
+        time_horizon_steps=options.time_horizon_steps,
+        movement_model=options.movement_model,
+    )
+    heuristic_baseline = evaluate_heuristic_baseline(
+        grid_map,
+        candidates,
+        k=options.k,
+        objective=options.objective,
+        seed=options.seed + 303,
+        mc_runs=options.mc_runs,
+        time_horizon_steps=options.time_horizon_steps,
+        movement_model=options.movement_model,
+        min_spacing_cells=max(1, int(heuristic_spacing_cells)),
+    )
+
+    baseline = heuristic_baseline if mode == "heuristic" else random_baseline
+    objective_name = options.objective.lower()
+    optimized = _optimized_score_from_result(result, objective_name)
+
+    baseline_mean = float(baseline["mean"])
+    random_mean = float(random_baseline["mean"])
+
+    uplift_vs_baseline = optimized - baseline_mean
+    uplift_vs_baseline_pct = (uplift_vs_baseline / baseline_mean * 100.0) if baseline_mean > 0 else None
+
+    uplift_vs_random = optimized - random_mean
+    uplift_vs_random_pct = (uplift_vs_random / random_mean * 100.0) if random_mean > 0 else None
+
+    payload_out: dict[str, Any] = {
+        "run_id": result.get("run_id"),
+        "created_at": result.get("created_at"),
+        "objective": objective_name,
+        "k": options.k,
+        "map_name": grid_map.name,
+        "mc_runs": options.mc_runs,
+        "time_horizon_steps": options.time_horizon_steps,
+        "movement_model": options.movement_model,
+        "baseline_mode": mode,
+        "baseline_label": "Heuristic baseline" if mode == "heuristic" else "Random baseline",
+        "baseline": baseline,
+        "baselines": {
+            "heuristic": heuristic_baseline,
+            "random": random_baseline,
+        },
+        "optimized_score": optimized,
+        "uplift_vs_baseline_mean": uplift_vs_baseline,
+        "uplift_vs_baseline_pct": uplift_vs_baseline_pct,
+        "uplift_vs_random_mean": uplift_vs_random,
+        "uplift_vs_random_pct": uplift_vs_random_pct,
+        "solver_version": result.get("solver_version"),
+        "traps": result.get("traps"),
+        "metrics": result.get("metrics"),
+        "artifacts": result.get("artifacts"),
+        "run": result,
+        "note": (
+            "Primary comparator is heuristic baseline (edge + spacing prior); "
+            "random baseline is secondary reference."
+        ),
+    }
+
+    run_dir_value = result.get("artifacts", {}).get("run_dir")
+    if isinstance(run_dir_value, str) and run_dir_value:
+        run_dir = Path(run_dir_value)
+        run_dir.mkdir(parents=True, exist_ok=True)
+        (run_dir / "benchmark.json").write_text(json.dumps(payload_out, indent=2))
+
+    return payload_out
 
 
 def run_solve(
@@ -372,6 +476,19 @@ def run_solve(
             coverage_radius_m=options.coverage_radius_m,
             out_path=report_path,
             image_path="heatmap.png",
+            proof={
+                "run_id": run_id,
+                "capture_probability": capture.capture_probability,
+                "robust_score": robust.robust_score,
+                "ci95_low": capture.ci95_low,
+                "ci95_high": capture.ci95_high,
+                "expected_time_to_capture": capture.expected_time_to_capture,
+                "mc_runs": options.mc_runs,
+                "time_horizon_steps": options.time_horizon_steps,
+                "movement_model": options.movement_model,
+                "seed": options.seed,
+                "scenario_scores": robust.scenario_scores,
+            },
         )
 
     result = {
