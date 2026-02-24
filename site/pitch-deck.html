@@ -56,14 +56,14 @@
       }
 
       .deck {
-        width: min(1460px, calc(100% - 2rem));
+        width: min(1560px, calc(100% - 1.8rem));
         margin: 1.2rem auto 1.6rem;
         display: grid;
         gap: 1.2rem;
       }
 
       .slide {
-        min-height: clamp(560px, 72vh, 760px);
+        min-height: clamp(380px, 48vh, 540px);
         border: 1px solid var(--line);
         border-radius: 34px;
         background:
@@ -71,10 +71,10 @@
           radial-gradient(circle at 15% 88%, rgba(20, 107, 78, 0.08), transparent 38%),
           var(--card);
         box-shadow: 0 20px 50px rgba(11, 30, 23, 0.08);
-        padding: 2rem 2.2rem;
+        padding: 1.8rem 2rem;
         display: flex;
         flex-direction: column;
-        gap: 1rem;
+        gap: 0.88rem;
         scroll-margin-top: 72px;
       }
 
@@ -87,24 +87,17 @@
         font-weight: 700;
       }
 
-      .mapline {
-        margin: 0.18rem 0 0;
-        font-family: "JetBrains Mono", monospace;
-        font-size: 0.74rem;
-        color: #4f6f63;
-      }
-
       h1, h2, h3 {
         margin: 0;
         font-family: "Manrope", sans-serif;
         letter-spacing: -0.02em;
       }
 
-      h1 { font-size: clamp(2.7rem, 5.6vw, 5.2rem); line-height: 0.95; max-width: none; }
-      h2 { font-size: clamp(1.9rem, 3.9vw, 3.4rem); line-height: 1.01; max-width: 16ch; }
+      h1 { font-size: clamp(2.55rem, 5.1vw, 4.7rem); line-height: 0.96; max-width: 18ch; }
+      h2 { font-size: clamp(1.85rem, 3.6vw, 3.05rem); line-height: 1.04; max-width: 20ch; }
       h3 { font-size: 1.2rem; }
 
-      p { margin: 0; color: var(--soft); line-height: 1.58; font-size: 1.02rem; }
+      p { margin: 0; color: var(--soft); line-height: 1.54; font-size: 1.05rem; }
 
       .two-line { max-width: 74ch; font-size: 1.15rem; }
 
@@ -118,13 +111,13 @@
         font-weight: 700;
       }
 
-      .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: stretch; flex: 1; }
+      .grid2 { display: grid; grid-template-columns: 1.02fr 0.98fr; gap: 1.05rem; align-items: start; }
       .grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.8rem; }
 
       .card {
         border: 1px solid rgba(16, 45, 36, 0.16);
         border-radius: 20px;
-        padding: 1rem;
+        padding: 1.05rem;
         background: linear-gradient(165deg, rgba(255, 255, 255, 0.95), rgba(248, 252, 250, 0.9));
         display: flex;
         flex-direction: column;
@@ -140,8 +133,8 @@
       }
 
       .card li {
-        font-size: 1rem;
-        line-height: 1.46;
+        font-size: 1.03rem;
+        line-height: 1.44;
       }
 
       .metric {
@@ -175,15 +168,8 @@
         border: 1px solid rgba(16, 45, 36, 0.2);
       }
 
-      .grid2 > figure,
-      .grid2 > .dark-frame,
-      .grid2 > .card {
-        height: 100%;
-      }
-
       .grid2 > figure img {
-        height: 100%;
-        min-height: 280px;
+        min-height: 258px;
         object-fit: cover;
       }
 
@@ -204,15 +190,6 @@
         margin-top: 0.5rem;
         font-size: 0.88rem;
         color: #56766a;
-      }
-
-      .cue {
-        margin-top: 0.2rem;
-        border-left: 3px solid rgba(20, 107, 78, 0.5);
-        padding-left: 0.7rem;
-        font-size: 0.98rem;
-        color: #204b3d;
-        font-weight: 700;
       }
 
       .footer {
@@ -243,7 +220,6 @@
     <main class="deck">
       <section class="slide" id="s1">
         <p class="kicker">Slide 1 · What we do</p>
-        <p class="mapline">Script alignment: Segment 1 + Segment 2</p>
         <h1>BioPath turns farm maps into measurable trap-placement decisions.</h1>
         <p class="two-line">
           Two-line investor definition: we convert one layout into optimized trap coordinates with quantified uplift,
@@ -271,7 +247,6 @@
 
       <section class="slide" id="s2">
         <p class="kicker">Slide 2 · Problem + customer</p>
-        <p class="mapline">Script alignment: Segment 2</p>
         <h2>Manual trap placement is inconsistent, hard to audit, and loses performance in complex layouts.</h2>
         <div class="grid2">
           <article class="card">
@@ -295,7 +270,6 @@
 
       <section class="slide" id="s3">
         <p class="kicker">Slide 3 · Product</p>
-        <p class="mapline">Script alignment: Segment 3</p>
         <h2>Source -> model -> solve is transparent and reproducible.</h2>
         <div class="grid2">
           <figure>
@@ -316,7 +290,6 @@
 
       <section class="slide" id="s4">
         <p class="kicker">Slide 4 · Technical edge</p>
-        <p class="mapline">Script alignment: Segment 4</p>
         <h2>Originality is robust optimization under uncertainty, not static rule heuristics.</h2>
         <div class="grid2">
           <article class="card">
@@ -342,7 +315,6 @@
 
       <section class="slide" id="s5">
         <p class="kicker">Slide 5 · Traction velocity</p>
-        <p class="mapline">Script alignment: Segment 6</p>
         <h2>Early traction is execution speed and evidence quality.</h2>
         <div class="grid2">
           <article class="card">
@@ -357,10 +329,10 @@
           <article class="card">
             <h3>Demo proof contract (same k, benchmarked)</h3>
             <div class="grid3" style="margin-top:0.45rem;">
-              <div class="metric"><span>Optimized capture</span><strong>54.3%</strong></div>
+              <div class="metric"><span>Optimized capture</span><strong>48.1%</strong></div>
               <div class="metric"><span>Random baseline</span><strong>30.4%</strong></div>
-              <div class="metric"><span>Uplift</span><strong>+78.8%</strong></div>
-              <div class="metric"><span>Robust capture</span><strong>54.3%</strong></div>
+              <div class="metric"><span>Uplift</span><strong>+58.5%</strong></div>
+              <div class="metric"><span>Robust capture</span><strong>48.1%</strong></div>
               <div class="metric"><span>MC runs</span><strong>N = 140</strong></div>
               <div class="metric"><span>Trap budget</span><strong>k = 6</strong></div>
             </div>
@@ -371,7 +343,6 @@
 
       <section class="slide" id="s6">
         <p class="kicker">Slide 6 · Market + pricing</p>
-        <p class="mapline">Script alignment: Segment 7</p>
         <h2>Bottom-up model: paid pilot -> annual subscription -> portfolio expansion.</h2>
         <div class="grid2">
           <article class="card">
@@ -397,7 +368,6 @@
 
       <section class="slide" id="s7">
         <p class="kicker">Slide 7 · Finance + funding path</p>
-        <p class="mapline">Script alignment: Segment 8</p>
         <h2>Finance is practical: realistic costs, explicit milestones, and fit-for-stage funding.</h2>
         <div class="grid2">
           <article class="card">
@@ -427,7 +397,6 @@
 
       <section class="slide" id="s8">
         <p class="kicker">Slide 8 · Team + explicit ask</p>
-        <p class="mapline">Script alignment: Segment 10</p>
         <h2>Execution trust comes from founder-problem fit and a direct ask tied to outcomes.</h2>
         <div class="grid2">
           <article class="card">

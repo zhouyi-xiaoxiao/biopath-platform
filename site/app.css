@@ -68,7 +68,7 @@ body.ui-pitch-live .connection-banner {
 .connection-banner span { flex: 1; font-size: 0.84rem; }
 
 .topbar {
-  width: min(1280px, calc(100% - 1.4rem));
+  width: min(1520px, calc(100% - 1.4rem));
   margin: 0.9rem auto 0;
   padding: 0.9rem 1.1rem;
   border: 1px solid rgba(255, 255, 255, 0.84);
@@ -128,10 +128,10 @@ body.ui-pitch-live .connection-banner {
 }
 
 .hero-shell {
-  width: min(1280px, calc(100% - 1.4rem));
+  width: min(1520px, calc(100% - 1.4rem));
   margin: 1rem auto 0;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 360px;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 380px);
   gap: 1rem;
   align-items: start;
 }
@@ -465,10 +465,10 @@ body.ui-pitch-live .connection-banner {
 }
 
 .main-grid {
-  width: min(1280px, calc(100% - 1.4rem));
+  width: min(1520px, calc(100% - 1.4rem));
   margin: 1rem auto 3rem;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
   gap: 1rem;
 }
 
@@ -868,7 +868,7 @@ body.ui-pitch-live .ops-section {
 
 body.ui-pitch-safe .main-grid,
 body.ui-pitch-live .main-grid {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
 }
 
 body.ui-pitch-safe .panel-proof,
@@ -892,7 +892,7 @@ body.ui-pitch-live .mode-badge {
   100% { box-shadow: 0 0 0 0 rgba(197, 122, 61, 0); }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1320px) {
   .hero-shell { grid-template-columns: 1fr; }
   .hero-side { grid-template-columns: 1fr; }
   .main-grid { grid-template-columns: 1fr; }

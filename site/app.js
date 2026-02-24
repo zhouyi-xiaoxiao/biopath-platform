@@ -418,8 +418,8 @@ async function autoDetectAndConnect({ quiet = false } = {}) {
   }
 
   $("apiBase").value = candidates[0] || "";
-  setConnectionState("safe", "No healthy live API found.");
-  showConnectionBanner("API unreachable", "Use Fix in 1 step or replace API URL, then run Health Check.");
+  setConnectionState("safe", "Live API optional for stage demo.");
+  showConnectionBanner("API unavailable", "Pitch Safe mode is ready. Add API URL only if you want live solve/benchmark.");
   setApiStatus("Auto-detection failed. You can still run Pitch Safe mode.");
   return false;
 }
@@ -498,9 +498,12 @@ function updateHeroProof(result, benchmark = null) {
   if (uplift === null) {
     $("heroUplift").textContent = "Run benchmark to compute uplift";
   } else if (baseline && baseline > 0) {
-    $("heroUplift").textContent = `+${((uplift / baseline) * 100).toFixed(1)}% vs random`;
+    const relPct = typeof benchmark?.uplift_vs_random_pct === "number"
+      ? benchmark.uplift_vs_random_pct
+      : (uplift / baseline) * 100;
+    $("heroUplift").textContent = `+${relPct.toFixed(1)}% vs random`;
   } else {
-    $("heroUplift").textContent = `+${fmt(uplift, 3)} absolute`;
+    $("heroUplift").textContent = `+${(uplift * 100).toFixed(1)} pp`;
   }
 }
 
@@ -544,9 +547,26 @@ function renderProof(result, benchmark = null) {
   const baseline = benchmark && benchmark.baseline && typeof benchmark.baseline.mean === "number"
     ? benchmark.baseline.mean
     : null;
+  const baselineSamples = benchmark?.baseline?.samples;
+  const upliftRelPct = benchmark && typeof benchmark.uplift_vs_random_pct === "number"
+    ? benchmark.uplift_vs_random_pct
+    : (uplift !== null && baseline && baseline > 0 ? (uplift / baseline) * 100 : null);
 
-  $("upliftValue").textContent = uplift === null ? "n/a" : fmt(uplift, 4);
-  $("baselineValue").textContent = baseline === null ? "n/a" : fmt(baseline, 4);
+  if (uplift === null) {
+    $("upliftValue").textContent = "n/a";
+  } else if (upliftRelPct !== null) {
+    $("upliftValue").textContent = `+${upliftRelPct.toFixed(1)}% (${(uplift * 100).toFixed(1)} pp)`;
+  } else {
+    $("upliftValue").textContent = `+${(uplift * 100).toFixed(1)} pp`;
+  }
+
+  if (baseline === null) {
+    $("baselineValue").textContent = "n/a";
+  } else if (typeof baselineSamples === "number") {
+    $("baselineValue").textContent = `${(baseline * 100).toFixed(1)}% (n=${baselineSamples})`;
+  } else {
+    $("baselineValue").textContent = `${(baseline * 100).toFixed(1)}%`;
+  }
   $("benchmarkState").textContent = benchmark ? "Benchmark complete" : "No benchmark yet";
 
   const summaryPath = extractArtifact(result, "summary");
@@ -579,7 +599,9 @@ function renderProof(result, benchmark = null) {
 
 function setPitchNarrative(result, benchmark = null) {
   const trapCount = Array.isArray(result?.traps) ? result.traps.length : Number($("kInput")?.value || 6);
-  const mcRuns = Number($("mcRuns")?.value || 140);
+  const mcRuns = typeof benchmark?.mc_runs === "number"
+    ? benchmark.mc_runs
+    : Number($("mcRuns")?.value || 140);
   const cp = typeof result?.capture_probability === "number" ? `${(result.capture_probability * 100).toFixed(1)}%` : "n/a";
   const rb = typeof result?.robust_score === "number" ? `${(result.robust_score * 100).toFixed(1)}%` : "n/a";
 
@@ -593,7 +615,10 @@ function setPitchNarrative(result, benchmark = null) {
   let proofLine = `With k=${trapCount} traps, optimized capture is ${cp} and robust capture is ${rb}.`;
   if (uplift !== null && baseline && baseline > 0) {
     const baselinePct = `${(baseline * 100).toFixed(1)}%`;
-    const upliftPct = `+${((uplift / baseline) * 100).toFixed(1)}%`;
+    const relPct = typeof benchmark?.uplift_vs_random_pct === "number"
+      ? benchmark.uplift_vs_random_pct
+      : (uplift / baseline) * 100;
+    const upliftPct = `+${relPct.toFixed(1)}%`;
     proofLine = `With k=${trapCount} traps, BioPath achieves capture ${cp} vs random baseline ${baselinePct}, delivering uplift ${upliftPct}. Robust capture is ${rb} (conservative performance across uncertainty scenarios), validated with Monte Carlo N=${mcRuns}.`;
   } else {
     proofLine += ` Run benchmark to add random baseline and uplift. Robust capture means conservative performance across uncertainty scenarios.`;
