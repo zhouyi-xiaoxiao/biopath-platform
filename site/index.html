@@ -44,8 +44,8 @@
 
         <div class="hero-actions">
           <button id="startDemoBtn" class="btn btn-accent">Start 2-min Demo</button>
-          <button id="pitchModeBtn" class="btn">Open Pitch Safe</button>
-          <button id="liveModeBtn" class="btn btn-ghost" disabled>Use Live API</button>
+          <button id="pitchModeBtn" class="btn">Open Ops Panel</button>
+          <button id="liveModeBtn" class="btn btn-ghost" disabled>Switch to Pitch Live</button>
           <button id="resetDemoBtn" class="btn btn-ghost">Reset Demo</button>
           <button id="helpBtn" class="btn btn-ghost">Guided Tour</button>
         </div>
@@ -93,6 +93,14 @@
           <p id="connectionPill" class="status-pill checking">Checking...</p>
           <p id="apiLastChecked" class="muted">No health check yet.</p>
           <p class="small-note">Pitch Safe mode remains available even without API.</p>
+          <div class="side-actions ops-section">
+            <button id="autoConnectHero" class="btn btn-ghost">Auto Connect</button>
+            <button id="healthCheckHero" class="btn btn-ghost">Health Check</button>
+          </div>
+          <p class="small-note ops-section">
+            Quick command for instant public API on this laptop:
+            <code>bash scripts/start_public_demo.sh</code>
+          </p>
         </article>
       </aside>
     </section>
@@ -162,21 +170,6 @@
           <a href="https://www.ceresagritech.org/lincam-linc-camb/" target="_blank" rel="noreferrer">Open Ceres collaboration page</a>
         </div>
         <p class="source">Source: Ceres Agri-Tech official pages (accessed 24 Feb 2026).</p>
-      </section>
-
-      <section class="panel panel-criteria">
-        <div class="panel-head">
-          <h2>Judging Criteria (Outlook)</h2>
-          <p>Your deck and script are mapped to these five scoring points.</p>
-        </div>
-        <ol>
-          <li>Clarity of communicating idea</li>
-          <li>Level of market and customer knowledge and understanding</li>
-          <li>Degree of understanding and appropriateness of chosen business model</li>
-          <li>Logic of pitch deck order and quality of presentation skills</li>
-          <li>Robustness and reality of finance</li>
-        </ol>
-        <p class="source">Source: Basecamp email “Week 5 - Resources and Partners and information about pitching”, 12 Feb 2026.</p>
       </section>
 
       <section class="panel panel-context">

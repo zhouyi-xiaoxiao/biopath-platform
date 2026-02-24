@@ -26,7 +26,7 @@ async function shot(ctx, relUrl, file, options = {}) {
   if (options.waitMs) await page.waitForTimeout(options.waitMs);
   if (options.click) await page.click(options.click);
   if (options.waitText) await page.waitForSelector(`text=${options.waitText}`);
-  await page.screenshot({ path: path.join(outDir, file), fullPage: options.fullPage ?? true });
+  await page.screenshot({ path: path.join(outDir, file), fullPage: options.fullPage ?? false });
   await page.close();
 }
 

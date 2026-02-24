@@ -354,6 +354,15 @@ function unique(values) {
   return out;
 }
 
+function runtimeApiCandidates() {
+  const out = [];
+  const origin = normalizeApiBase(window.location.origin || "");
+  if (origin && !origin.includes("github.io")) {
+    out.push(origin);
+  }
+  return out;
+}
+
 async function probeApi(base) {
   const normalized = normalizeApiBase(base);
   if (!normalized) return { ok: false };
@@ -375,12 +384,13 @@ async function probeApi(base) {
 
 async function autoDetectAndConnect({ quiet = false } = {}) {
   setConnectionState("checking", "Probing API candidates...");
-  setApiStatus("Trying URL query -> saved value -> config.json...");
+  setApiStatus("Trying URL query -> saved value -> config.json -> same-origin API...");
 
   const queryApi = normalizeApiBase(params.get("api") || "");
   const storedApi = getApiBase();
   const configApi = await readConfigDefaultApi();
-  const candidates = unique([queryApi, storedApi, configApi]);
+  const runtimeApi = runtimeApiCandidates();
+  const candidates = unique([queryApi, storedApi, configApi, ...runtimeApi]);
 
   if (!candidates.length) {
     setConnectionState("disconnected", "No API configured.");
@@ -853,8 +863,8 @@ function setUiMode(mode, { persist = true } = {}) {
   if (nextMode === UI_MODES.PITCH_SAFE) body.classList.add("ui-pitch-safe");
   if (nextMode === UI_MODES.PITCH_LIVE) body.classList.add("ui-pitch-live");
 
-  $("pitchModeBtn").textContent = nextMode === UI_MODES.OPS ? "Open Pitch Safe" : "Back to Ops";
-  $("liveModeBtn").textContent = nextMode === UI_MODES.PITCH_LIVE ? "Switch to Safe" : "Use Live API";
+  $("pitchModeBtn").textContent = nextMode === UI_MODES.OPS ? "Switch to Pitch Safe" : "Open Ops Panel";
+  $("liveModeBtn").textContent = nextMode === UI_MODES.PITCH_LIVE ? "Switch to Pitch Safe" : "Switch to Pitch Live";
   $("modeBadge").textContent = nextMode === UI_MODES.PITCH_LIVE
     ? "Pitch Live"
     : nextMode === UI_MODES.PITCH_SAFE
@@ -930,7 +940,16 @@ function bindEvents() {
 
   $("autoConnect").addEventListener("click", () => autoDetectAndConnect());
   $("healthCheck").addEventListener("click", () => runHealthCheck());
-  $("fixApiBtn").addEventListener("click", () => autoDetectAndConnect());
+  $("fixApiBtn").addEventListener("click", async () => {
+    const ok = await autoDetectAndConnect();
+    if (!ok) {
+      setUiMode(UI_MODES.OPS);
+      setApiStatus("No healthy API found. Paste API URL and click Health Check, or run: bash scripts/start_public_demo.sh");
+      $("apiBase").focus();
+    }
+  });
+  $("autoConnectHero")?.addEventListener("click", () => autoDetectAndConnect());
+  $("healthCheckHero")?.addEventListener("click", () => runHealthCheck());
 
   $("runSolve").addEventListener("click", () => runSolve());
   $("runBenchmark").addEventListener("click", () => runBenchmark());
