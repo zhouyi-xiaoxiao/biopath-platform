@@ -31,51 +31,39 @@ def save_heatmap(
     cmap = plt.cm.viridis.copy()
     cmap.set_bad(color="#161a1d")
 
-    fig, ax = plt.subplots(figsize=(7.6, 4.6), dpi=180)
-    fig.patch.set_facecolor("#0c1512")
-    ax.set_facecolor("#0f1a16")
+    fig, ax = plt.subplots(figsize=(9.4, 4.9), dpi=220)
+    fig.patch.set_facecolor("#06130e")
+    ax.set_facecolor("#071711")
 
     im = ax.imshow(data, cmap=cmap, origin="upper", interpolation="nearest")
-    cbar = fig.colorbar(im, ax=ax, fraction=0.038, pad=0.03)
-    cbar.set_label("Distance (m)", color="#e7f6ee", fontsize=8)
-    cbar.ax.tick_params(labelsize=8, colors="#d8efe4")
-    cbar.outline.set_edgecolor("#2f4a3e")
+    cbar = fig.colorbar(im, ax=ax, fraction=0.03, pad=0.02)
+    cbar.set_label("Distance (m)", color="#d7ecdf", fontsize=8)
+    cbar.ax.tick_params(labelsize=7, colors="#bfdacb")
+    cbar.outline.set_edgecolor("#2a4a3a")
 
     traps_list = list(traps)
     if traps_list:
         rows, cols = zip(*traps_list)
-        ax.scatter(cols, rows, c="#fff4e8", s=44, marker="x", linewidths=2.2, label="Traps")
+        ax.scatter(cols, rows, c="#ffe9d4", s=34, marker="X", linewidths=0.8, edgecolors="#8a4330", label="Traps")
         leg = ax.legend(
             loc="upper right",
             frameon=True,
-            fontsize=7,
-            facecolor="#182520",
-            edgecolor="#2f4a3e",
+            fontsize=7.2,
+            facecolor="#10241a",
+            edgecolor="#2a4a3a",
             labelcolor="#eaf8f0",
         )
         for txt in leg.get_texts():
             txt.set_color("#eaf8f0")
 
     for spine in ax.spines.values():
-        spine.set_color("#2f4a3e")
-        spine.set_linewidth(0.9)
+        spine.set_color("#27463a")
+        spine.set_linewidth(0.85)
 
     ax.set_xticks([])
     ax.set_yticks([])
-    ax.text(
-        0.01,
-        1.02,
-        "Distance-to-nearest-trap heatmap",
-        transform=ax.transAxes,
-        ha="left",
-        va="bottom",
-        fontsize=8,
-        color="#d4eee1",
-        fontweight="bold",
-    )
-
-    fig.tight_layout(pad=0.2)
-    fig.savefig(out_path, dpi=180, facecolor=fig.get_facecolor(), bbox_inches="tight", pad_inches=0.08)
+    fig.tight_layout(pad=0.1)
+    fig.savefig(out_path, dpi=220, facecolor=fig.get_facecolor(), bbox_inches="tight", pad_inches=0.03)
     plt.close(fig)
 
 
