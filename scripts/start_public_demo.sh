@@ -102,8 +102,11 @@ main() {
   local api_url
   api_url="$(cat "$TUNNEL_URL_FILE")"
 
-  local demo_url
-  demo_url="${SITE_URL}?api=${api_url}&tour=1"
+  local stage_url
+  stage_url="${SITE_URL}?api=${api_url}"
+
+  local rehearsal_url
+  rehearsal_url="${SITE_URL}?api=${api_url}&tour=1"
 
   cat <<MSG
 BioPath public demo is ready.
@@ -111,8 +114,11 @@ BioPath public demo is ready.
 API URL:
 ${api_url}
 
-Pitch URL:
-${demo_url}
+Stage URL (recommended for live pitch):
+${stage_url}
+
+Rehearsal URL (opens guided tour):
+${rehearsal_url}
 
 Logs:
 - API: ${API_LOG}
