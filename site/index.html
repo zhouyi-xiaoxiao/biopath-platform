@@ -9,8 +9,6 @@
   <body>
     <div class="bg-layer bg-layer-a" aria-hidden="true"></div>
     <div class="bg-layer bg-layer-b" aria-hidden="true"></div>
-    <div class="spotlight spotlight-a" aria-hidden="true"></div>
-    <div class="spotlight spotlight-b" aria-hidden="true"></div>
 
     <div id="connectionBanner" class="connection-banner hidden" role="status" aria-live="polite">
       <strong id="bannerTitle">API not connected</strong>
@@ -34,14 +32,14 @@
         <p class="eyebrow">Decision Intelligence for Farm Pest Control</p>
         <h1>From map to measurable farm impact in under 2 minutes.</h1>
         <p>
-          BioPath turns layout complexity into an execution-ready trap placement plan with simulation-backed proof.
-          One workspace for live solve, benchmark uplift, and investor/client narrative.
+          BioPath turns layout complexity into an execution-ready trap placement plan with simulation-backed proof,
+          built for farm teams, pest-control operators, and funding reviewers.
         </p>
 
         <div class="hero-tags">
-          <span>Cambridge Demo Layout</span>
-          <span>Monte Carlo Validation</span>
-          <span>CREGS + ECEF Narrative Ready</span>
+          <span>Real Farm Context + Synthetic Demo</span>
+          <span>Stochastic Modelling + Monte Carlo</span>
+          <span>CREGS + Ceres/LINCAM Narrative Ready</span>
         </div>
 
         <div class="hero-actions">
@@ -69,7 +67,7 @@
           <div class="script-grid">
             <article>
               <p class="time">0:00-0:30</p>
-              <p class="step">Connect API and confirm health.</p>
+              <p class="step">Auto-connect API and confirm health.</p>
             </article>
             <article>
               <p class="time">0:30-1:00</p>
@@ -77,7 +75,7 @@
             </article>
             <article>
               <p class="time">1:00-1:30</p>
-              <p class="step">Run benchmark and quote uplift.</p>
+              <p class="step">Run benchmark and read uplift.</p>
             </article>
             <article>
               <p class="time">1:30-2:00</p>
@@ -89,45 +87,88 @@
         <div class="plan-strip" aria-label="Recommended ten-minute plan">
           <div class="plan-head">
             <strong>Recommended 10-min Plan</strong>
-            <span>Use this exact sequence for tomorrow</span>
+            <span>Tomorrow's fixed structure</span>
           </div>
           <div class="plan-chips">
-            <span>7 min: Online Deck Story</span>
-            <span>2 min: Live UI Solve + Benchmark</span>
-            <span>1 min: Ask + Funding Track</span>
+            <span>7 min: Story + Market + Tech</span>
+            <span>2 min: Live Solve + Benchmark</span>
+            <span>1 min: Ask + Funding Path</span>
           </div>
           <p class="plan-note">
-            Funding context: Cambridge farm pilot funding application is currently in progress in parallel with this pitch cycle.
+            Cambridge farm pilot funding application is in progress in parallel with this pitch cycle.
           </p>
         </div>
       </div>
 
-      <aside class="status-card" aria-label="Connection status">
-        <h2>Live Connection</h2>
-        <p id="connectionPill" class="status-pill checking">Checking...</p>
-        <p id="apiLastChecked" class="muted">No health check yet.</p>
-        <div class="status-hint">
-          Real-time API is the default demo path. If unavailable, fallback data is shown.
-        </div>
+      <aside class="status-stack">
+        <article class="status-card" aria-label="Connection status">
+          <h2>Live Connection</h2>
+          <p id="connectionPill" class="status-pill checking">Checking...</p>
+          <p id="apiLastChecked" class="muted">No health check yet.</p>
+          <div class="status-hint">
+            Real-time API is the default demo path. If unavailable, fallback data is shown.
+          </div>
+        </article>
+
+        <article class="funding-card" aria-label="Funding context">
+          <h2>Funding Signal</h2>
+          <p class="funding-quote">
+            “Ceres AgriTech delivers the LINCAM translational research funding programme.”
+          </p>
+          <p class="funding-sub">
+            “Funding of up to £150K available for eligible projects.”
+          </p>
+          <p class="funding-meta">
+            Source: Enterprise Roadshow flyer (email from Dr Olivia Champion, 9 Jan 2026).
+          </p>
+          <a class="funding-link" href="./assets/ceres-roadshow.pdf" target="_blank" rel="noreferrer">Open source flyer (PDF)</a>
+        </article>
       </aside>
+    </section>
+
+    <section class="context-band">
+      <article class="context-card context-photo">
+        <h2>Real Cambridgeshire Farm Context</h2>
+        <figure>
+          <img src="./assets/cambridge-university-farm.jpg" alt="Real farm landscape at Cambridge University Farm" loading="lazy" />
+          <figcaption>
+            Cambridge University Farm (photo: Chris Boland / Geograph, CC BY-SA 2.0)
+            <a href="https://commons.wikimedia.org/wiki/File:Cambridge_University_Farm_-_geograph.org.uk_-_3363476.jpg" target="_blank" rel="noreferrer">source</a>
+          </figcaption>
+        </figure>
+      </article>
+
+      <article class="context-card context-maps">
+        <h2>Demo Visuals You Can Quote</h2>
+        <div class="context-grid">
+          <figure>
+            <img src="./assets/cambridge-layout.png" alt="Cambridge synthetic farm layout" loading="lazy" />
+            <figcaption>Synthetic layout used in live demo</figcaption>
+          </figure>
+          <figure>
+            <img id="cambridgeHeatmapPreview" src="./assets/cambridge-heatmap.png" alt="Optimized heatmap and trap placement" loading="lazy" />
+            <figcaption>Optimized trap overlay + distance heatmap</figcaption>
+          </figure>
+        </div>
+      </article>
     </section>
 
     <main class="layout">
       <section class="panel journey-panel" id="journeyPanel">
         <div class="panel-head">
           <h2>User Flow and Effect</h2>
-          <p>Show judges exactly what users do, then show exactly what changes after one run.</p>
+          <p>Show judges exactly what users do and what measurable effect they get in one run.</p>
         </div>
 
         <div class="journey-grid">
           <article class="journey-card">
             <h3>How A User Uses BioPath</h3>
             <ol class="journey-steps">
-              <li><strong>Connect API</strong> with Auto Connect or paste URL.</li>
-              <li><strong>Load farm map</strong> (default Cambridge synthetic layout).</li>
+              <li><strong>Connect API</strong> with Auto Connect.</li>
+              <li><strong>Load map</strong> (default Cambridge synthetic layout).</li>
               <li><strong>Run Solve</strong> to get trap coordinates.</li>
-              <li><strong>Run Benchmark</strong> to compare against random baseline.</li>
-              <li><strong>Quote proof</strong> in pitch mode using ready-made lines.</li>
+              <li><strong>Run Benchmark</strong> versus random baseline.</li>
+              <li><strong>Switch to Pitch Mode</strong> and narrate Problem -> Solution -> Proof -> Ask.</li>
             </ol>
           </article>
 
@@ -213,16 +254,6 @@
             </div>
             <textarea id="mapJson" spellcheck="false" aria-label="Map JSON"></textarea>
             <p id="mapError" class="field-error hidden"></p>
-            <div class="map-visuals">
-              <figure>
-                <img src="./assets/cambridge-layout.png" alt="Cambridge synthetic farm layout" loading="lazy" />
-                <figcaption>Cambridge demo layout (synthetic)</figcaption>
-              </figure>
-              <figure>
-                <img id="cambridgeHeatmapPreview" src="./assets/cambridge-heatmap.png" alt="Optimized heatmap and trap placement" loading="lazy" />
-                <figcaption>Optimized heatmap + trap overlay</figcaption>
-              </figure>
-            </div>
           </article>
 
           <article class="subpanel run-panel">
@@ -242,7 +273,7 @@
       <section class="panel proof-panel" id="proofPanel">
         <div class="panel-head">
           <h2>Proof Panel</h2>
-          <p>The exact numbers you should quote during pitch.</p>
+          <p>The exact numbers you can quote during pitch.</p>
         </div>
 
         <div id="proofMetrics" class="metric-grid"></div>
@@ -283,8 +314,16 @@
 
         <article class="narrative-block ask-block">
           <h3>Ask</h3>
-          <p id="askLine">We ask for 2 pilot introductions, a small PoC budget, and practical data access for an 8-week farm trial; in parallel, we are applying for Cambridge farm pilot funding.</p>
-          <button class="copy-btn" data-copy="We ask for 2 pilot introductions, a small PoC budget, and practical data access for an 8-week farm trial; in parallel, we are applying for Cambridge farm pilot funding.">Copy ask</button>
+          <p id="askLine">
+            We ask for 2 pilot introductions, a small PoC budget, and practical data access for an 8-week farm trial;
+            in parallel, we are applying for Cambridge farm funding and Ceres/LINCAM-aligned translational pathways.
+          </p>
+          <button
+            class="copy-btn"
+            data-copy="We ask for 2 pilot introductions, a small PoC budget, and practical data access for an 8-week farm trial; in parallel, we are applying for Cambridge farm funding and Ceres/LINCAM-aligned translational pathways."
+          >
+            Copy ask
+          </button>
         </article>
       </section>
 
