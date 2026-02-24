@@ -92,9 +92,5 @@
     "heatmap": "/Users/zhouyixiaoxiao/Library/CloudStorage/OneDrive-UniversityofBristol/Desktop/biopath/runs/20260224T163054Z-ffa7d325/heatmap.png",
     "summary": "/Users/zhouyixiaoxiao/Library/CloudStorage/OneDrive-UniversityofBristol/Desktop/biopath/runs/20260224T163054Z-ffa7d325/summary.md",
     "metrics": "/Users/zhouyixiaoxiao/Library/CloudStorage/OneDrive-UniversityofBristol/Desktop/biopath/runs/20260224T163054Z-ffa7d325/metrics.json"
-  },
-  "artifacts_site": {
-    "heatmap": "./data/latest-heatmap.png",
-    "summary": "./data/latest-summary.md"
   }
 }
