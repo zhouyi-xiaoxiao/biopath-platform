@@ -12,6 +12,7 @@ const UI_MODES = {
 
 const DEFAULT_MAP_URL = "./data/cambridge-photo-informed-map.json";
 const CURATED_LATEST_URL = "./data/latest.json";
+const CURATED_BENCHMARK_URL = "./data/latest-benchmark.json";
 const CURATED_RUNS_URL = "./data/runs.json";
 
 const DEFAULT_ARTIFACTS = {
@@ -193,12 +194,16 @@ function setApiStatus(message) {
 
 function setConnectionState(mode, details) {
   const pill = $("connectionPill");
-  pill.classList.remove("connected", "disconnected", "checking");
+  pill.classList.remove("connected", "disconnected", "checking", "safe");
 
   if (mode === "connected") {
     pill.classList.add("connected");
     pill.textContent = "Connected";
     state.connected = true;
+  } else if (mode === "safe") {
+    pill.classList.add("safe");
+    pill.textContent = "Pitch Safe Ready";
+    state.connected = false;
   } else if (mode === "checking") {
     pill.classList.add("checking");
     pill.textContent = "Checking";
@@ -393,7 +398,7 @@ async function autoDetectAndConnect({ quiet = false } = {}) {
   const candidates = unique([queryApi, storedApi, configApi, ...runtimeApi]);
 
   if (!candidates.length) {
-    setConnectionState("disconnected", "No API configured.");
+    setConnectionState("safe", "No live API configured.");
     showConnectionBanner("API not connected", "Paste your API URL and click Auto Connect.");
     setApiStatus("No API candidate found.");
     return false;
@@ -413,7 +418,7 @@ async function autoDetectAndConnect({ quiet = false } = {}) {
   }
 
   $("apiBase").value = candidates[0] || "";
-  setConnectionState("disconnected", "All candidates failed health check.");
+  setConnectionState("safe", "No healthy live API found.");
   showConnectionBanner("API unreachable", "Use Fix in 1 step or replace API URL, then run Health Check.");
   setApiStatus("Auto-detection failed. You can still run Pitch Safe mode.");
   return false;
@@ -573,6 +578,8 @@ function renderProof(result, benchmark = null) {
 }
 
 function setPitchNarrative(result, benchmark = null) {
+  const trapCount = Array.isArray(result?.traps) ? result.traps.length : Number($("kInput")?.value || 6);
+  const mcRuns = Number($("mcRuns")?.value || 140);
   const cp = typeof result?.capture_probability === "number" ? `${(result.capture_probability * 100).toFixed(1)}%` : "n/a";
   const rb = typeof result?.robust_score === "number" ? `${(result.robust_score * 100).toFixed(1)}%` : "n/a";
 
@@ -583,9 +590,13 @@ function setPitchNarrative(result, benchmark = null) {
     ? benchmark.baseline.mean
     : null;
 
-  let proofLine = `Latest run shows capture probability ${cp} and robust score ${rb}.`;
+  let proofLine = `With k=${trapCount} traps, optimized capture is ${cp} and robust capture is ${rb}.`;
   if (uplift !== null && baseline && baseline > 0) {
-    proofLine += ` Uplift versus random baseline is +${((uplift / baseline) * 100).toFixed(1)}%.`;
+    const baselinePct = `${(baseline * 100).toFixed(1)}%`;
+    const upliftPct = `+${((uplift / baseline) * 100).toFixed(1)}%`;
+    proofLine = `With k=${trapCount} traps, BioPath achieves capture ${cp} vs random baseline ${baselinePct}, delivering uplift ${upliftPct}. Robust capture is ${rb} (conservative performance across uncertainty scenarios), validated with Monte Carlo N=${mcRuns}.`;
+  } else {
+    proofLine += ` Run benchmark to add random baseline and uplift. Robust capture means conservative performance across uncertainty scenarios.`;
   }
 
   const askLine = "We are currently applying CREGS + LINCAM PoC and ask for 2 pilot introductions, one 8-week data access trial, and support for a £5k-£20k PoC application.";
@@ -609,10 +620,17 @@ async function loadCuratedLatest() {
     const res = await fetch(CURATED_LATEST_URL, { cache: "no-store" });
     if (!res.ok) throw new Error("Curated latest not found");
     const data = await res.json();
+    let curatedBenchmark = null;
+    try {
+      const bRes = await fetch(CURATED_BENCHMARK_URL, { cache: "no-store" });
+      if (bRes.ok) curatedBenchmark = await bRes.json();
+    } catch (_) {
+      curatedBenchmark = null;
+    }
     state.latestResult = data;
-    state.latestBenchmark = null;
-    renderProof(data, null);
-    setPitchNarrative(data, null);
+    state.latestBenchmark = curatedBenchmark;
+    renderProof(data, curatedBenchmark);
+    setPitchNarrative(data, curatedBenchmark);
     return true;
   } catch (_) {
     setCompareBox("Curated latest dataset is unavailable. Add site/data/latest.json before presenting.");
@@ -1013,6 +1031,7 @@ async function setup() {
   const connected = await autoDetectAndConnect({ quiet: true });
   if (!connected) {
     setApiStatus("Auto-connect failed. Pitch Safe mode is ready with curated evidence.");
+    setConnectionState("safe", "Live API optional for stage demo.");
     setNoApiFriendlyState();
   }
 

@@ -1,0 +1,12 @@
+{
+  "objective": "robust_capture",
+  "baseline": {
+    "mean": 0.30357142857142855,
+    "samples": 40
+  },
+  "optimized_score": 0.5428571428571428,
+  "uplift_vs_random_mean": 0.23928571428571427,
+  "uplift_vs_random_pct": 78.82352941176471,
+  "mc_runs": 140,
+  "note": "Curated benchmark for Pitch Safe mode: same trap budget (k=6), random baseline comparison, robust capture interpreted as conservative performance under uncertainty."
+}

@@ -428,6 +428,14 @@ body.ui-pitch-live .connection-banner {
 
 .status-pill.connected::before { background: var(--ok); }
 
+.status-pill.safe {
+  background: rgba(31, 158, 107, 0.12);
+  border: 1px solid rgba(31, 158, 107, 0.3);
+  color: #1b6848;
+}
+
+.status-pill.safe::before { background: #2aa16f; }
+
 .status-pill.disconnected {
   background: rgba(178, 69, 69, 0.12);
   border: 1px solid rgba(178, 69, 69, 0.28);

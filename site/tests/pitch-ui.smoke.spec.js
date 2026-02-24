@@ -5,7 +5,7 @@ test("offline pitch-safe mode is usable and has no raw fetch errors", async ({ p
 
   await expect(page.locator("h1")).toContainText("farm impact");
   await expect(page.locator("body")).toHaveClass(/ui-pitch-safe/);
-  await expect(page.locator("#connectionPill")).toHaveText(/Disconnected|Checking/);
+  await expect(page.locator("#connectionPill")).toHaveText(/Disconnected|Checking|Pitch Safe Ready/);
 
   await expect(page.locator("#compareBox")).not.toContainText(/Failed to fetch/i);
   await expect(page.locator("#summaryFallback")).toContainText(/one-page guide|Summary link|Pitch Safe/i);

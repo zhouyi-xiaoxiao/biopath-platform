@@ -87,6 +87,13 @@
         font-weight: 700;
       }
 
+      .mapline {
+        margin: 0.18rem 0 0;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.74rem;
+        color: #4f6f63;
+      }
+
       h1, h2, h3 {
         margin: 0;
         font-family: "Manrope", sans-serif;
@@ -236,6 +243,7 @@
     <main class="deck">
       <section class="slide" id="s1">
         <p class="kicker">Slide 1 · What we do</p>
+        <p class="mapline">Script alignment: Segment 1 + Segment 2</p>
         <h1>BioPath turns farm maps into measurable trap-placement decisions.</h1>
         <p class="two-line">
           Two-line investor definition: we convert one layout into optimized trap coordinates with quantified uplift,
@@ -263,14 +271,15 @@
 
       <section class="slide" id="s2">
         <p class="kicker">Slide 2 · Problem + customer</p>
+        <p class="mapline">Script alignment: Segment 2</p>
         <h2>Manual trap placement is inconsistent, hard to audit, and loses performance in complex layouts.</h2>
         <div class="grid2">
           <article class="card">
             <h3>Who feels this pain</h3>
             <ul>
-              <li>Farm operations teams handling irregular site geometry.</li>
-              <li>Pest-control operators managing multiple properties.</li>
-              <li>Funding reviewers demanding reproducible evidence.</li>
+              <li><strong>Primary customer:</strong> farm operations teams handling irregular site geometry.</li>
+              <li><strong>Primary customer:</strong> pest-control operators managing multiple properties.</li>
+              <li><strong>Secondary stakeholder:</strong> managers/procurement teams needing auditable decisions.</li>
             </ul>
           </article>
           <article class="card">
@@ -286,6 +295,7 @@
 
       <section class="slide" id="s3">
         <p class="kicker">Slide 3 · Product</p>
+        <p class="mapline">Script alignment: Segment 3</p>
         <h2>Source -> model -> solve is transparent and reproducible.</h2>
         <div class="grid2">
           <figure>
@@ -295,10 +305,10 @@
           <article class="card">
             <h3>User flow in 2 minutes</h3>
             <ol>
-              <li>Load map JSON and trap budget.</li>
+              <li>Upload a site map/layout and set trap budget.</li>
               <li>Run solve for trap coordinates.</li>
               <li>Run benchmark against random baseline.</li>
-              <li>Read capture, robust score, and uplift.</li>
+              <li>Read capture, robust score, uplift, and export run artifact.</li>
             </ol>
           </article>
         </div>
@@ -306,6 +316,7 @@
 
       <section class="slide" id="s4">
         <p class="kicker">Slide 4 · Technical edge</p>
+        <p class="mapline">Script alignment: Segment 4</p>
         <h2>Originality is robust optimization under uncertainty, not static rule heuristics.</h2>
         <div class="grid2">
           <article class="card">
@@ -320,6 +331,7 @@
           <article class="card">
             <h3>Why this is defensible</h3>
             <ul>
+              <li><strong>Robust capture definition:</strong> conservative performance across uncertainty scenarios.</li>
               <li>Evidence is reproducible run-to-run.</li>
               <li>Decisions are auditable for operators and judges.</li>
               <li>Research background aligns directly with movement uncertainty.</li>
@@ -330,6 +342,7 @@
 
       <section class="slide" id="s5">
         <p class="kicker">Slide 5 · Traction velocity</p>
+        <p class="mapline">Script alignment: Segment 6</p>
         <h2>Early traction is execution speed and evidence quality.</h2>
         <div class="grid2">
           <article class="card">
@@ -342,19 +355,23 @@
             </ul>
           </article>
           <article class="card">
-            <h3>Demo evidence snapshot</h3>
+            <h3>Demo proof contract (same k, benchmarked)</h3>
             <div class="grid3" style="margin-top:0.45rem;">
-              <div class="metric"><span>Capture</span><strong>48.1%</strong></div>
-              <div class="metric"><span>Robust</span><strong>48.1%</strong></div>
-              <div class="metric"><span>Trap count</span><strong>6</strong></div>
+              <div class="metric"><span>Optimized capture</span><strong>54.3%</strong></div>
+              <div class="metric"><span>Random baseline</span><strong>30.4%</strong></div>
+              <div class="metric"><span>Uplift</span><strong>+78.8%</strong></div>
+              <div class="metric"><span>Robust capture</span><strong>54.3%</strong></div>
+              <div class="metric"><span>MC runs</span><strong>N = 140</strong></div>
+              <div class="metric"><span>Trap budget</span><strong>k = 6</strong></div>
             </div>
-            <p class="caption" style="margin-top:0.52rem;">Benchmarked uplift is shown live when API is available; stable curated proof remains available offline.</p>
+            <p class="caption" style="margin-top:0.52rem;">Pitch Safe keeps this full proof contract visible offline: optimized vs baseline + uplift + robust + MC.</p>
           </article>
         </div>
       </section>
 
       <section class="slide" id="s6">
         <p class="kicker">Slide 6 · Market + pricing</p>
+        <p class="mapline">Script alignment: Segment 7</p>
         <h2>Bottom-up model: paid pilot -> annual subscription -> portfolio expansion.</h2>
         <div class="grid2">
           <article class="card">
@@ -380,12 +397,14 @@
 
       <section class="slide" id="s7">
         <p class="kicker">Slide 7 · Finance + funding path</p>
+        <p class="mapline">Script alignment: Segment 8</p>
         <h2>Finance is practical: realistic costs, explicit milestones, and fit-for-stage funding.</h2>
         <div class="grid2">
           <article class="card">
             <h3>Near-term finance baseline</h3>
             <ul>
               <li><strong>Year-1 cost base:</strong> £28k (people + cloud + field ops).</li>
+              <li><strong>Boundary:</strong> founder build time is in-kind at this stage; £28k tracks cash operating costs.</li>
               <li><strong>Milestone horizon:</strong> 18-24 months.</li>
               <li><strong>Outcome targets:</strong> repeatable uplift evidence + recurring contracts.</li>
             </ul>
@@ -408,6 +427,7 @@
 
       <section class="slide" id="s8">
         <p class="kicker">Slide 8 · Team + explicit ask</p>
+        <p class="mapline">Script alignment: Segment 10</p>
         <h2>Execution trust comes from founder-problem fit and a direct ask tied to outcomes.</h2>
         <div class="grid2">
           <article class="card">
