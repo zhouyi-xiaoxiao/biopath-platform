@@ -1134,8 +1134,8 @@ async function setup() {
   await loadRunList();
 
   const forceTour = params.get("tour") === "1";
-  const tourDone = localStorage.getItem(STORAGE_KEYS.tourDone) === "1";
-  if (forceTour || !tourDone) openTour();
+  // Stage-safe default: only open the onboarding tour when explicitly requested.
+  if (forceTour) openTour();
 }
 
 window.addEventListener("DOMContentLoaded", setup);
