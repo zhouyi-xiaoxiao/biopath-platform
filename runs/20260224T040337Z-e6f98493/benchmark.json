@@ -1,0 +1,159 @@
+{
+  "run_id": "20260224T040337Z-e6f98493",
+  "traps": [
+    {
+      "row": 10,
+      "col": 25,
+      "x_m": 25.0,
+      "y_m": 10.0
+    },
+    {
+      "row": 6,
+      "col": 18,
+      "x_m": 18.0,
+      "y_m": 6.0
+    },
+    {
+      "row": 3,
+      "col": 17,
+      "x_m": 17.0,
+      "y_m": 3.0
+    },
+    {
+      "row": 7,
+      "col": 8,
+      "x_m": 8.0,
+      "y_m": 7.0
+    },
+    {
+      "row": 2,
+      "col": 3,
+      "x_m": 3.0,
+      "y_m": 2.0
+    },
+    {
+      "row": 3,
+      "col": 11,
+      "x_m": 11.0,
+      "y_m": 3.0
+    }
+  ],
+  "metrics": {
+    "mean_distance_m": 4.6,
+    "weighted_mean_distance_m": 4.2039799427272735,
+    "max_distance_m": 14.0,
+    "p95_distance_m": 11.0,
+    "coverage_within_radius": null,
+    "weighted_coverage_within_radius": null
+  },
+  "artifacts": {
+    "run_dir": "/Users/zhouyixiaoxiao/Library/CloudStorage/OneDrive-UniversityofBristol/Desktop/biopath/runs/20260224T040337Z-e6f98493",
+    "heatmap": "/Users/zhouyixiaoxiao/Library/CloudStorage/OneDrive-UniversityofBristol/Desktop/biopath/runs/20260224T040337Z-e6f98493/heatmap.png",
+    "summary": "/Users/zhouyixiaoxiao/Library/CloudStorage/OneDrive-UniversityofBristol/Desktop/biopath/runs/20260224T040337Z-e6f98493/summary.md",
+    "metrics": "/Users/zhouyixiaoxiao/Library/CloudStorage/OneDrive-UniversityofBristol/Desktop/biopath/runs/20260224T040337Z-e6f98493/metrics.json"
+  },
+  "solver_version": "v0.2-auto",
+  "run": {
+    "run_id": "20260224T040337Z-e6f98493",
+    "created_at": "2026-02-24T04:03:37.787843+00:00",
+    "solver_version": "v0.2-auto",
+    "map": {
+      "name": "Cambridgeshire Photo-informed Demo Farm (Synthetic Geometry + Publicly Inspired Risk Prior)",
+      "cell_size_m": 1.0,
+      "height": 13,
+      "width": 28
+    },
+    "objective": {
+      "name": "robust_capture",
+      "raw": -0.625,
+      "value": 0.625
+    },
+    "traps": [
+      {
+        "row": 10,
+        "col": 25,
+        "x_m": 25.0,
+        "y_m": 10.0
+      },
+      {
+        "row": 6,
+        "col": 18,
+        "x_m": 18.0,
+        "y_m": 6.0
+      },
+      {
+        "row": 3,
+        "col": 17,
+        "x_m": 17.0,
+        "y_m": 3.0
+      },
+      {
+        "row": 7,
+        "col": 8,
+        "x_m": 8.0,
+        "y_m": 7.0
+      },
+      {
+        "row": 2,
+        "col": 3,
+        "x_m": 3.0,
+        "y_m": 2.0
+      },
+      {
+        "row": 3,
+        "col": 11,
+        "x_m": 11.0,
+        "y_m": 3.0
+      }
+    ],
+    "metrics": {
+      "mean_distance_m": 4.6,
+      "weighted_mean_distance_m": 4.2039799427272735,
+      "max_distance_m": 14.0,
+      "p95_distance_m": 11.0,
+      "coverage_within_radius": null,
+      "weighted_coverage_within_radius": null
+    },
+    "capture_probability": 0.475,
+    "expected_time_to_capture": 35.625,
+    "ci95_low": 0.3202422053659332,
+    "ci95_high": 0.6297577946340668,
+    "robust_score": 0.625,
+    "scenario_scores": [
+      {
+        "name": "lazy_neutral",
+        "capture_probability": 0.625,
+        "expected_time_to_capture": 29.775,
+        "ci95_low": 0.47496875325453036,
+        "ci95_high": 0.7750312467454696
+      },
+      {
+        "name": "biased_right",
+        "capture_probability": 0.625,
+        "expected_time_to_capture": 29.25,
+        "ci95_low": 0.47496875325453036,
+        "ci95_high": 0.7750312467454696
+      },
+      {
+        "name": "biased_down",
+        "capture_probability": 0.625,
+        "expected_time_to_capture": 29.675,
+        "ci95_low": 0.47496875325453036,
+        "ci95_high": 0.7750312467454696
+      }
+    ],
+    "artifacts": {
+      "run_dir": "/Users/zhouyixiaoxiao/Library/CloudStorage/OneDrive-UniversityofBristol/Desktop/biopath/runs/20260224T040337Z-e6f98493",
+      "heatmap": "/Users/zhouyixiaoxiao/Library/CloudStorage/OneDrive-UniversityofBristol/Desktop/biopath/runs/20260224T040337Z-e6f98493/heatmap.png",
+      "summary": "/Users/zhouyixiaoxiao/Library/CloudStorage/OneDrive-UniversityofBristol/Desktop/biopath/runs/20260224T040337Z-e6f98493/summary.md",
+      "metrics": "/Users/zhouyixiaoxiao/Library/CloudStorage/OneDrive-UniversityofBristol/Desktop/biopath/runs/20260224T040337Z-e6f98493/metrics.json"
+    }
+  },
+  "baseline": {
+    "best": 0.45,
+    "mean": 0.28375
+  },
+  "optimized_score": 0.625,
+  "uplift_vs_random_mean": 0.34125,
+  "objective": "robust_capture"
+}
