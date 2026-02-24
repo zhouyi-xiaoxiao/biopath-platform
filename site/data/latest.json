@@ -1,6 +1,6 @@
 {
-  "run_id": "20260224T065151Z-71787367",
-  "created_at": "2026-02-24T06:51:52.113214+00:00",
+  "run_id": "20260224T144611Z-ecf2f1cd",
+  "created_at": "2026-02-24T14:46:11.431502+00:00",
   "solver_version": "v0.2-auto",
   "map": {
     "name": "Cambridgeshire Demo Farm (Publicly Inspired Synthetic)",
@@ -10,88 +10,88 @@
   },
   "objective": {
     "name": "robust_capture",
-    "raw": -0.536,
-    "value": 0.536
+    "raw": -0.575,
+    "value": 0.48125
   },
   "traps": [
     {
-      "row": 11,
+      "row": 10,
+      "col": 23,
+      "x_m": 23.0,
+      "y_m": 10.0
+    },
+    {
+      "row": 3,
+      "col": 11,
+      "x_m": 11.0,
+      "y_m": 3.0
+    },
+    {
+      "row": 6,
       "col": 7,
       "x_m": 7.0,
+      "y_m": 6.0
+    },
+    {
+      "row": 2,
+      "col": 17,
+      "x_m": 17.0,
+      "y_m": 2.0
+    },
+    {
+      "row": 11,
+      "col": 15,
+      "x_m": 15.0,
       "y_m": 11.0
     },
     {
       "row": 3,
-      "col": 5,
-      "x_m": 5.0,
+      "col": 3,
+      "x_m": 3.0,
       "y_m": 3.0
-    },
-    {
-      "row": 6,
-      "col": 9,
-      "x_m": 9.0,
-      "y_m": 6.0
-    },
-    {
-      "row": 3,
-      "col": 20,
-      "x_m": 20.0,
-      "y_m": 3.0
-    },
-    {
-      "row": 6,
-      "col": 19,
-      "x_m": 19.0,
-      "y_m": 6.0
-    },
-    {
-      "row": 8,
-      "col": 22,
-      "x_m": 22.0,
-      "y_m": 8.0
     }
   ],
   "metrics": {
-    "mean_distance_m": 4.37,
-    "weighted_mean_distance_m": 3.98,
-    "max_distance_m": 10.0,
-    "p95_distance_m": 8.0,
+    "mean_distance_m": 4.520833333333333,
+    "weighted_mean_distance_m": 4.520833333333333,
+    "max_distance_m": 13.0,
+    "p95_distance_m": 10.0,
     "coverage_within_radius": null,
     "weighted_coverage_within_radius": null
   },
-  "capture_probability": 0.586,
-  "expected_time_to_capture": 29.84,
-  "ci95_low": 0.513,
-  "ci95_high": 0.659,
-  "robust_score": 0.536,
+  "capture_probability": 0.48125,
+  "expected_time_to_capture": 34.9625,
+  "ci95_low": 0.40382869166453594,
+  "ci95_high": 0.5586713083354641,
+  "robust_score": 0.48125,
   "scenario_scores": [
     {
       "name": "lazy_neutral",
-      "capture_probability": 0.586,
-      "expected_time_to_capture": 29.84,
-      "ci95_low": 0.513,
-      "ci95_high": 0.659
+      "capture_probability": 0.48125,
+      "expected_time_to_capture": 34.9625,
+      "ci95_low": 0.40382869166453594,
+      "ci95_high": 0.5586713083354641
     },
     {
       "name": "biased_right",
-      "capture_probability": 0.612,
-      "expected_time_to_capture": 28.11,
-      "ci95_low": 0.541,
-      "ci95_high": 0.683
+      "capture_probability": 0.5625,
+      "expected_time_to_capture": 30.2375,
+      "ci95_low": 0.48563186006218184,
+      "ci95_high": 0.6393681399378182
     },
     {
       "name": "biased_down",
-      "capture_probability": 0.536,
-      "expected_time_to_capture": 31.42,
-      "ci95_low": 0.463,
-      "ci95_high": 0.609
+      "capture_probability": 0.5,
+      "expected_time_to_capture": 32.2125,
+      "ci95_low": 0.4225241973258747,
+      "ci95_high": 0.5774758026741253
     }
   ],
   "artifacts": {
-    "run_dir": "runs/20260224T065151Z-71787367",
-    "heatmap": "runs/20260224T065151Z-71787367/heatmap.png",
-    "summary": "runs/20260224T065151Z-71787367/summary.md",
-    "metrics": "runs/20260224T065151Z-71787367/metrics.json"
+    "run_dir": "runs/20260224T144611Z-ecf2f1cd",
+    "heatmap": "runs/20260224T144611Z-ecf2f1cd/heatmap.png",
+    "summary": "runs/20260224T144611Z-ecf2f1cd/summary.md",
+    "metrics": "runs/20260224T144611Z-ecf2f1cd/metrics.json"
   },
   "artifacts_site": {
     "heatmap": "./data/latest-heatmap.png",
