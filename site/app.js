@@ -542,7 +542,7 @@ function updateHeroProof(result, benchmark = null) {
       ? baselineSummary.upliftPct
       : (uplift / baseline) * 100;
     const shortLabel = baselineSummary.label.toLowerCase().includes("heuristic")
-      ? "heuristic baseline"
+      ? "heuristic"
       : "baseline";
     $("heroUplift").textContent = `+${relPct.toFixed(1)}% vs ${shortLabel}`;
   } else {

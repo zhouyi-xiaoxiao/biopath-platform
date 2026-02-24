@@ -403,7 +403,8 @@ body.ui-pitch-live .connection-banner {
   line-height: 1.45;
 }
 
-.source a {
+.source a,
+.source a:visited {
   color: #1f5a47;
   text-decoration: none;
   border-bottom: 1px solid rgba(31, 90, 71, 0.26);
@@ -555,7 +556,7 @@ body.ui-pitch-live .connection-banner {
   margin-top: 0.66rem;
   border: 1px solid rgba(16, 44, 35, 0.14);
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.62);
+  background: linear-gradient(170deg, rgba(255, 255, 255, 0.72), rgba(244, 249, 246, 0.72));
   padding: 0.44rem 0.56rem;
   color: #5f7b70;
   font-size: 0.73rem;

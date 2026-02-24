@@ -1,12 +1,20 @@
 {
   "objective": "robust_capture",
+  "baseline_mode": "heuristic",
+  "baseline_label": "Heuristic baseline",
   "baseline": {
-    "mean": 0.30357142857142855,
+    "mean": 0.476,
     "samples": 40
   },
-  "optimized_score": 0.48125,
-  "uplift_vs_random_mean": 0.17767857142857143,
-  "uplift_vs_random_pct": 58.529411764705884,
+  "optimized_score": 0.586,
+  "uplift_vs_baseline_mean": 0.10999999999999999,
+  "uplift_vs_baseline_pct": 23.109243697478987,
+  "random_baseline": {
+    "mean": 0.37,
+    "samples": 40
+  },
+  "uplift_vs_random_mean": 0.21599999999999997,
+  "uplift_vs_random_pct": 58.37837837837837,
   "mc_runs": 140,
-  "note": "Curated benchmark for Pitch Safe mode: same trap budget (k=6), random baseline comparison, robust capture interpreted as conservative performance under uncertainty."
+  "note": "Curated benchmark for Pitch Safe mode: same trap budget (k=6), primary comparator is heuristic baseline (edge + spacing prior); random baseline is secondary reference. Robust capture is conservative scenario performance."
 }
