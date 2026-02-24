@@ -96,9 +96,10 @@
           <div class="side-actions">
             <button id="autoConnectHero" class="btn btn-ghost">Auto Connect</button>
             <button id="healthCheckHero" class="btn btn-ghost">Health Check</button>
+            <button id="copyDemoCommand" class="btn btn-ghost">Copy Start Command</button>
           </div>
           <p class="small-note">
-            Quick command for instant public API on this laptop:
+            To get <strong>Connected</strong> quickly on this laptop, run:
             <code>bash scripts/start_public_demo.sh</code>
           </p>
         </article>
@@ -116,8 +117,14 @@
 
         <div class="proof-foot">
           <p><strong>Benchmark Uplift:</strong> <span id="upliftValue">n/a</span></p>
-          <p><strong>Random Baseline Mean:</strong> <span id="baselineValue">n/a</span></p>
+          <p><strong><span id="baselineLabel">Heuristic Baseline Mean</span>:</strong> <span id="baselineValue">n/a</span></p>
           <p><strong>Benchmark Status:</strong> <span id="benchmarkState">No benchmark yet</span></p>
+          <div class="metric-definitions">
+            <p><strong>Capture:</strong> nominal scenario estimate.</p>
+            <p><strong>Robust:</strong> conservative score across uncertainty scenarios.</p>
+            <p><strong>Weighted Mean:</strong> risk-prior weighted distance (can differ from plain mean).</p>
+          </div>
+          <p id="distanceNote" class="small-note">Weighted mean uses photo-informed risk weights; it may differ from plain mean distance.</p>
           <a id="summaryLink" href="#" target="_blank" rel="noreferrer" class="hidden">Open run summary</a>
           <p id="summaryFallback" class="small-note">Summary link is optional for live pitch.</p>
         </div>
@@ -145,8 +152,8 @@
 
         <article class="narrative-block">
           <h3>Proof</h3>
-          <p id="narrativeProof">With k=6 traps, BioPath reports optimized capture and robust capture with random-baseline uplift under Monte Carlo validation.</p>
-          <button id="proofCopy" class="copy-btn" data-copy="With k=6 traps, BioPath reports optimized capture and robust capture with random-baseline uplift under Monte Carlo validation.">Copy line</button>
+          <p id="narrativeProof">With k=6 traps, BioPath reports optimized capture and robust capture with heuristic-baseline uplift under Monte Carlo validation.</p>
+          <button id="proofCopy" class="copy-btn" data-copy="With k=6 traps, BioPath reports optimized capture and robust capture with heuristic-baseline uplift under Monte Carlo validation.">Copy line</button>
         </article>
 
         <article class="narrative-block ask">
@@ -181,8 +188,7 @@
           <figure>
             <img src="./assets/cambridge-university-farm.jpg" alt="Cambridge University Farm real context" loading="lazy" />
             <figcaption>
-              Public context photo: Cambridge University Farm (Chris Boland / Geograph, CC BY-SA 2.0)
-              <a href="https://commons.wikimedia.org/wiki/File:Cambridge_University_Farm_-_geograph.org.uk_-_3363476.jpg" target="_blank" rel="noreferrer">source</a>
+              Public farmyard context photo used for explainable source-to-model mapping (demo context only; no private telemetry).
             </figcaption>
           </figure>
           <figure>

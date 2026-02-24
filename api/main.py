@@ -5,14 +5,18 @@ from __future__ import annotations
 from datetime import datetime, timezone
 import json
 from pathlib import Path
-import random
 from typing import Any
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from biopath.mapio import load_map_data
-from biopath.run_pipeline import SolveOptions, evaluate_random_baseline, run_solve
+from biopath.run_pipeline import (
+    SolveOptions,
+    evaluate_heuristic_baseline,
+    evaluate_random_baseline,
+    run_solve,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 RUNS_ROOT = ROOT / "runs"
@@ -98,6 +102,9 @@ def benchmark(payload: dict[str, Any]) -> dict[str, Any]:
     map_data = _extract_map(payload)
     options = _options_from_payload(payload)
     baseline_samples = int(payload.get("baseline_samples", 40))
+    baseline_mode = str(payload.get("baseline_mode", "heuristic")).strip().lower()
+    if baseline_mode not in {"heuristic", "random"}:
+        raise HTTPException(status_code=400, detail="baseline_mode must be 'heuristic' or 'random'")
 
     try:
         grid_map = load_map_data(map_data)
@@ -112,7 +119,7 @@ def benchmark(payload: dict[str, Any]) -> dict[str, Any]:
     else:
         candidates = all_walkable(grid_map)
 
-    baseline = evaluate_random_baseline(
+    random_baseline = evaluate_random_baseline(
         grid_map,
         candidates,
         k=options.k,
@@ -123,6 +130,19 @@ def benchmark(payload: dict[str, Any]) -> dict[str, Any]:
         time_horizon_steps=options.time_horizon_steps,
         movement_model=options.movement_model,
     )
+    heuristic_baseline = evaluate_heuristic_baseline(
+        grid_map,
+        candidates,
+        k=options.k,
+        objective=options.objective,
+        seed=options.seed + 303,
+        mc_runs=options.mc_runs,
+        time_horizon_steps=options.time_horizon_steps,
+        movement_model=options.movement_model,
+        min_spacing_cells=int(payload.get("heuristic_spacing_cells", 5)),
+    )
+
+    baseline = heuristic_baseline if baseline_mode == "heuristic" else random_baseline
 
     objective_name = options.objective.lower()
     if objective_name in ("mean", "weighted_mean"):
@@ -132,7 +152,19 @@ def benchmark(payload: dict[str, Any]) -> dict[str, Any]:
     else:
         optimized = float(result["robust_score"])
 
-    uplift_vs_mean = optimized - baseline["mean"]
+    uplift_vs_baseline = optimized - float(baseline["mean"])
+    uplift_vs_baseline_pct = (
+        (uplift_vs_baseline / float(baseline["mean"])) * 100.0
+        if float(baseline["mean"]) > 0
+        else None
+    )
+    uplift_vs_random = optimized - float(random_baseline["mean"])
+    uplift_vs_random_pct = (
+        (uplift_vs_random / float(random_baseline["mean"])) * 100.0
+        if float(random_baseline["mean"]) > 0
+        else None
+    )
+
     payload_out = {
         "run_id": result.get("run_id"),
         "traps": result.get("traps"),
@@ -140,9 +172,18 @@ def benchmark(payload: dict[str, Any]) -> dict[str, Any]:
         "artifacts": result.get("artifacts"),
         "solver_version": result.get("solver_version"),
         "run": result,
+        "baseline_mode": baseline_mode,
         "baseline": baseline,
+        "baselines": {
+            "heuristic": heuristic_baseline,
+            "random": random_baseline,
+        },
+        "baseline_label": "Heuristic rule baseline" if baseline_mode == "heuristic" else "Random baseline",
         "optimized_score": optimized,
-        "uplift_vs_random_mean": uplift_vs_mean,
+        "uplift_vs_baseline_mean": uplift_vs_baseline,
+        "uplift_vs_baseline_pct": uplift_vs_baseline_pct,
+        "uplift_vs_random_mean": uplift_vs_random,
+        "uplift_vs_random_pct": uplift_vs_random_pct,
         "objective": objective_name,
     }
 

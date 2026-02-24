@@ -1,123 +1,137 @@
-# BioPath Q&A Bank (Judge-focused)
+# BioPath Q&A Bank (Judge + Investor + Customer)
 
-Audience: judging panel + potential pilot customers
-Founder: Xiaoxiao Zhouyi (Founder & Sole Builder, PhD Candidate)
+Founder: Xiaoxiao Zhouyi (Founder & Sole Builder, PhD Candidate in stochastic processes)
 
-Use this bank after the 10-minute pitch. Questions are grouped by the 5 official criteria.
+Use this after the 10-minute pitch. Answers are intentionally short and concrete.
 
-## Criterion 1: Clarity of communicating idea
+## 1) Clarity of idea
 
-### Q1. In one sentence, what does BioPath do?
-A. BioPath converts a farm layout into optimized trap coordinates with measurable benchmark uplift, so placement becomes evidence-based rather than guesswork.
+### Q1. What does BioPath do in one sentence?
+A. BioPath converts a farm layout into optimized trap coordinates with benchmarked uplift, so placement becomes evidence-based rather than guesswork.
 
-### Q2. What is your concrete output, not your process?
-A. A trap plan with explicit coordinates plus proof metrics: capture probability, robust score, and uplift versus random baseline.
+### Q2. What do users actually receive?
+A. A trap coordinate plan, proof metrics, and a rerunnable run artifact for audit and handover.
 
-### Q3. Why should we trust the heatmap?
-A. The heatmap is not decorative; it is generated from the same run artifact that produces the optimization metrics and trap coordinates.
+### Q3. Why is this not just a heatmap tool?
+A. Because we optimize coordinates under a fixed budget and then benchmark against a baseline under uncertainty.
 
-### Q4. Can a non-technical farm manager understand this?
-A. Yes. The user workflow is five steps: connect, load map, solve, benchmark, read proof. No code required in normal operation.
+### Q4. What is your shortest memory line?
+A. Map in. Traps out. Proof attached.
 
-### Q5. What happens if your API fails during demo?
-A. We use Pitch Safe mode with curated run artifacts so the narrative remains complete and reproducible without live API dependency.
+### Q5. What if API fails in front of judges?
+A. We present in Pitch Safe mode with curated proof, so the story remains complete and reproducible.
 
-### Q6. What should we remember after 30 seconds?
-A. One map in, six actionable coordinates out, measurable proof attached.
+### Q6. Why should non-technical users trust it?
+A. We keep assumptions explicit and output concrete coordinates plus simple proof lines.
 
-## Criterion 2: Market and customer understanding
+## 2) Market and customer understanding
 
-### Q7. Who is your first paying customer?
-A. Early adopters are farm operations teams and pest-control operators managing complex site geometries.
+### Q7. Who pays first?
+A. Farm operations teams and pest-control operators with complex layouts.
 
-### Q8. Why these customers first?
-A. They already face repeated placement variability and value reproducible decisions that can be reviewed across teams.
+### Q8. Why these two first?
+A. They own the day-to-day decision and directly absorb the cost of weak placement quality.
 
-### Q9. What pain do they currently pay for?
-A. They pay in hidden forms: repeated re-positioning time, inconsistent outcomes, and weak auditability across sites.
+### Q9. What is your SAM starting point?
+A. High-output farms in England, around 15k, where budget and governance requirements are stronger.
 
-### Q10. Why is this urgent now?
-A. Buyers increasingly need operational decisions they can justify with evidence, not solely technician intuition.
+### Q10. What official data supports this segmentation?
+A. GOV.UK farming evidence shows high/very-high output farms are a minority by count but contribute most output.
 
-### Q11. What is your wedge use case?
-A. Cambridge-style constrained layouts where manual placement repeatedly misses bottleneck corridors.
+### Q11. What is your channel multiplier?
+A. Pest-control operators can roll one product workflow across many sites.
 
-### Q12. How do you expand after first pilots?
-A. From single-site pilots to operator portfolio rollouts using the same standardized run artifacts and process.
+### Q12. Why mention BPCA?
+A. BPCA’s 700+ member companies indicate a practical partner pool for channel-led expansion.
 
-## Criterion 3: Business model appropriateness
+### Q13. How large can this become without hype?
+A. At 1% of a 15k SAM and £9k/site/year, ARR is about £1.35m.
 
-### Q13. How do you make money?
-A. Paid pilot first (£5k for 8 weeks), then annual subscription (£9k per site/year) for ongoing decision support.
+### Q14. What is your 3–5 year practical target?
+A. 30–70 active subscription sites, roughly £270k–£630k ARR.
 
-### Q14. Why pilot-first instead of subscription-first?
-A. Pilot-first matches buyer risk behavior: they want evidence in their own context before long-term commitment.
+## 3) Business model and pricing
 
-### Q15. Why £5k pilot?
-A. It is practical for early approvals while still high enough to validate economic willingness to pay and delivery effort.
+### Q15. How do you monetize?
+A. Paid pilot first (£5k for 8 weeks), then annual subscription (£9k per site/year).
 
-### Q16. Why £9k annual subscription?
-A. It reflects annual decision value, reproducible benchmarking, and ongoing operational support without overpricing early-stage adoption.
+### Q16. Why pilot first?
+A. Buyers want local evidence before committing to a yearly contract.
 
-### Q17. Why use 35% conversion assumption?
-A. It is deliberately conservative for an early-stage operational tool and avoids overclaiming growth.
+### Q17. Why £5k pilot?
+A. It is high enough to validate willingness to pay and low enough for practical approval.
 
-### Q18. What is your year-one commercial target?
-A. Eight paid sites by year end, with pilot-to-subscription conversion as the key quality metric.
+### Q18. Why £9k annual subscription?
+A. We provide recurring optimization + benchmark + audit-ready outputs, not one-off recommendations.
 
-## Criterion 4: Logic of deck order and presentation quality
+### Q19. Why 35% conversion assumption?
+A. It is conservative for early-stage B2B decision software and avoids inflated planning.
 
-### Q19. Why is your deck order this way?
-A. We open with clear definition + concrete example, then problem, product, proof, business model, finance, and explicit ask.
+### Q20. What keeps subscription renewals credible?
+A. Layout updates, scheduled reruns, and audit evidence are recurring operational needs.
 
-### Q20. Why avoid deep algorithm math in the first slides?
-A. Judges must first understand the decision outcome and customer value before technical depth can be meaningful.
+### Q21. Is this software or consulting?
+A. Commercially it is software subscription; pilot includes structured onboarding and evidence generation.
 
-### Q21. How do you handle interruptions?
-A. Each script segment has a recovery sentence so we can resume the logic without losing clarity.
+## 4) Technical credibility and proof
 
-### Q22. What if you run out of time?
-A. We preserve the minimum path: one-line definition, concrete example, proof metrics, explicit ask.
+### Q22. Why compare to heuristic baseline, not only random?
+A. Heuristic baseline is a stronger real-world comparator; random is secondary reference.
 
-### Q23. How do you keep visuals from distracting the message?
-A. One visual anchor per slide, limited bullets, and all visuals tied to measurable outputs.
+### Q23. Define robust score in one line.
+A. Robust score is conservative capture performance under uncertainty scenarios, not best-case capture.
 
-### Q24. What is your strongest presentation discipline?
-A. Clear transitions and explicit section intent, so every minute maps to one scoring criterion.
+### Q24. Why can capture and robust be close?
+A. If uncertainty scenarios are similar in difficulty, conservative and nominal outcomes converge.
 
-## Criterion 5: Robustness and reality of finance
+### Q25. Why can mean and weighted mean differ?
+A. Weighted mean emphasizes high-risk areas using photo-informed prior weights.
 
-### Q25. What is your year-one cost baseline?
-A. £28k, covering people time, cloud infrastructure, and essential pilot execution.
+### Q26. What is your fixed proof contract?
+A. Optimized capture, baseline mean, uplift, robust score, and MC runs under fixed k.
 
-### Q26. Why is this finance plan realistic?
-A. It uses bottom-up assumptions and staged milestones rather than inflated top-down market claims.
+### Q27. How reproducible are runs?
+A. Runs are deterministic under explicit seed, map, objective, and trap budget settings.
 
-### Q27. What funding path are you pursuing now?
-A. We are currently applying through CREGS + LINCAM PoC for near-term pilot validation.
+### Q28. What is the novelty from your PhD background?
+A. Explicit uncertainty modelling in movement and robust decision selection under that uncertainty.
 
-### Q28. What official LINCAM range are you using?
-A. Ceres official pages list LINCAM PoC awards at £5,000-£20,000 with a 7-minute pitch format.
+## 5) Finance realism and funding
 
-### Q29. What does this funding unlock specifically?
-A. Controlled pilot evidence generation, conversion validation, and contract-ready deployment artifacts.
+### Q29. What is your year-1 cash cost baseline?
+A. £28k for cloud, pilot execution, and essential operations.
 
-### Q30. How do investors know the money is not just “burned”?
-A. We tie every funding request to milestone outputs: pilot evidence, conversion results, and repeatable revenue pathways.
+### Q30. Is founder salary included?
+A. Founder build time is in-kind at current stage; £28k tracks cash operating spend.
 
-## Bonus cross-criterion questions
+### Q31. What funding are you applying for now?
+A. CREGS + LINCAM PoC.
 
-### Q31. If one metric looks weak in a run, what do you do?
-A. We disclose it, adjust assumptions transparently, rerun benchmark, and compare with the same reporting template.
+### Q32. What official LINCAM range do you cite?
+A. £5,000–£20,000 with a 7-minute pitch format on Ceres official pages.
 
-### Q32. Is this a consulting service or software product?
-A. It starts with pilot-enabled delivery but monetizes as recurring decision-support software with a clear subscription path.
+### Q33. What does funding buy, specifically?
+A. Pilot evidence generation, reliability upgrades, and conversion-ready delivery assets.
 
-### Q33. Why should a judge believe one founder can execute this?
-A. Because the same founder built and demonstrated the full stack end-to-end, including solver, API, benchmark, and pitch deployment.
+### Q34. How do you avoid “money burned” concern?
+A. Each spend line is linked to milestones: pilot proof, conversion, and recurring contracts.
 
-### Q34. What is your strongest moat today?
-A. Reproducible decision evidence under uncertainty, not just static recommendations.
+### Q35. What are your 18–24 month outcomes?
+A. Repeatable uplift evidence, first recurring subscriptions, and a scale-ready evidence package.
 
-### Q35. What is the next de-risking milestone after this pitch?
-A. Complete one 8-week pilot with run-level benchmark evidence and convert at least one site to subscription.
+## 6) Presentation and flow
+
+### Q36. Why this deck order?
+A. Clear definition -> concrete problem -> product -> technical edge -> proof -> market/pricing -> finance -> explicit ask.
+
+### Q37. Why avoid heavy math in first slides?
+A. Clarity first; once problem and value are clear, technical depth has context.
+
+### Q38. What if interrupted mid-pitch?
+A. We use recovery lines to return to the proof contract and keep narrative continuity.
+
+### Q39. What if the panel asks market before tech?
+A. Jump to Slide 6 directly and answer with bottom-up logic and conservative assumptions.
+
+### Q40. Final line to close strongly?
+A. We ask for practical pilot support now to convert measurable proof into recurring revenue.

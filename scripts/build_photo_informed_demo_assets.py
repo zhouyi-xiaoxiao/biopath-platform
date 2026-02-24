@@ -21,6 +21,7 @@ import matplotlib
 
 matplotlib.use("Agg", force=True)
 import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -33,9 +34,25 @@ from biopath.objective import compute_distance_map
 from biopath.run_pipeline import SolveOptions, run_solve
 from biopath.viz import save_heatmap
 
-BASE_MAP_PATH = MAPS_DIR / "cambridgeshire_demo_farm.json"
 PHOTO_PATH = SITE_ASSETS / "cambridge-university-farm.jpg"
-PHOTO_URL = "https://commons.wikimedia.org/wiki/File:Cambridge_University_Farm_-_geograph.org.uk_-_3363476.jpg"
+PHOTO_URL = "Founder-provided Cambridgeshire farmyard context photo"
+PHOTO_CREDIT = "Founder-provided contextual image for demo narrative"
+
+ASCII_ROWS = [
+    "############################",
+    "#............#.............#",
+    "#............#.............#",
+    "#............#.............#",
+    "#..........................#",
+    "######.##################..#",
+    "#............#............##",
+    "#............#.............#",
+    "#............#.............#",
+    "#.....################.....#",
+    "#..........................#",
+    "#..........................#",
+    "############################",
+]
 
 
 def _build_weights(ascii_rows: list[str]) -> list[list[float]]:
@@ -45,12 +62,11 @@ def _build_weights(ascii_rows: list[str]) -> list[list[float]]:
     # Publicly inspired hotspots for demonstration: access gates, feed/storage area,
     # central corridor junctions, and shelter edges.
     hotspots: list[tuple[float, float, float, float]] = [
-        (2.4, 3.4, 2.3, 2.5),
-        (2.4, 18.8, 2.1, 2.6),
-        (6.3, 7.2, 1.8, 2.4),
-        (6.6, 15.8, 2.4, 2.8),
-        (10.2, 22.2, 2.2, 2.9),
-        (10.8, 14.2, 1.7, 3.0),
+        (2.8, 4.5, 2.0, 2.4),    # silage stack edge
+        (2.6, 17.0, 1.8, 2.6),   # barn entry edge
+        (6.2, 7.5, 1.7, 2.6),    # gate + corridor transition
+        (8.8, 22.5, 2.0, 2.2),   # rear service lane
+        (10.8, 13.0, 1.6, 3.0),  # yard center return loop
     ]
 
     weights = [[0.0 for _ in range(width)] for _ in range(height)]
@@ -60,7 +76,7 @@ def _build_weights(ascii_rows: list[str]) -> list[list[float]]:
             if ascii_rows[r][c] != ".":
                 continue
 
-            value = 0.55
+            value = 0.7
             for hr, hc, amp, sigma in hotspots:
                 d2 = (r - hr) ** 2 + (c - hc) ** 2
                 value += amp * math.exp(-d2 / (2.0 * sigma**2))
@@ -71,9 +87,9 @@ def _build_weights(ascii_rows: list[str]) -> list[list[float]]:
                 rr, cc = r + dr, c + dc
                 if 0 <= rr < height and 0 <= cc < width and ascii_rows[rr][cc] == "#":
                     wall_bonus += 0.14
-            value += min(0.42, wall_bonus)
+            value += min(0.35, wall_bonus)
 
-            weights[r][c] = round(min(4.8, max(0.15, value)), 3)
+            weights[r][c] = round(min(4.6, max(0.2, value)), 3)
 
     return weights
 
@@ -101,15 +117,25 @@ def _save_transform_figure(
             spine.set_linewidth(0.9)
 
     axes[0].imshow(photo)
-    axes[0].set_title("1) Real farm context", fontsize=10, pad=9, color="#e5f7ee", weight="bold")
+    h, w = photo.shape[:2]
+    overlays = [
+        (0.00 * w, 0.10 * h, 0.30 * w, 0.38 * h, "silage stack edge"),
+        (0.62 * w, 0.12 * h, 0.35 * w, 0.52 * h, "barn frontage"),
+        (0.36 * w, 0.32 * h, 0.24 * w, 0.20 * h, "gate chokepoint"),
+    ]
+    for x, y, ww, hh, label in overlays:
+        rect = Rectangle((x, y), ww, hh, fill=False, linewidth=1.4, edgecolor="#a8e6cb", linestyle="--")
+        axes[0].add_patch(rect)
+        axes[0].text(x + 6, y + 14, label, fontsize=7, color="#dff8ec", weight="bold")
+    axes[0].set_title("1) Public farmyard context + visible obstacles", fontsize=10, pad=9, color="#e5f7ee", weight="bold")
     axes[0].axis("off")
 
     cmap_geom = plt.cm.Greens.copy()
     axes[1].imshow(geom, cmap=cmap_geom, origin="upper", vmin=0, vmax=1, interpolation="nearest", aspect="auto")
-    axes[1].set_title("2) Synthetic walkable geometry", fontsize=10, pad=9, color="#e5f7ee", weight="bold")
+    axes[1].set_title("2) Computable geometry (synthetic but aligned)", fontsize=10, pad=9, color="#e5f7ee", weight="bold")
     axes[1].set_xticks([])
     axes[1].set_yticks([])
-    axes[1].set_xlabel("Transparent geometry for computation", fontsize=8, color="#bddbcc")
+    axes[1].set_xlabel("Transparent map used by solver and benchmark", fontsize=8, color="#bddbcc")
 
     cmap_w = plt.cm.inferno.copy()
     cmap_w.set_bad(color="#101418")
@@ -120,7 +146,7 @@ def _save_transform_figure(
     axes[2].set_title("3) Photo-informed prior + optimised traps", fontsize=10, pad=9, color="#e5f7ee", weight="bold")
     axes[2].set_xticks([])
     axes[2].set_yticks([])
-    axes[2].set_xlabel("Brighter = higher prior activity", fontsize=8, color="#bddbcc")
+    axes[2].set_xlabel("Brighter = higher prior activity; X = optimized traps", fontsize=8, color="#bddbcc")
 
     cbar = fig.colorbar(im, ax=axes[2], fraction=0.042, pad=0.022)
     cbar.set_label("Relative activity prior", fontsize=8, color="#e6f8ef")
@@ -129,7 +155,7 @@ def _save_transform_figure(
 
     fig.text(0.335, 0.51, "→", fontsize=24, color="#cae7d8", ha="center", va="center")
     fig.text(0.665, 0.51, "→", fontsize=24, color="#cae7d8", ha="center", va="center")
-    fig.suptitle("Photo -> Model -> Solve", fontsize=13, y=0.965, color="#effaf4", weight="bold")
+    fig.suptitle("Photo -> Model -> Solve (with explicit obstacle mapping)", fontsize=13, y=0.965, color="#effaf4", weight="bold")
     fig.tight_layout(rect=[0.01, 0.01, 0.99, 0.94])
     fig.savefig(out_path, facecolor=fig.get_facecolor(), bbox_inches="tight", pad_inches=0.03)
     plt.close(fig)
@@ -145,7 +171,8 @@ def _write_summary(
         "# BioPath Photo-informed Demo Summary",
         "",
         f"- Map: {map_data['name']}",
-        "- Source photo: Cambridge University Farm (Wikimedia Commons, CC BY-SA 2.0)",
+        "- Source photo: Founder-provided Cambridgeshire farmyard context (for demo only)",
+        f"- Photo credit: {PHOTO_CREDIT}",
         f"- Source URL: {PHOTO_URL}",
         "- Conversion method: publicly inspired synthetic geometry + photo-informed risk prior",
         "",
@@ -174,16 +201,16 @@ def _write_summary(
 
 
 def main() -> None:
-    base_map = json.loads(BASE_MAP_PATH.read_text())
-    ascii_rows = base_map["ascii"]
+    ascii_rows = ASCII_ROWS
     weights = _build_weights(ascii_rows)
 
     photo_map = {
-        "name": "Cambridgeshire Photo-informed Demo Farm (Synthetic Geometry + Publicly Inspired Risk Prior)",
+        "name": "Cambridgeshire Farmyard Demo (Synthetic Geometry + Publicly Inspired Risk Prior)",
         "cell_size_m": 1.0,
         "ascii": ascii_rows,
         "weights": weights,
         "source_photo": PHOTO_URL,
+        "source_credit": PHOTO_CREDIT,
         "source_license": "CC BY-SA 2.0",
         "distribution_note": "Publicly inspired prior for demo only; replace with pilot data in production.",
     }

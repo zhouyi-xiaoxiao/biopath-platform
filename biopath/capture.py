@@ -229,11 +229,16 @@ def robust_capture_score(
     mc_runs: int = 120,
     time_horizon_steps: int = 40,
     seed: int = 0,
+    primary_movement_model: str = "lazy",
 ) -> RobustCaptureEstimate:
     sparse_entries = _sparse_entry_points(grid_map)
 
+    model = str(primary_movement_model).strip().lower()
+    if model not in {"lazy", "unbiased", "biased"}:
+        model = "lazy"
+
     scenarios: list[tuple[str, str, tuple[float, float], int, Sequence[tuple[int, int, float]] | None]] = [
-        ("lazy_neutral", "lazy", (0.0, 0.0), seed + 11, None),
+        (f"{model}_neutral", model, (0.0, 0.0), seed + 11, None),
         ("biased_right", "biased", (0.5, 0.0), seed + 29, None),
     ]
     if sparse_entries:

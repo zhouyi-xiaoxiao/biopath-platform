@@ -1,76 +1,74 @@
 # BioPath Pitch Quickstart
 
-This guide is for first-time demo operators.
+Use this when you need a stable stage demo in 2 minutes.
 
 ## Goal
 
-Finish one complete demo in 2 minutes:
+Complete one clear flow:
 
-1. Connect API.
+1. Connect API (or use Pitch Safe fallback).
 2. Run solve.
 3. Run benchmark.
-4. Read proof metrics.
-5. Switch to pitch mode.
+4. Read proof contract.
+5. Deliver ask.
 
-## Before you start
+## Fast start (recommended)
 
-1. Start API: `uvicorn api.main:app --host 0.0.0.0 --port 8001`
-2. Serve site: `python -m http.server 8080 --directory site`
-3. Open UI: `http://127.0.0.1:8080/?api=http://127.0.0.1:8001`
+1. In the project root, run:
+   - `bash scripts/start_public_demo.sh`
+2. Open the generated pitch URL.
+3. Click `Auto Connect` in Studio.
 
-Alternative (public demo URL in one command):
+If live API fails, continue in `Pitch Safe` mode (curated proof is still presentation-ready).
 
-`bash scripts/start_public_demo.sh`
+## Local-only mode
 
-## 30-second startup checklist
+1. Start API: `python3 -m uvicorn api.main:app --host 127.0.0.1 --port 8001`
+2. Serve site: `python3 -m http.server 8080 --directory site`
+3. Open: `http://127.0.0.1:8080/?api=http://127.0.0.1:8001&tour=1`
 
-1. Click `Auto Connect`.
-2. Confirm connection badge turns `Connected`.
-3. Keep default Cambridge demo map.
-4. Keep default objective `robust_capture` and `k=6`.
-
-## 2-minute live demo checklist
+## 2-minute demo checklist
 
 1. Click `Run Solve`.
 2. Click `Run Benchmark`.
-3. Read these values out loud from Proof Panel:
-   - `capture_probability`
-   - `robust_score`
-   - `uplift_vs_random_mean`
-4. Click `Open Pitch Mode`.
-5. Use copy buttons in Narrative Panel.
+3. Read these values from Proof Panel:
+   - Optimized capture probability
+   - Heuristic baseline mean
+   - Uplift vs heuristic baseline
+   - Robust score (conservative under uncertainty)
+   - MC runs
+4. Switch to pitch narrative and deliver Ask.
 
-## Failure recovery playbook
+## If something breaks
 
 1. API unreachable:
-   - Use top red banner button `Fix in 1 step`.
-   - Run `Health Check`.
+   - stay in Pitch Safe and continue script
+   - or rerun `bash scripts/start_public_demo.sh`
 2. Map JSON invalid:
-   - Read line/column hint below the map box.
-   - Fix only that line and retry.
+   - use line/column hint under map box
 3. Benchmark timeout:
-   - Click `Retry with lower MC`.
-4. Empty run history:
-   - Click `Run first benchmark now`.
+   - lower `MC Runs` and retry
+4. Empty run list:
+   - use curated proof and one-page guide
 
-## 60-second speaking script
+## 60-second backup speech
 
-Problem: Manual trap placement is inconsistent and misses bottlenecks in complex farm layouts.
+Problem: Manual placement is inconsistent, hard to audit, and misses chokepoints.
 
-Solution: BioPath turns a simple map into optimized trap coordinates and a reproducible plan.
+Solution: BioPath turns one map into optimized trap coordinates plus a reproducible run artifact.
 
-Proof: We benchmark against random baseline with Monte Carlo validation and robust capture metrics.
+Proof: With fixed k, BioPath benchmarks against a heuristic baseline and reports uplift, robust capture, and Monte Carlo validation.
 
-Ask: We ask for 2 pilot introductions, support for a £5k–£20k LINCAM PoC pathway (currently applying with CREGS + LINCAM), and practical data access for an 8-week farm trial.
+Ask: Two pilot introductions, one 8-week trial site, and support for a £5k–£20k LINCAM PoC application.
 
-## Query shortcuts
+## URL shortcuts
 
 - `?api=<url>` preset API base
 - `?tour=1` force guided tour
-- `?pitch=1` open in pitch mode
+- `?pitch=1` open pitch-safe mode
 
-## Stable local storage keys
+## Local storage keys
 
 - `biopath_api_base`
 - `biopath_tour_completed`
-- `biopath_ui_mode`
+- `biopath_ui_mode` (`ops|pitch_safe|pitch_live`)
