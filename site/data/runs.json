@@ -1,6 +1,13 @@
 {
   "runs": [
     {
+      "run_id": "20260228T221243Z-692525a1",
+      "created_at": "2026-02-28T22:12:43.281771+00:00",
+      "capture_probability": 0.5875,
+      "robust_score": 0.5875,
+      "objective": "robust_capture"
+    },
+    {
       "run_id": "20260228T201244Z-f61f4124",
       "created_at": "2026-02-28T20:12:44.904989+00:00",
       "capture_probability": 0.5875,
