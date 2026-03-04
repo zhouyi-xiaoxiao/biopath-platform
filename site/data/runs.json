@@ -1,6 +1,13 @@
 {
   "runs": [
     {
+      "run_id": "20260304T124040Z-082ec605",
+      "created_at": "2026-03-04T12:40:40.627263+00:00",
+      "capture_probability": 0.48125,
+      "robust_score": 0.48125,
+      "objective": "robust_capture"
+    },
+    {
       "run_id": "20260304T103109Z-a5a967fd",
       "created_at": "2026-03-04T10:31:09.283865+00:00",
       "capture_probability": 0.48125,
