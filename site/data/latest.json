@@ -1,6 +1,6 @@
 {
-  "run_id": "20260328T222243Z-1ef69ff7",
-  "created_at": "2026-03-28T22:22:43.149854+00:00",
+  "run_id": "20260329T015041Z-2038bc93",
+  "created_at": "2026-03-29T01:50:41.163909+00:00",
   "solver_version": "v0.2-auto",
   "map": {
     "name": "Cambridgeshire Demo Farm (Publicly Inspired Synthetic)",
@@ -88,10 +88,10 @@
     }
   ],
   "artifacts": {
-    "run_dir": "runs/20260328T222243Z-1ef69ff7",
-    "heatmap": "runs/20260328T222243Z-1ef69ff7/heatmap.png",
-    "summary": "runs/20260328T222243Z-1ef69ff7/summary.md",
-    "metrics": "runs/20260328T222243Z-1ef69ff7/metrics.json"
+    "run_dir": "runs/20260329T015041Z-2038bc93",
+    "heatmap": "runs/20260329T015041Z-2038bc93/heatmap.png",
+    "summary": "runs/20260329T015041Z-2038bc93/summary.md",
+    "metrics": "runs/20260329T015041Z-2038bc93/metrics.json"
   },
   "artifacts_site": {
     "heatmap": "./data/latest-heatmap.png",
