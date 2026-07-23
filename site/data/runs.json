@@ -1,6 +1,13 @@
 {
   "runs": [
     {
+      "run_id": "20260723T190408Z-4ad1ec3f",
+      "created_at": "2026-07-23T19:04:08.998350+00:00",
+      "capture_probability": 0.48125,
+      "robust_score": 0.48125,
+      "objective": "robust_capture"
+    },
+    {
       "run_id": "20260723T171250Z-677d7346",
       "created_at": "2026-07-23T17:12:50.141958+00:00",
       "capture_probability": 0.48125,
@@ -829,13 +836,6 @@
     {
       "run_id": "20260711T204101Z-27fc5df2",
       "created_at": "2026-07-11T20:41:01.993754+00:00",
-      "capture_probability": 0.48125,
-      "robust_score": 0.48125,
-      "objective": "robust_capture"
-    },
-    {
-      "run_id": "20260711T185108Z-666c2481",
-      "created_at": "2026-07-11T18:51:08.962644+00:00",
       "capture_probability": 0.48125,
       "robust_score": 0.48125,
       "objective": "robust_capture"
