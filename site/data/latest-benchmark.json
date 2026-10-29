@@ -1,6 +1,6 @@
 {
-  "run_id": "20261029T145221Z-86fd56a2",
-  "created_at": "2026-10-29T14:52:21.270996+00:00",
+  "run_id": "20261029T204710Z-0726141f",
+  "created_at": "2026-10-29T20:47:10.578171+00:00",
   "objective": "robust_capture",
   "k": 6,
   "map_name": "Cambridgeshire Demo Farm (Publicly Inspired Synthetic)",
@@ -131,14 +131,14 @@
     "weighted_coverage_within_radius": null
   },
   "artifacts": {
-    "run_dir": "runs/20261029T145221Z-86fd56a2",
-    "heatmap": "runs/20261029T145221Z-86fd56a2/heatmap.png",
-    "summary": "runs/20261029T145221Z-86fd56a2/summary.md",
-    "metrics": "runs/20261029T145221Z-86fd56a2/metrics.json"
+    "run_dir": "runs/20261029T204710Z-0726141f",
+    "heatmap": "runs/20261029T204710Z-0726141f/heatmap.png",
+    "summary": "runs/20261029T204710Z-0726141f/summary.md",
+    "metrics": "runs/20261029T204710Z-0726141f/metrics.json"
   },
   "run": {
-    "run_id": "20261029T145221Z-86fd56a2",
-    "created_at": "2026-10-29T14:52:21.270996+00:00",
+    "run_id": "20261029T204710Z-0726141f",
+    "created_at": "2026-10-29T20:47:10.578171+00:00",
     "solver_version": "v0.2-auto",
     "map": {
       "name": "Cambridgeshire Demo Farm (Publicly Inspired Synthetic)",
@@ -226,10 +226,10 @@
       }
     ],
     "artifacts": {
-      "run_dir": "runs/20261029T145221Z-86fd56a2",
-      "heatmap": "runs/20261029T145221Z-86fd56a2/heatmap.png",
-      "summary": "runs/20261029T145221Z-86fd56a2/summary.md",
-      "metrics": "runs/20261029T145221Z-86fd56a2/metrics.json"
+      "run_dir": "runs/20261029T204710Z-0726141f",
+      "heatmap": "runs/20261029T204710Z-0726141f/heatmap.png",
+      "summary": "runs/20261029T204710Z-0726141f/summary.md",
+      "metrics": "runs/20261029T204710Z-0726141f/metrics.json"
     }
   },
   "note": "Primary comparator is heuristic baseline (edge + spacing prior); random baseline is secondary reference."
