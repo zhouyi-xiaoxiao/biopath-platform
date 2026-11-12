@@ -10,7 +10,7 @@
 - P95 distance (m): 10.000
 
 ## Proof Contract
-- Run ID: 20261111T235453Z-7a931df7
+- Run ID: 20261112T051156Z-54b932e3
 - Capture probability: 48.1%
 - Robust score (scenario min): 48.1%
 - Capture 95% CI: [40.4%, 55.9%]
