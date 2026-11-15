@@ -30,15 +30,15 @@ async function shot(ctx, relUrl, file, options = {}) {
   await page.close();
 }
 
-await shot(desktop, "/", "studio-home-desktop.png", { waitMs: 800 });
-await shot(desktop, "/?pitch=1", "studio-pitch-safe-desktop.png", { waitMs: 800 });
+await shot(desktop, "/studio.html", "studio-home-desktop.png", { waitMs: 800 });
+await shot(desktop, "/studio.html?pitch=1", "studio-pitch-safe-desktop.png", { waitMs: 800 });
 await shot(desktop, "/pitch-deck.html#s1", "deck-s1-desktop.png", { waitMs: 500 });
 await shot(desktop, "/pitch-deck.html#s6", "deck-s6-desktop.png", { waitMs: 500 });
 await shot(desktop, "/pitch-deck.html#s8", "deck-s8-desktop.png", { waitMs: 500 });
 await shot(desktop, "/pitch-script.html", "script-top-desktop.png", { waitMs: 500 });
 await shot(desktop, "/finance-pricing.html", "finance-top-desktop.png", { waitMs: 500 });
 
-await shot(ipad, "/", "studio-home-ipad.png", { waitMs: 700, fullPage: true });
+await shot(ipad, "/studio.html", "studio-home-ipad.png", { waitMs: 700, fullPage: true });
 await shot(ipad, "/pitch-deck.html#s1", "deck-s1-ipad.png", { waitMs: 700, fullPage: true });
 await shot(ipad, "/pitch-script.html", "script-top-ipad.png", { waitMs: 700, fullPage: true });
 

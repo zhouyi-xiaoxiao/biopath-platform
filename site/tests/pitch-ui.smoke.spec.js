@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test("offline pitch-safe mode is usable and has no raw fetch errors", async ({ page }) => {
-  await page.goto("/?pitch=1");
+  await page.goto("/studio.html?pitch=1");
 
   await expect(page.locator("h1")).toContainText("farm impact");
   await expect(page.locator("body")).toHaveClass(/ui-pitch-safe/);
@@ -12,7 +12,7 @@ test("offline pitch-safe mode is usable and has no raw fetch errors", async ({ p
 });
 
 test("live mode benchmark flow still works", async ({ page }) => {
-  await page.goto("/?api=http://127.0.0.1:8001&tour=1");
+  await page.goto("/studio.html?api=http://127.0.0.1:8001&tour=1");
 
   await expect(page.locator("#tourBackdrop")).toBeVisible();
   await page.click("#tourSkip");
