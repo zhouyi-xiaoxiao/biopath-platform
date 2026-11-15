@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BioPath — map in, traps out, proof attached</title>
+    <meta
+      name="description"
+      content="BioPath turns a site map and a trap budget into trap coordinates, with evidence you can question. A research prototype from a University of Bristol Early Career Enterprise Fellowship, 2026."
+    />
+    <meta name="theme-color" content="#123a2e" />
+    <meta property="og:title" content="BioPath — map in, traps out, proof attached" />
+    <meta
+      property="og:description"
+      content="Trap placement from a site map, with the proof attached. Try it on a synthetic farmyard in the browser."
+    />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23123a2e'/%3E%3Ccircle cx='8' cy='8' r='3.4' fill='%23d27a3c'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="./home.css" />
+  </head>
+  <body>
+    <header class="masthead">
+      <a class="wordmark" href="./" aria-label="BioPath home"><span class="dot" aria-hidden="true"></span>BioPath</a>
+      <nav aria-label="Sections">
+        <a href="#try">Try it</a>
+        <a href="#why">Why</a>
+        <a href="#status">Status</a>
+        <a href="https://github.com/zhouyi-xiaoxiao/biopath-platform">Code</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="opening" aria-labelledby="title">
+        <div class="opening-head">
+          <p class="kicker">Trap placement from a site map</p>
+          <h1 id="title">Map in. Traps&nbsp;out. Proof&nbsp;attached.</h1>
+        </div>
+        <div class="opening-body">
+        <p class="lede">
+          BioPath takes the layout of a site and the number of traps you can afford, and returns where to put them, with
+          evidence anyone can check: how far the remotest corner is from a trap, how often a simulated wanderer is caught,
+          and how a rule-of-thumb layout does on the same ground.
+        </p>
+        <p class="standing">
+          A research prototype built in 2026 for the University of Bristol's Early Career Enterprise Fellowship. Everything
+          below runs on a synthetic map; the numbers are demo metrics, not field results.
+        </p>
+        </div>
+      </section>
+
+      <section id="try" class="instrument" aria-labelledby="try-title">
+        <h2 id="try-title" class="visually-hidden">Try it</h2>
+        <div id="instrument" class="bench">
+          <div class="bench-map">
+            <div class="step-head">
+              <span class="step">1</span>
+              <div>
+                <h3>Map</h3>
+                <p>
+                  A synthetic layout inspired by a Cambridgeshire farm, 28&nbsp;×&nbsp;13&nbsp;m in 1&nbsp;m cells: yards
+                  divided by walls, with a few gaps. Colour is the walk to the nearest trap.
+                </p>
+              </div>
+            </div>
+            <figure class="field-frame">
+              <div id="fieldStage" class="field-stage">
+                <!-- prerender:field --><svg class="field" viewBox="0 0 280 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Synthetic farmyard, 28 by 13 metres, with 6 trap positions and the walking distance from every open cell to the nearest trap."><rect class="wall" data-r="0" data-c="0" x="0" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="1" x="10" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="2" x="20" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="3" x="30" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="4" x="40" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="5" x="50" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="6" x="60" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="7" x="70" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="8" x="80" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="9" x="90" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="10" x="100" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="11" x="110" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="12" x="120" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="13" x="130" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="14" x="140" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="15" x="150" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="16" x="160" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="17" x="170" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="18" x="180" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="19" x="190" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="20" x="200" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="21" x="210" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="22" x="220" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="23" x="230" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="24" x="240" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="25" x="250" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="26" x="260" y="0" width="10" height="10"/><rect class="wall" data-r="0" data-c="27" x="270" y="0" width="10" height="10"/><rect class="wall" data-r="1" data-c="0" x="0" y="10" width="10" height="10"/><rect class="open" data-r="1" data-c="1" x="10" y="10" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="1" data-c="2" x="20" y="10" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="1" data-c="3" x="30" y="10" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="1" data-c="4" x="40" y="10" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="1" data-c="5" x="50" y="10" width="10" height="10" fill="rgb(69,18,99)"/><rect class="open" data-r="1" data-c="6" x="60" y="10" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="1" data-c="7" x="70" y="10" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="1" data-c="8" x="80" y="10" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="1" data-c="9" x="90" y="10" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="1" data-c="10" x="100" y="10" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="1" data-c="11" x="110" y="10" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="1" data-c="12" x="120" y="10" width="10" height="10" fill="rgb(69,50,125)"/><rect class="wall" data-r="1" data-c="13" x="130" y="10" width="10" height="10"/><rect class="open" data-r="1" data-c="14" x="140" y="10" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="1" data-c="15" x="150" y="10" width="10" height="10" fill="rgb(53,94,140)"/><rect class="open" data-r="1" data-c="16" x="160" y="10" width="10" height="10" fill="rgb(53,94,140)"/><rect class="open" data-r="1" data-c="17" x="170" y="10" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="1" data-c="18" x="180" y="10" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="1" data-c="19" x="190" y="10" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="1" data-c="20" x="200" y="10" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="1" data-c="21" x="210" y="10" width="10" height="10" fill="rgb(69,18,99)"/><rect class="open" data-r="1" data-c="22" x="220" y="10" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="1" data-c="23" x="230" y="10" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="1" data-c="24" x="240" y="10" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="1" data-c="25" x="250" y="10" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="1" data-c="26" x="260" y="10" width="10" height="10" fill="rgb(53,94,140)"/><rect class="wall" data-r="1" data-c="27" x="270" y="10" width="10" height="10"/><rect class="wall" data-r="2" data-c="0" x="0" y="20" width="10" height="10"/><rect class="open" data-r="2" data-c="1" x="10" y="20" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="2" data-c="2" x="20" y="20" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="2" data-c="3" x="30" y="20" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="2" data-c="4" x="40" y="20" width="10" height="10" fill="rgb(69,18,99)"/><rect class="open" data-r="2" data-c="5" x="50" y="20" width="10" height="10" fill="rgb(68,1,84)"/><rect class="open" data-r="2" data-c="6" x="60" y="20" width="10" height="10" fill="rgb(69,18,99)"/><rect class="open" data-r="2" data-c="7" x="70" y="20" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="2" data-c="8" x="80" y="20" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="2" data-c="9" x="90" y="20" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="2" data-c="10" x="100" y="20" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="2" data-c="11" x="110" y="20" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="2" data-c="12" x="120" y="20" width="10" height="10" fill="rgb(70,34,113)"/><rect class="wall" data-r="2" data-c="13" x="130" y="20" width="10" height="10"/><rect class="open" data-r="2" data-c="14" x="140" y="20" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="2" data-c="15" x="150" y="20" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="2" data-c="16" x="160" y="20" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="2" data-c="17" x="170" y="20" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="2" data-c="18" x="180" y="20" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="2" data-c="19" x="190" y="20" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="2" data-c="20" x="200" y="20" width="10" height="10" fill="rgb(69,18,99)"/><rect class="open" data-r="2" data-c="21" x="210" y="20" width="10" height="10" fill="rgb(68,1,84)"/><rect class="open" data-r="2" data-c="22" x="220" y="20" width="10" height="10" fill="rgb(69,18,99)"/><rect class="open" data-r="2" data-c="23" x="230" y="20" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="2" data-c="24" x="240" y="20" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="2" data-c="25" x="250" y="20" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="2" data-c="26" x="260" y="20" width="10" height="10" fill="rgb(59,82,139)"/><rect class="wall" data-r="2" data-c="27" x="270" y="20" width="10" height="10"/><rect class="wall" data-r="3" data-c="0" x="0" y="30" width="10" height="10"/><rect class="open" data-r="3" data-c="1" x="10" y="30" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="3" data-c="2" x="20" y="30" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="3" data-c="3" x="30" y="30" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="3" data-c="4" x="40" y="30" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="3" data-c="5" x="50" y="30" width="10" height="10" fill="rgb(69,18,99)"/><rect class="open" data-r="3" data-c="6" x="60" y="30" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="3" data-c="7" x="70" y="30" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="3" data-c="8" x="80" y="30" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="3" data-c="9" x="90" y="30" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="3" data-c="10" x="100" y="30" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="3" data-c="11" x="110" y="30" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="3" data-c="12" x="120" y="30" width="10" height="10" fill="rgb(69,18,99)"/><rect class="wall" data-r="3" data-c="13" x="130" y="30" width="10" height="10"/><rect class="open" data-r="3" data-c="14" x="140" y="30" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="3" data-c="15" x="150" y="30" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="3" data-c="16" x="160" y="30" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="3" data-c="17" x="170" y="30" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="3" data-c="18" x="180" y="30" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="3" data-c="19" x="190" y="30" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="3" data-c="20" x="200" y="30" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="3" data-c="21" x="210" y="30" width="10" height="10" fill="rgb(69,18,99)"/><rect class="open" data-r="3" data-c="22" x="220" y="30" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="3" data-c="23" x="230" y="30" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="3" data-c="24" x="240" y="30" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="3" data-c="25" x="250" y="30" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="3" data-c="26" x="260" y="30" width="10" height="10" fill="rgb(53,94,140)"/><rect class="wall" data-r="3" data-c="27" x="270" y="30" width="10" height="10"/><rect class="wall" data-r="4" data-c="0" x="0" y="40" width="10" height="10"/><rect class="open" data-r="4" data-c="1" x="10" y="40" width="10" height="10" fill="rgb(53,94,140)"/><rect class="open" data-r="4" data-c="2" x="20" y="40" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="4" data-c="3" x="30" y="40" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="4" data-c="4" x="40" y="40" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="4" data-c="5" x="50" y="40" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="4" data-c="6" x="60" y="40" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="4" data-c="7" x="70" y="40" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="4" data-c="8" x="80" y="40" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="4" data-c="9" x="90" y="40" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="4" data-c="10" x="100" y="40" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="4" data-c="11" x="110" y="40" width="10" height="10" fill="rgb(69,18,99)"/><rect class="open" data-r="4" data-c="12" x="120" y="40" width="10" height="10" fill="rgb(68,1,84)"/><rect class="open" data-r="4" data-c="13" x="130" y="40" width="10" height="10" fill="rgb(69,18,99)"/><rect class="open" data-r="4" data-c="14" x="140" y="40" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="4" data-c="15" x="150" y="40" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="4" data-c="16" x="160" y="40" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="4" data-c="17" x="170" y="40" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="4" data-c="18" x="180" y="40" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="4" data-c="19" x="190" y="40" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="4" data-c="20" x="200" y="40" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="4" data-c="21" x="210" y="40" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="4" data-c="22" x="220" y="40" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="4" data-c="23" x="230" y="40" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="4" data-c="24" x="240" y="40" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="4" data-c="25" x="250" y="40" width="10" height="10" fill="rgb(53,94,140)"/><rect class="open" data-r="4" data-c="26" x="260" y="40" width="10" height="10" fill="rgb(47,107,141)"/><rect class="wall" data-r="4" data-c="27" x="270" y="40" width="10" height="10"/><rect class="wall" data-r="5" data-c="0" x="0" y="50" width="10" height="10"/><rect class="wall" data-r="5" data-c="1" x="10" y="50" width="10" height="10"/><rect class="wall" data-r="5" data-c="2" x="20" y="50" width="10" height="10"/><rect class="wall" data-r="5" data-c="3" x="30" y="50" width="10" height="10"/><rect class="wall" data-r="5" data-c="4" x="40" y="50" width="10" height="10"/><rect class="wall" data-r="5" data-c="5" x="50" y="50" width="10" height="10"/><rect class="open" data-r="5" data-c="6" x="60" y="50" width="10" height="10" fill="rgb(64,66,132)"/><rect class="wall" data-r="5" data-c="7" x="70" y="50" width="10" height="10"/><rect class="wall" data-r="5" data-c="8" x="80" y="50" width="10" height="10"/><rect class="wall" data-r="5" data-c="9" x="90" y="50" width="10" height="10"/><rect class="wall" data-r="5" data-c="10" x="100" y="50" width="10" height="10"/><rect class="wall" data-r="5" data-c="11" x="110" y="50" width="10" height="10"/><rect class="wall" data-r="5" data-c="12" x="120" y="50" width="10" height="10"/><rect class="wall" data-r="5" data-c="13" x="130" y="50" width="10" height="10"/><rect class="wall" data-r="5" data-c="14" x="140" y="50" width="10" height="10"/><rect class="wall" data-r="5" data-c="15" x="150" y="50" width="10" height="10"/><rect class="wall" data-r="5" data-c="16" x="160" y="50" width="10" height="10"/><rect class="wall" data-r="5" data-c="17" x="170" y="50" width="10" height="10"/><rect class="wall" data-r="5" data-c="18" x="180" y="50" width="10" height="10"/><rect class="wall" data-r="5" data-c="19" x="190" y="50" width="10" height="10"/><rect class="wall" data-r="5" data-c="20" x="200" y="50" width="10" height="10"/><rect class="wall" data-r="5" data-c="21" x="210" y="50" width="10" height="10"/><rect class="wall" data-r="5" data-c="22" x="220" y="50" width="10" height="10"/><rect class="wall" data-r="5" data-c="23" x="230" y="50" width="10" height="10"/><rect class="wall" data-r="5" data-c="24" x="240" y="50" width="10" height="10"/><rect class="open" data-r="5" data-c="25" x="250" y="50" width="10" height="10" fill="rgb(53,94,140)"/><rect class="open" data-r="5" data-c="26" x="260" y="50" width="10" height="10" fill="rgb(47,107,141)"/><rect class="wall" data-r="5" data-c="27" x="270" y="50" width="10" height="10"/><rect class="wall" data-r="6" data-c="0" x="0" y="60" width="10" height="10"/><rect class="open" data-r="6" data-c="1" x="10" y="60" width="10" height="10" fill="rgb(53,94,140)"/><rect class="open" data-r="6" data-c="2" x="20" y="60" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="6" data-c="3" x="30" y="60" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="6" data-c="4" x="40" y="60" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="6" data-c="5" x="50" y="60" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="6" data-c="6" x="60" y="60" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="6" data-c="7" x="70" y="60" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="6" data-c="8" x="80" y="60" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="6" data-c="9" x="90" y="60" width="10" height="10" fill="rgb(53,94,140)"/><rect class="open" data-r="6" data-c="10" x="100" y="60" width="10" height="10" fill="rgb(47,107,141)"/><rect class="open" data-r="6" data-c="11" x="110" y="60" width="10" height="10" fill="rgb(42,119,142)"/><rect class="open" data-r="6" data-c="12" x="120" y="60" width="10" height="10" fill="rgb(38,132,141)"/><rect class="wall" data-r="6" data-c="13" x="130" y="60" width="10" height="10"/><rect class="open" data-r="6" data-c="14" x="140" y="60" width="10" height="10" fill="rgb(33,145,140)"/><rect class="open" data-r="6" data-c="15" x="150" y="60" width="10" height="10" fill="rgb(38,132,141)"/><rect class="open" data-r="6" data-c="16" x="160" y="60" width="10" height="10" fill="rgb(42,119,142)"/><rect class="open" data-r="6" data-c="17" x="170" y="60" width="10" height="10" fill="rgb(47,107,141)"/><rect class="open" data-r="6" data-c="18" x="180" y="60" width="10" height="10" fill="rgb(53,94,140)"/><rect class="open" data-r="6" data-c="19" x="190" y="60" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="6" data-c="20" x="200" y="60" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="6" data-c="21" x="210" y="60" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="6" data-c="22" x="220" y="60" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="6" data-c="23" x="230" y="60" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="6" data-c="24" x="240" y="60" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="6" data-c="25" x="250" y="60" width="10" height="10" fill="rgb(59,82,139)"/><rect class="wall" data-r="6" data-c="26" x="260" y="60" width="10" height="10"/><rect class="wall" data-r="6" data-c="27" x="270" y="60" width="10" height="10"/><rect class="wall" data-r="7" data-c="0" x="0" y="70" width="10" height="10"/><rect class="open" data-r="7" data-c="1" x="10" y="70" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="7" data-c="2" x="20" y="70" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="7" data-c="3" x="30" y="70" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="7" data-c="4" x="40" y="70" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="7" data-c="5" x="50" y="70" width="10" height="10" fill="rgb(69,18,99)"/><rect class="open" data-r="7" data-c="6" x="60" y="70" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="7" data-c="7" x="70" y="70" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="7" data-c="8" x="80" y="70" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="7" data-c="9" x="90" y="70" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="7" data-c="10" x="100" y="70" width="10" height="10" fill="rgb(53,94,140)"/><rect class="open" data-r="7" data-c="11" x="110" y="70" width="10" height="10" fill="rgb(47,107,141)"/><rect class="open" data-r="7" data-c="12" x="120" y="70" width="10" height="10" fill="rgb(42,119,142)"/><rect class="wall" data-r="7" data-c="13" x="130" y="70" width="10" height="10"/><rect class="open" data-r="7" data-c="14" x="140" y="70" width="10" height="10" fill="rgb(38,132,141)"/><rect class="open" data-r="7" data-c="15" x="150" y="70" width="10" height="10" fill="rgb(42,119,142)"/><rect class="open" data-r="7" data-c="16" x="160" y="70" width="10" height="10" fill="rgb(47,107,141)"/><rect class="open" data-r="7" data-c="17" x="170" y="70" width="10" height="10" fill="rgb(53,94,140)"/><rect class="open" data-r="7" data-c="18" x="180" y="70" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="7" data-c="19" x="190" y="70" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="7" data-c="20" x="200" y="70" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="7" data-c="21" x="210" y="70" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="7" data-c="22" x="220" y="70" width="10" height="10" fill="rgb(69,18,99)"/><rect class="open" data-r="7" data-c="23" x="230" y="70" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="7" data-c="24" x="240" y="70" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="7" data-c="25" x="250" y="70" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="7" data-c="26" x="260" y="70" width="10" height="10" fill="rgb(59,82,139)"/><rect class="wall" data-r="7" data-c="27" x="270" y="70" width="10" height="10"/><rect class="wall" data-r="8" data-c="0" x="0" y="80" width="10" height="10"/><rect class="open" data-r="8" data-c="1" x="10" y="80" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="8" data-c="2" x="20" y="80" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="8" data-c="3" x="30" y="80" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="8" data-c="4" x="40" y="80" width="10" height="10" fill="rgb(69,18,99)"/><rect class="open" data-r="8" data-c="5" x="50" y="80" width="10" height="10" fill="rgb(68,1,84)"/><rect class="open" data-r="8" data-c="6" x="60" y="80" width="10" height="10" fill="rgb(69,18,99)"/><rect class="open" data-r="8" data-c="7" x="70" y="80" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="8" data-c="8" x="80" y="80" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="8" data-c="9" x="90" y="80" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="8" data-c="10" x="100" y="80" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="8" data-c="11" x="110" y="80" width="10" height="10" fill="rgb(53,94,140)"/><rect class="open" data-r="8" data-c="12" x="120" y="80" width="10" height="10" fill="rgb(47,107,141)"/><rect class="wall" data-r="8" data-c="13" x="130" y="80" width="10" height="10"/><rect class="open" data-r="8" data-c="14" x="140" y="80" width="10" height="10" fill="rgb(42,119,142)"/><rect class="open" data-r="8" data-c="15" x="150" y="80" width="10" height="10" fill="rgb(47,107,141)"/><rect class="open" data-r="8" data-c="16" x="160" y="80" width="10" height="10" fill="rgb(53,94,140)"/><rect class="open" data-r="8" data-c="17" x="170" y="80" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="8" data-c="18" x="180" y="80" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="8" data-c="19" x="190" y="80" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="8" data-c="20" x="200" y="80" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="8" data-c="21" x="210" y="80" width="10" height="10" fill="rgb(69,18,99)"/><rect class="open" data-r="8" data-c="22" x="220" y="80" width="10" height="10" fill="rgb(68,1,84)"/><rect class="open" data-r="8" data-c="23" x="230" y="80" width="10" height="10" fill="rgb(69,18,99)"/><rect class="open" data-r="8" data-c="24" x="240" y="80" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="8" data-c="25" x="250" y="80" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="8" data-c="26" x="260" y="80" width="10" height="10" fill="rgb(64,66,132)"/><rect class="wall" data-r="8" data-c="27" x="270" y="80" width="10" height="10"/><rect class="wall" data-r="9" data-c="0" x="0" y="90" width="10" height="10"/><rect class="open" data-r="9" data-c="1" x="10" y="90" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="9" data-c="2" x="20" y="90" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="9" data-c="3" x="30" y="90" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="9" data-c="4" x="40" y="90" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="9" data-c="5" x="50" y="90" width="10" height="10" fill="rgb(69,18,99)"/><rect class="wall" data-r="9" data-c="6" x="60" y="90" width="10" height="10"/><rect class="wall" data-r="9" data-c="7" x="70" y="90" width="10" height="10"/><rect class="wall" data-r="9" data-c="8" x="80" y="90" width="10" height="10"/><rect class="wall" data-r="9" data-c="9" x="90" y="90" width="10" height="10"/><rect class="wall" data-r="9" data-c="10" x="100" y="90" width="10" height="10"/><rect class="wall" data-r="9" data-c="11" x="110" y="90" width="10" height="10"/><rect class="wall" data-r="9" data-c="12" x="120" y="90" width="10" height="10"/><rect class="wall" data-r="9" data-c="13" x="130" y="90" width="10" height="10"/><rect class="wall" data-r="9" data-c="14" x="140" y="90" width="10" height="10"/><rect class="wall" data-r="9" data-c="15" x="150" y="90" width="10" height="10"/><rect class="wall" data-r="9" data-c="16" x="160" y="90" width="10" height="10"/><rect class="wall" data-r="9" data-c="17" x="170" y="90" width="10" height="10"/><rect class="wall" data-r="9" data-c="18" x="180" y="90" width="10" height="10"/><rect class="wall" data-r="9" data-c="19" x="190" y="90" width="10" height="10"/><rect class="wall" data-r="9" data-c="20" x="200" y="90" width="10" height="10"/><rect class="wall" data-r="9" data-c="21" x="210" y="90" width="10" height="10"/><rect class="open" data-r="9" data-c="22" x="220" y="90" width="10" height="10" fill="rgb(69,18,99)"/><rect class="open" data-r="9" data-c="23" x="230" y="90" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="9" data-c="24" x="240" y="90" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="9" data-c="25" x="250" y="90" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="9" data-c="26" x="260" y="90" width="10" height="10" fill="rgb(59,82,139)"/><rect class="wall" data-r="9" data-c="27" x="270" y="90" width="10" height="10"/><rect class="wall" data-r="10" data-c="0" x="0" y="100" width="10" height="10"/><rect class="open" data-r="10" data-c="1" x="10" y="100" width="10" height="10" fill="rgb(53,94,140)"/><rect class="open" data-r="10" data-c="2" x="20" y="100" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="10" data-c="3" x="30" y="100" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="10" data-c="4" x="40" y="100" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="10" data-c="5" x="50" y="100" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="10" data-c="6" x="60" y="100" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="10" data-c="7" x="70" y="100" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="10" data-c="8" x="80" y="100" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="10" data-c="9" x="90" y="100" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="10" data-c="10" x="100" y="100" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="10" data-c="11" x="110" y="100" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="10" data-c="12" x="120" y="100" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="10" data-c="13" x="130" y="100" width="10" height="10" fill="rgb(69,18,99)"/><rect class="open" data-r="10" data-c="14" x="140" y="100" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="10" data-c="15" x="150" y="100" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="10" data-c="16" x="160" y="100" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="10" data-c="17" x="170" y="100" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="10" data-c="18" x="180" y="100" width="10" height="10" fill="rgb(53,94,140)"/><rect class="open" data-r="10" data-c="19" x="190" y="100" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="10" data-c="20" x="200" y="100" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="10" data-c="21" x="210" y="100" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="10" data-c="22" x="220" y="100" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="10" data-c="23" x="230" y="100" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="10" data-c="24" x="240" y="100" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="10" data-c="25" x="250" y="100" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="10" data-c="26" x="260" y="100" width="10" height="10" fill="rgb(53,94,140)"/><rect class="wall" data-r="10" data-c="27" x="270" y="100" width="10" height="10"/><rect class="wall" data-r="11" data-c="0" x="0" y="110" width="10" height="10"/><rect class="open" data-r="11" data-c="1" x="10" y="110" width="10" height="10" fill="rgb(47,107,141)"/><rect class="open" data-r="11" data-c="2" x="20" y="110" width="10" height="10" fill="rgb(53,94,140)"/><rect class="open" data-r="11" data-c="3" x="30" y="110" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="11" data-c="4" x="40" y="110" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="11" data-c="5" x="50" y="110" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="11" data-c="6" x="60" y="110" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="11" data-c="7" x="70" y="110" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="11" data-c="8" x="80" y="110" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="11" data-c="9" x="90" y="110" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="11" data-c="10" x="100" y="110" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="11" data-c="11" x="110" y="110" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="11" data-c="12" x="120" y="110" width="10" height="10" fill="rgb(69,18,99)"/><rect class="open" data-r="11" data-c="13" x="130" y="110" width="10" height="10" fill="rgb(68,1,84)"/><rect class="open" data-r="11" data-c="14" x="140" y="110" width="10" height="10" fill="rgb(69,18,99)"/><rect class="open" data-r="11" data-c="15" x="150" y="110" width="10" height="10" fill="rgb(70,34,113)"/><rect class="open" data-r="11" data-c="16" x="160" y="110" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="11" data-c="17" x="170" y="110" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="11" data-c="18" x="180" y="110" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="11" data-c="19" x="190" y="110" width="10" height="10" fill="rgb(53,94,140)"/><rect class="open" data-r="11" data-c="20" x="200" y="110" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="11" data-c="21" x="210" y="110" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="11" data-c="22" x="220" y="110" width="10" height="10" fill="rgb(69,50,125)"/><rect class="open" data-r="11" data-c="23" x="230" y="110" width="10" height="10" fill="rgb(64,66,132)"/><rect class="open" data-r="11" data-c="24" x="240" y="110" width="10" height="10" fill="rgb(59,82,139)"/><rect class="open" data-r="11" data-c="25" x="250" y="110" width="10" height="10" fill="rgb(53,94,140)"/><rect class="open" data-r="11" data-c="26" x="260" y="110" width="10" height="10" fill="rgb(47,107,141)"/><rect class="wall" data-r="11" data-c="27" x="270" y="110" width="10" height="10"/><rect class="wall" data-r="12" data-c="0" x="0" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="1" x="10" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="2" x="20" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="3" x="30" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="4" x="40" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="5" x="50" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="6" x="60" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="7" x="70" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="8" x="80" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="9" x="90" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="10" x="100" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="11" x="110" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="12" x="120" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="13" x="130" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="14" x="140" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="15" x="150" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="16" x="160" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="17" x="170" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="18" x="180" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="19" x="190" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="20" x="200" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="21" x="210" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="22" x="220" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="23" x="230" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="24" x="240" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="25" x="250" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="26" x="260" y="120" width="10" height="10"/><rect class="wall" data-r="12" data-c="27" x="270" y="120" width="10" height="10"/><circle class="ghost" cx="15" cy="15" r="3.2"/><circle class="ghost" cx="125" cy="15" r="3.2"/><circle class="ghost" cx="265" cy="15" r="3.2"/><circle class="ghost" cx="65" cy="55" r="3.2"/><circle class="ghost" cx="15" cy="65" r="3.2"/><circle class="ghost" cx="125" cy="65" r="3.2"/><g class="trap"><circle cx="225" cy="85" r="4.1"/><text x="225" y="87.1">1</text></g><g class="trap"><circle cx="55" cy="85" r="4.1"/><text x="55" y="87.1">2</text></g><g class="trap"><circle cx="215" cy="25" r="4.1"/><text x="215" y="27.1">3</text></g><g class="trap"><circle cx="135" cy="115" r="4.1"/><text x="135" y="117.1">4</text></g><g class="trap"><circle cx="125" cy="45" r="4.1"/><text x="125" y="47.1">5</text></g><g class="trap"><circle cx="55" cy="25" r="4.1"/><text x="55" y="27.1">6</text></g></svg>
+                <!-- /prerender:field -->
+              </div>
+              <figcaption>
+                <span class="scale" aria-hidden="true"><span class="bar"></span><span>0&nbsp;m</span><span>near a trap · far from any trap</span><span>20&nbsp;m</span></span>
+                <span id="editNote" class="edit-note">Traps are numbered; small rings show the other layout.</span>
+              </figcaption>
+            </figure>
+            <div class="map-tools live-only">
+              <div class="toggle" role="group" aria-label="Which layout to show">
+                <button type="button" data-layer="optimised" aria-pressed="true">BioPath plan</button>
+                <button type="button" data-layer="baseline" aria-pressed="false">Rule of thumb</button>
+              </div>
+              <button type="button" id="resetMap" class="quiet" hidden>Reset the map</button>
+            </div>
+            <div class="reading">
+              <p>
+                <strong>Rule of thumb</strong> is the package's own baseline: traps along walls first, at least 5&nbsp;m apart.
+                <strong>Caught</strong> counts 160 simulated random walks from random open cells, each pausing on about a
+                quarter of its steps; the range is a 95% interval.
+              </p>
+              <p>
+                The page solves in your browser with a line-for-line port of the package's placement step: shortest walking
+                distance, greedy choice, then swaps while any swap helps. A test in the repository checks that it places the
+                same traps as the Python code. The package can also optimise the capture rate directly and test it against
+                biased movement; that runs in Python.
+              </p>
+            </div>
+          </div>
+
+          <div class="bench-side">
+            <div class="step-head">
+              <span class="step">2</span>
+              <div>
+                <h3>Budget</h3>
+                <label class="budget" for="budget">
+                  <span>Traps: <output id="budgetOut" for="budget">6</output></span>
+                  <input id="budget" type="range" min="1" max="10" step="1" value="6" />
+                </label>
+              </div>
+            </div>
+
+            <div class="step-head">
+              <span class="step">3</span>
+              <div>
+                <h3 id="coordsTitle">BioPath's coordinates</h3>
+                <p class="fine">Metres from the top-left corner of the map.</p>
+                <ol id="coords" class="coords">
+                  <!-- prerender:coords --><li><span class="tn">1</span><span class="xy">x&nbsp;22, y&nbsp;8</span></li><li><span class="tn">2</span><span class="xy">x&nbsp;5, y&nbsp;8</span></li><li><span class="tn">3</span><span class="xy">x&nbsp;21, y&nbsp;2</span></li><li><span class="tn">4</span><span class="xy">x&nbsp;13, y&nbsp;11</span></li><li><span class="tn">5</span><span class="xy">x&nbsp;12, y&nbsp;4</span></li><li><span class="tn">6</span><span class="xy">x&nbsp;5, y&nbsp;2</span></li>
+                  <!-- /prerender:coords -->
+                </ol>
+              </div>
+            </div>
+
+            <div class="step-head">
+              <span class="step">4</span>
+              <div>
+                <h3>Proof</h3>
+                <table class="proof">
+                  <thead>
+                    <tr><th scope="col"><span class="visually-hidden">Measure</span></th><th scope="col">BioPath</th><th scope="col">Rule of thumb</th></tr>
+                  </thead>
+                  <tbody id="proofBody">
+                    <!-- prerender:proof --><tr><th scope="row">Average walk to the nearest trap</th><td>3.8 m</td><td>7.2 m</td></tr><tr><th scope="row">95% of the yard is within</th><td>7 m</td><td>17 m</td></tr><tr><th scope="row">Farthest open ground</th><td>10 m</td><td>19 m</td></tr><tr><th scope="row">Wanderers caught within 48 steps</th><td>41% <small>(33%–48%)</small></td><td>26% <small>(19%–32%)</small></td></tr>
+                    <!-- /prerender:proof -->
+                  </tbody>
+                </table>
+                <p class="live-only">
+                  <button type="button" id="downloadPlan" class="solid">Download this plan</button>
+                </p>
+                <p class="fine live-only">
+                  The file is a valid BioPath map with the plan attached, and carries the command that reruns it with the Python package.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="why" class="story" aria-labelledby="why-title">
+        <h2 id="why-title">Why traps, and why a map</h2>
+        <div class="story-grid">
+          <article>
+            <h3>It started close to home.</h3>
+            <p>
+              “Movement modelling is my route in; my grandfather’s strawberries are why it feels personal.” (From the June 2026
+              talk.)
+            </p>
+          </article>
+          <article>
+            <h3>A trap is where movement becomes evidence.</h3>
+            <p>
+              Lures attract, sticky cards catch, and monitoring points count what is happening in the crop row. BioPath asks
+              where those points should go.
+            </p>
+          </article>
+          <article>
+            <h3>A few metres change the work that follows.</h3>
+            <p>Better placement can mean fewer wasted checks, less chemical pressure and fewer weak explanations.</p>
+          </article>
+          <article>
+            <h3>Movement is uncertain. The space shapes it.</h3>
+            <p>
+              Encounters are not random once space has structure: walls, corridors and gaps decide where a wanderer is likely
+              to arrive first. That first arrival is the subject of the research behind BioPath, first-passage processes, and
+              it is what the solver uses.
+            </p>
+          </article>
+          <article>
+            <h3>Coordinates, not just a picture.</h3>
+            <p>
+              A placement with numbers attached can be questioned: why these spots, and how good are they? The decision moves
+              from gut feel alone to something a site can test.
+            </p>
+          </article>
+          <article>
+            <h3>The hard question is trust.</h3>
+            <p>
+              The fellowship moved the question from "can it work?" to "who would use it, pay for it and come back to it?",
+              and from leading with the method to leading with the decision.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="exists" aria-labelledby="exists-title">
+        <h2 id="exists-title">What exists</h2>
+        <div class="exists-grid">
+          <dl class="parts">
+            <div><dt>Solver</dt><dd>A Python package that reads a grid map with optional risk weights and places a given number of traps.</dd></div>
+            <div><dt>Proof bundle</dt><dd>Each benchmark run saves its traps, distances, capture estimates with intervals, scores under biased movement, and the rule-of-thumb and random baselines on the same map.</dd></div>
+            <div><dt>Interfaces</dt><dd>A command-line tool, a small web API, and this page.</dd></div>
+            <div><dt>Tests</dt><dd>Unit tests for the map reader, objectives, optimiser and capture model, and the browser-to-Python check.</dd></div>
+          </dl>
+          <div class="rerun">
+            <h3>The same answer, two thousand times</h3>
+            <p>
+              A scheduled job, set to run every two hours, reruns the benchmark on the demo farm: six traps, chosen for the
+              worst of three movement scenarios, 160 simulated walks per scenario, fixed seed. Between 24 February and
+              15 November 2026 it was rerun 2,146 times on that map and returned the same answer every time: 48% caught (95% interval 40–56%), against 15% for the rule-of-thumb
+              layout and 30% for random layouts on average.
+            </p>
+            <p id="latestRun" class="fine">
+              Latest rerun on record when this page was written: 15 November 2026, 16:44 UTC, run 20261115T164419Z-60ba34f3.
+            </p>
+            <p class="fine"><a href="./data/latest-summary.md">Latest run summary</a> · <a href="https://github.com/zhouyi-xiaoxiao/biopath-platform/tree/main/runs">All runs on GitHub</a></p>
+          </div>
+        </div>
+      </section>
+
+      <section id="status" class="status" aria-labelledby="status-title">
+        <h2 id="status-title">Where it stands</h2>
+        <div class="status-grid">
+          <ol class="timeline">
+            <li><time datetime="2025-12-23">23 Dec 2025</time><span>Place confirmed on the Early Career Enterprise Fellowship, on a proposal to turn first-passage research into trap-placement software.</span></li>
+            <li><time datetime="2026-02-23">23 Feb 2026</time><span>First commit of the platform: solver, API, saved runs and the scheduled benchmark.</span></li>
+            <li><time datetime="2026-02-24">24 Feb 2026</time><span>Pitched at New Enterprise, the university's start-up programme, in the Wills Memorial Building; a £150 development award followed on 2 March.</span></li>
+            <li><time datetime="2026-02-26">26 Feb 2026</time><span>Introduced among the 2026 Enterprise Fellows on the university's <a href="https://enterpriseinnovation.blogs.bristol.ac.uk/2026/02/26/introducing-the-2026-early-career-enterprise-fellows/">Enterprise &amp; Innovation blog</a>.</span></li>
+            <li><time datetime="2026-06-10">10 Jun 2026</time><span>Presented as a PechaKucha, twenty slides of twenty seconds, at the University of Bristol Festival of Enterprise. The next step it named was deliberately small: one partner site, one baseline map, one evidence plan.</span></li>
+            <li><time datetime="2026-09-21">21 Sep 2026</time><span>Featured by the Careers Service: <a href="https://universityofbristolcareers.blogs.bristol.ac.uk/2026/09/21/from-strawberry-patch-to-phd-how-engineering-maths-inspired-biopath/">“From strawberry patch to PhD”</a>.</span></li>
+          </ol>
+          <aside class="honest">
+            <h3>What it is not</h3>
+            <p>
+              Not a product, and not field-tested. The maps are synthetic; the movement model and any risk weights are assumptions; the
+              repository holds no field data. The demo metrics say what a pilot on a real site should measure, not what it
+              would find.
+            </p>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="colophon">
+      <div class="colophon-inner">
+      <p class="who">
+        Built by Xiaoxiao Zhouyi, a PhD researcher in Engineering Mathematics at the University of Bristol.
+        <a href="https://zhouyixiaoxiao.com/">Xiaoxiao Zhouyi · zhouyixiaoxiao.com</a>
+      </p>
+      <p class="fine">
+        <a href="https://github.com/zhouyi-xiaoxiao/biopath-platform">Source on GitHub</a>, MIT licence. Stage material from the
+        February 2026 pitch, kept as it was: <a href="./studio.html">pitch studio</a> · <a href="./pitch-deck.html">deck</a> ·
+        <a href="./pitch-script.html">script</a>.
+      </p>
+      </div>
+    </footer>
+
+    <script src="./solver.js" defer></script>
+    <script src="./home.js" defer></script>
+  </body>
+</html>

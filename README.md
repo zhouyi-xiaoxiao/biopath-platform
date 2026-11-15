@@ -4,6 +4,10 @@ BioPath turns a site map into trap coordinates plus a rerunnable proof bundle.
 
 `Map in -> traps out -> proof attached.`
 
+**Try it:** <https://zhouyi-xiaoxiao.github.io/biopath-platform/> places traps on a synthetic farm map in the browser, with the proof beside them.
+
+Status, November 2026: a research prototype, built in 2026 for the University of Bristol Early Career Enterprise Fellowship and presented at the university's Festival of Enterprise on 10 June 2026. Every map in this repository is synthetic; the numbers are demo metrics, not field results.
+
 ## What the proof bundle contains
 
 For one fixed run (`run_id`):
@@ -75,6 +79,8 @@ curl -X POST http://127.0.0.1:8001/api/benchmark \
 ```
 
 ## Documentation
+
+- Public page: `site/index.html`, with the browser port of the placement solver in `site/solver.js` (checked against the Python solver by `tests/test_browser_solver_parity.py`). After changing either, run `node scripts/prerender_home.cjs` to refresh the plan the page shows before scripts load. The February 2026 pitch studio now lives at `site/studio.html`.
 
 - Metrics and proof definitions: `docs/METRICS_AND_PROOF.md`
 - Reproducibility workflow: `docs/REPRODUCIBILITY.md`
