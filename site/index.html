@@ -36,9 +36,10 @@
         </div>
         <div class="opening-body">
         <p class="lede">
-          BioPath takes the layout of a site and the number of traps you can afford, and returns where to put them, with
-          evidence anyone can check: how far the remotest corner is from a trap, how often a simulated wanderer is caught,
-          and how a rule-of-thumb layout does on the same ground.
+          BioPath takes the layout of a farmyard or grain store and the number of rodent traps or bait stations you can
+          afford, and returns where to put them, with evidence anyone can check: how far the remotest corner is from a trap,
+          how often a simulated wanderer is caught, and how a rule-of-thumb layout does on the same ground. The aim is to
+          cut rodenticide use.
         </p>
         <p class="standing">
           A research prototype built in 2026 for the University of Bristol's Early Career Enterprise Fellowship. Everything
@@ -67,7 +68,8 @@
                 <!-- /prerender:field -->
               </div>
               <figcaption>
-                <span class="scale" aria-hidden="true"><span class="bar"></span><span>0&nbsp;m</span><span>near a trap · far from any trap</span><span>20&nbsp;m</span></span>
+                <span class="scale" aria-hidden="true"><span class="bar"></span><span>0&nbsp;m · near a trap</span><span>20&nbsp;m · far from any trap</span></span>
+                <span class="map-legend"><span id="legendShown">● numbered: BioPath traps</span><span id="legendOther">◌ small rings: rule-of-thumb traps</span></span>
                 <span id="editNote" class="edit-note">Traps are numbered; small rings show the other layout.</span>
               </figcaption>
             </figure>
@@ -79,11 +81,6 @@
               <button type="button" id="resetMap" class="quiet" hidden>Reset the map</button>
             </div>
             <div class="reading">
-              <p>
-                <strong>Rule of thumb</strong> is the package's own baseline: traps along walls first, at least 5&nbsp;m apart.
-                <strong>Caught</strong> counts 160 simulated random walks from random open cells, each pausing on about a
-                quarter of its steps; the range is a 95% interval.
-              </p>
               <p>
                 The page solves in your browser with a line-for-line port of the package's placement step: shortest walking
                 distance, greedy choice, then swaps while any swap helps. A test in the repository checks that it places the
@@ -130,6 +127,12 @@
                     <!-- /prerender:proof -->
                   </tbody>
                 </table>
+                <p class="proof-definitions fine">
+                  <strong>Rule of thumb</strong> is the package's own baseline: traps along walls first, at least 5&nbsp;m apart.
+                  <strong>Caught</strong> is the share of 160 simulated random walks, started from random open cells, that reach
+                  a trap within 48 steps. A step is a move to a neighbouring 1&nbsp;m cell or, about a quarter of the time, a
+                  pause. The range in brackets is a 95% interval.
+                </p>
                 <p class="live-only">
                   <button type="button" id="downloadPlan" class="solid">Download this plan</button>
                 </p>
@@ -155,20 +158,21 @@
           <article>
             <h3>A trap is where movement becomes evidence.</h3>
             <p>
-              Lures attract, sticky cards catch, and monitoring points count what is happening in the crop row. BioPath asks
-              where those points should go.
+              Bait stations, snap traps and monitoring points are where rodent movement becomes evidence. BioPath asks where
+              those points should go.
             </p>
           </article>
           <article>
             <h3>A few metres change the work that follows.</h3>
-            <p>Better placement can mean fewer wasted checks, less chemical pressure and fewer weak explanations.</p>
+            <p>Better placement can mean fewer wasted checks, less rodenticide and fewer weak explanations.</p>
           </article>
           <article>
             <h3>Movement is uncertain. The space shapes it.</h3>
             <p>
-              Encounters are not random once space has structure: walls, corridors and gaps decide where a wanderer is likely
-              to arrive first. That first arrival is the subject of the research behind BioPath, first-passage processes, and
-              it is what the solver uses.
+              Encounters are still random, but not uniform, once space has structure: walls, corridors and gaps shape where a
+              wanderer is likely to arrive first. That first arrival — a first-passage process — is the subject of the research
+              behind BioPath. The Python package can optimise it directly, and the browser demo uses walking distance as a fast
+              stand-in.
             </p>
           </article>
           <article>
@@ -198,17 +202,25 @@
             <div><dt>Tests</dt><dd>Unit tests for the map reader, objectives, optimiser and capture model, and the browser-to-Python check.</dd></div>
           </dl>
           <div class="rerun">
-            <h3>The same answer, two thousand times</h3>
+            <h3>Reproducible on every scheduled rerun</h3>
             <p>
               A scheduled job, set to run every two hours, reruns the benchmark on the demo farm: six traps, chosen for the
-              worst of three movement scenarios, 160 simulated walks per scenario, fixed seed. Between 24 February and
-              15 November 2026 it was rerun 2,146 times on that map and returned the same answer every time: 48% caught (95% interval 40–56%), against 15% for the rule-of-thumb
-              layout and 30% for random layouts on average.
+              worst of three movement scenarios (a neutral walk, and walks drifting right or down), 160 simulated walks per
+              scenario, fixed seed. Between 24 February and 25 November 2026 it was rerun 2,175 times on that map and returned
+              the same answer every time. Each layout is scored on its own worst scenario: 48% caught (95% interval 40%–56%),
+              against 15% for the rule-of-thumb layout and 30% for random layouts on average. With a fixed seed, the identical
+              reruns show that the pipeline is reproducible, not that the estimate is precise; the 95% interval gives the
+              precision.
+            </p>
+            <p>
+              These are not the demo's numbers. The demo places traps by walking distance and scores only the neutral walk.
+              Scored on the neutral walk alone, the Python code gives the same rule-of-thumb layout 28%, close to the demo's
+              26%.
             </p>
             <p id="latestRun" class="fine">
-              Latest rerun on record when this page was written: 15 November 2026, 16:44 UTC, run 20261115T164419Z-60ba34f3.
+              Latest rerun on record when this page was written: 25 November 2026, 16:36 UTC, run 20261125T163608Z-f0c45bd8.
             </p>
-            <p class="fine"><a href="./data/latest-summary.md">Latest run summary</a> · <a href="https://github.com/zhouyi-xiaoxiao/biopath-platform/tree/main/runs">All runs on GitHub</a></p>
+            <p class="fine"><a href="https://github.com/zhouyi-xiaoxiao/biopath-platform/blob/main/site/data/latest-summary.md">Latest run summary</a> · <a href="https://github.com/zhouyi-xiaoxiao/biopath-platform/actions/workflows/benchmark.yml">All scheduled runs on GitHub</a></p>
           </div>
         </div>
       </section>
@@ -217,10 +229,11 @@
         <h2 id="status-title">Where it stands</h2>
         <div class="status-grid">
           <ol class="timeline">
-            <li><time datetime="2025-12-23">23 Dec 2025</time><span>Place confirmed on the Early Career Enterprise Fellowship, on a proposal to turn first-passage research into trap-placement software.</span></li>
+            <li><time datetime="2025-12-23">23 Dec 2025</time><span>Place confirmed on the Early Career Enterprise Fellowship (one of 12 fellows in the 2026 cohort), on a proposal to turn first-passage research into trap-placement software.</span></li>
             <li><time datetime="2026-02-23">23 Feb 2026</time><span>First commit of the platform: solver, API, saved runs and the scheduled benchmark.</span></li>
             <li><time datetime="2026-02-24">24 Feb 2026</time><span>Pitched at New Enterprise, the university's start-up programme, in the Wills Memorial Building; a £150 development award followed on 2 March.</span></li>
             <li><time datetime="2026-02-26">26 Feb 2026</time><span>Introduced among the 2026 Enterprise Fellows on the university's <a href="https://enterpriseinnovation.blogs.bristol.ac.uk/2026/02/26/introducing-the-2026-early-career-enterprise-fellows/">Enterprise &amp; Innovation blog</a>.</span></li>
+            <li><time datetime="2026-03">Mar 2026</time><span>Moved to the Growth stage of New Enterprise and was matched with a research-translation mentor.</span></li>
             <li><time datetime="2026-06-10">10 Jun 2026</time><span>Presented as a PechaKucha, twenty slides of twenty seconds, at the University of Bristol Festival of Enterprise. The next step it named was deliberately small: one partner site, one baseline map, one evidence plan.</span></li>
             <li><time datetime="2026-09-21">21 Sep 2026</time><span>Featured by the Careers Service: <a href="https://universityofbristolcareers.blogs.bristol.ac.uk/2026/09/21/from-strawberry-patch-to-phd-how-engineering-maths-inspired-biopath/">“From strawberry patch to PhD”</a>.</span></li>
           </ol>
@@ -240,7 +253,7 @@
       <div class="colophon-inner">
       <p class="who">
         Built by Xiaoxiao Zhouyi, a PhD researcher in Engineering Mathematics at the University of Bristol.
-        <a href="https://zhouyixiaoxiao.com/">Xiaoxiao Zhouyi · zhouyixiaoxiao.com</a>
+        <a href="https://zhouyixiaoxiao.com/">zhouyixiaoxiao.com</a>
       </p>
       <p class="fine">
         <a href="https://github.com/zhouyi-xiaoxiao/biopath-platform">Source on GitHub</a>, MIT licence. Stage material from the

@@ -162,7 +162,13 @@
     const dlBtn = document.getElementById("downloadPlan");
     const note = document.getElementById("editNote");
     const coordsTitle = document.getElementById("coordsTitle");
+    const legendShown = document.getElementById("legendShown");
+    const legendOther = document.getElementById("legendOther");
 
+    const small = typeof root.matchMedia === "function" && root.matchMedia("(max-width: 600px)").matches;
+    const editHint = small
+      ? "Tap a cell inside the yard to add or remove a wall (easier on a larger screen)."
+      : "Tap any cell inside the yard to add or remove a wall.";
     let map = S.parseMap(DEMO_MAP);
     let layer = "optimised";
     let current = null;
@@ -173,6 +179,10 @@
       stage.innerHTML = renderSvg(map, shown, other);
       coords.innerHTML = coordsHtml(map, shown.traps);
       coordsTitle.textContent = layer === "optimised" ? "BioPath's coordinates" : "Rule-of-thumb coordinates";
+      if (legendShown && legendOther) {
+        legendShown.textContent = layer === "optimised" ? "● numbered: BioPath traps" : "● numbered: rule-of-thumb traps";
+        legendOther.textContent = layer === "optimised" ? "◌ small rings: rule-of-thumb traps" : "◌ small rings: BioPath traps";
+      }
       layerBtns.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.layer === layer)));
     }
 
@@ -219,7 +229,7 @@
     resetBtn.addEventListener("click", () => {
       map = S.parseMap(DEMO_MAP);
       resetBtn.hidden = true;
-      note.textContent = "Tap any cell inside the yard to add or remove a wall.";
+      note.textContent = editHint;
       solve();
     });
 
@@ -237,7 +247,7 @@
     });
 
     box.classList.add("is-live");
-    note.textContent = "Tap any cell inside the yard to add or remove a wall.";
+    note.textContent = editHint;
     solve();
   }
 
@@ -254,7 +264,7 @@
         if (Number.isNaN(when.getTime())) return;
         const date = when.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
         const time = when.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "UTC" });
-        let text = `Newest run in this copy of the site: ${date}, ${time} UTC, run ${run.run_id}. Capture ${pct(run.capture_probability)} (95% CI ${pct(run.ci95_low)}–${pct(run.ci95_high)})`;
+        let text = `The job keeps running. Newest run in this copy of the site: ${date}, ${time} UTC, run ${run.run_id}. Capture ${pct(run.capture_probability)} (95% interval ${pct(run.ci95_low)}–${pct(run.ci95_high)})`;
         if (bench && bench.baselines && bench.baselines.heuristic && bench.baselines.random) {
           text += `; rule of thumb ${pct(bench.baselines.heuristic.mean)}; random layouts ${pct(bench.baselines.random.mean)} on average`;
         }

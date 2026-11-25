@@ -62,7 +62,10 @@ if latest.exists():
         sp = resolve_artifact(str(summary))
         if sp.exists():
             target = root / "site" / "data" / "latest-summary.md"
-            shutil.copyfile(sp, target)
+            summary_text = sp.read_text()
+            summary_text = summary_text.replace("](heatmap.png)", "](latest-heatmap.png)")
+            summary_text = summary_text.replace("95% CI", "95% interval").replace("CI [", "95% interval [")
+            target.write_text(summary_text)
 
     benchmark_target = root / "site" / "data" / "latest-benchmark.json"
     benchmark_source = None
